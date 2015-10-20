@@ -1,5 +1,4 @@
 # Meeting #0
-============
 
 **Meeting date:** 10/13/2015, 9:00 AM to 9:30 AM
 **Location:** CP 108
