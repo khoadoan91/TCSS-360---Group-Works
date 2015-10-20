@@ -1,10 +1,15 @@
 # Meeting #0
 
 **Meeting date:** 10/13/2015, 9:00 AM to 9:30 AM
+
 **Location:** CP 108
+
 **Attending:** Nina Chepovska, Nabil Fadili, Kyle Doan, Cody McMahon
+
 **Absent:** no one
+
 **Facilitator:** Nabil Fadili
+
 **Minutes Taker:** Nina Chepovska
 
 
