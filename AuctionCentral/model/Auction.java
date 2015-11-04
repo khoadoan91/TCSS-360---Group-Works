@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,20 +10,39 @@ import java.util.List;
  */
 public class Auction {
 	
-	private List<Item> myItem;
+	private Date myDate;
+	private List<Item> myItems;
 	private boolean isAvailable;
 	
 	public Auction() {
-		myItem = new ArrayList<>();
+		myDate = null;
+		myItems = new ArrayList<>();
 		isAvailable = false;
 	}
 	
 	public void addItem(final Item theItem) {
-		myItem.add(theItem);
+		if (!myItems.contains(theItem)) 
+			myItems.add(theItem);
 	}
 	
 	public void removeItem(final Item theItem) {
-		
+		myItems.remove(theItem);
+	}
+	
+	public Item getItem(final Item theItem) {
+		return myItems.get(myItems.indexOf(theItem));
+	}
+	
+	public Date getAuctionDay() {
+		return myDate;
+	}
+	
+	public void setAuctionDay(final Date theDate) {
+		myDate = theDate;
+	}
+	
+	public void setAvailable(final boolean theAvailable) {
+		isAvailable = theAvailable;
 	}
 	
 	public boolean isAvailable() {
