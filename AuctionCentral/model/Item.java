@@ -37,4 +37,33 @@ public class Item {
 	public String getDescription() {
 		return myDesp;
 	}
+	
+	// these below methods are used for the editing
+	public void setTitle(final String theTitle) {
+		myTitle = theTitle;
+	}
+	
+	public void setQuantity(final int theQt) {
+		myQuantity = theQt;
+	}
+	
+	public void setDescription(final String theDesp) {
+		myDesp = theDesp;
+	}
+	
+	public void addImage(final Image theImage) {
+		if (!myImages.contains(theImage))
+			myImages.add(theImage);
+	}
+	
+	public void addMultiImages(final Image[] theImages) {
+		for (int i = 0; i < theImages.length; i++) {
+			if(!myImages.contains(theImages[i]))
+				myImages.add(theImages[i]);
+		}
+	}
+	
+	public void removeImage(final Image theImage) {
+		myImages.remove(theImage);
+	}
 }
