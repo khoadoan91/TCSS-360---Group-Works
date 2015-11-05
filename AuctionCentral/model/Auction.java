@@ -37,6 +37,10 @@ public class Auction {
 		return myDate;
 	}
 	
+	public List<Item> getAllItems() {
+		return myItems;
+	}
+	
 	public void setAuctionDay(final Date theDate) {
 		myDate = theDate;
 	}
