@@ -10,13 +10,16 @@ import java.util.List;
  */
 public class Auction {
 	
-	private Date myDate;
+	private String myDate;
+	private int myHour;
 	private List<Item> myItems;
 	private boolean isAvailable;
 	
-	public Auction() {
-		myDate = null;
+	public Auction(final List<Item> theItems, final String theDate, final int theHour) {
+		myDate = theDate;
+		myHour = theHour;
 		myItems = new ArrayList<>();
+		myItems.addAll(theItems);
 		isAvailable = false;
 	}
 	
@@ -33,7 +36,7 @@ public class Auction {
 		return myItems.get(myItems.indexOf(theItem));
 	}
 	
-	public Date getAuctionDay() {
+	public String getAuctionDay() {
 		return myDate;
 	}
 	
@@ -41,7 +44,7 @@ public class Auction {
 		return myItems;
 	}
 	
-	public void setAuctionDay(final Date theDate) {
+	public void setAuctionDay(final String theDate) {
 		myDate = theDate;
 	}
 	
