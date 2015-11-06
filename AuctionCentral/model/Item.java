@@ -4,7 +4,7 @@ package model;
  * @author KyleD
  *
  */
-public class Item implements Comparable<Item>{
+public class Item {
 	// TODO Question: How to generate the unique itemID?
 	
 	private String myTitle;
@@ -63,10 +63,4 @@ public class Item implements Comparable<Item>{
 //	public void removeImage(final Image theImage) {
 //		myImages.remove(theImage);
 //	}
-
-	@Override
-	public int compareTo(Item o) {
-		// TODO use for checking if the item is already in the list
-		return 0;
-	}
 }

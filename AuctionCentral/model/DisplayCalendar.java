@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -12,26 +11,26 @@ public class DisplayCalendar {
 	
 	public static final int MAX_AUCTION = 25;
 	
-	private Calendar myCalendar;
-	private List<String> myDates;
 	private List<Auction> myAuctions;
 	
 	public DisplayCalendar() {
 		myAuctions = new ArrayList<>();
 	}
 	
-	public DisplayCalendar(List<Auction> theAuction) {
-		
+	public DisplayCalendar(final List<Auction> theAuction) {
+		this();
+		myAuctions.addAll(theAuction);
 	}
 	
-	public void addAuction(final Auction theAuction) {
+	public boolean addAuction(final Auction theAuction) {
 		if (!hasMaxAuctions()) {
-			myAuctions.add(theAuction);	
+			return myAuctions.add(theAuction);	
 		}
+		return false;
 	}
 	
 	/**
-	 * TODO check the business rulesc
+	 * TODO check the business rules
 	 * @param theDate
 	 * @return
 	 */

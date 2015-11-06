@@ -1,7 +1,7 @@
 package model;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Auction {
 	
-	private String myDate;
+	private Date myDate;
 	private int myHour;
 	private List<Item> myItems;
 	private boolean isAvailable;
@@ -19,7 +19,7 @@ public class Auction {
 		this(null, null, -1);
 	}
 	
-	public Auction(final List<Item> theItems, final String theDate, final int theHour) {
+	public Auction(final List<Item> theItems, final Date theDate, final int theHour) {
 		myDate = theDate;
 		myHour = theHour;
 		myItems = new ArrayList<>();
@@ -48,7 +48,7 @@ public class Auction {
 		return myItems;
 	}
 	
-	public void setAuctionDay(final String theDate, final int theHour) {
+	public void setAuctionDay(final Date theDate, final int theHour) {
 		myDate = theDate;
 		myHour = theHour;
 	}
