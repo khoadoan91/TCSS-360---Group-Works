@@ -1,14 +1,12 @@
 package model;
 
-import java.awt.Image;
-import java.util.List;
-
 /**
  * @author KyleD
  *
  */
 public class Item implements Comparable<Item>{
 	// TODO Question: How to generate the unique itemID?
+	
 	private String myTitle;
 	private int myQuantity;
 //	private List<Image> myImages;
