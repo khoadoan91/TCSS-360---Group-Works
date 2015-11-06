@@ -6,6 +6,12 @@ public class Bid {
 	private double myBidAmount;
 	
 	public Bid(final Item theItem, final double theBidAmount) {
+		if (theItem == null) {
+			throw new NullPointerException();
+		} else if (theBidAmount <= 0.0) {
+			throw new IllegalArgumentException(); 
+		}
+		
 		myItem = theItem;
 		myBidAmount = theBidAmount; 
 	}
@@ -19,6 +25,10 @@ public class Bid {
 	}
 	
 	public void setBidAmount(final double theBidAmount) {
+		if (theBidAmount <= 0.0) {
+			throw new IllegalArgumentException(); 
+		}
+		
 		myBidAmount = theBidAmount;
 	}
 }
