@@ -28,7 +28,6 @@ public class NPEmployee extends User {
 		int itemQt;
 		List<Item> itemList = new ArrayList<>();
 		
-		
 		System.out.print("Which day? In format: \"YYYY MM DD\"\n");
 		year = scanner.nextInt();
 		month = scanner.nextInt();
@@ -73,9 +72,5 @@ public class NPEmployee extends User {
 	public String getUserType() {
 		return userType;
 	}
-	
-	public static void main(String[] args) {
-		NPEmployee npe = new NPEmployee("Kyle");
-		npe.addAuction();
-	}
+
 }

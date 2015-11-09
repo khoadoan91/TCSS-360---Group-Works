@@ -17,7 +17,7 @@ public class User {
 	}
 
 	public String getUserType() {
-		return "User";
+		return "User unspecified";
 	}
 	
 }
