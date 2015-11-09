@@ -23,36 +23,46 @@ public class Main {
 			currentUser = login();
 			if (currentUser != null) {flag = false;}
 		} 
-		mainMenu(currentUser);
+		if (currentUser.getUserType().equals("ACEmployee")) {
+			ACEmployeeMainMenu();
+		}
+		if (currentUser.getUserType().equals("NPEmployee")) {
+			NPEmployeeMainMenu();
+		}
+		if (currentUser.getUserType().equals("Bidder")) {
+			bidderMainMenu();
+		}
 	}
 	
 	/**
-	 * Main menu of program. Called after login.
-	 * !!!Should each user have a separate "mainMenu" method? Or should this handle
-	 * !!!all of them?
-	 * !!!Might need to return something.
-	 * @param currentUser
+	 * ACEmployee main menu of program. Called after login.
 	 */
-	public static void mainMenu(User currentUser) {
+	public static void ACEmployeeMainMenu() {
 		System.out.println("\nWhat would you like to do?");
-		if (currentUser.getUserType().equals("ACEmployee")) {
-			System.out.println("1. View all auctions\n"
-					+ "2. View specific auction\n"
-					+ "3. Logout");
-		}
-		if (currentUser.getUserType().equals("NPEmployee")) {
-			System.out.println("1. Schedule an auction\n"
-					+ "2. Edit an auction\n"
-					+ "3. Remove an auction\n"
-					+ "4. Logout");
-		}
-		if (currentUser.getUserType().equals("Bidder")) {
-			System.out.println("1. View your current bids\n"
-					+ "2. Make a bid\n"
-					+ "3. Remove a bid\n"
-					+ "4. Edit a bid\n"
-					+ "5. Logout");
-		}
+		System.out.println("1. View all auctions\n"
+				+ "2. View specific auction\n"
+				+ "3. Logout");	
+	}
+	/**
+	 * NPEmployee main menu of program. Called after login.
+	 */
+	public static void NPEmployeeMainMenu() {
+		System.out.println("\nWhat would you like to do?");
+		System.out.println("1. Schedule an auction\n"
+				+ "2. Edit an auction\n"
+				+ "3. Remove an auction\n"
+				+ "4. Logout");
+	}
+	/**
+	 * Bidder main menu of program. Called after login.
+	 */
+	public static void bidderMainMenu() {
+		System.out.println("\nWhat would you like to do?");
+		System.out.println("1. View your current bids\n"
+				+ "2. Make a bid\n"
+				+ "3. Remove a bid\n"
+				+ "4. Edit a bid\n"
+				+ "5. Logout");	
 	}
 	
 	/**
