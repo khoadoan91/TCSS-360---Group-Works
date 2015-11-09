@@ -30,6 +30,7 @@ public class Auction implements Comparable<Auction>{
 	public Date getDate(){
 		return (Date) myDate.clone();
 	}
+	
 	public void addItem(final Item theItem) {
 		if (!myItems.contains(theItem)) 
 			myItems.add(theItem);
@@ -67,6 +68,7 @@ public class Auction implements Comparable<Auction>{
 	public void printAuctionDetail() {
 		System.out.println();
 	}
+	
 	@Override
 	public int compareTo(Auction that) {
 		return this.myDate.compareTo(that.myDate);
