@@ -1,8 +1,5 @@
 package model;
 
-import java.awt.Image;
-import java.util.List;
-
 /**
  * @author KyleD
  *
@@ -12,12 +9,14 @@ public class Item {
 	
 	private String myTitle;
 	private int myQuantity;
-	private String myDesp;
+//	private List<Image> myImages;
+	private String myDesc;
 	
-	public Item(final String theTitle, final int theQuantity, final String theDesp) {
+	public Item(final String theTitle, final int theQuantity, final String theDesc) {
 		myTitle = theTitle;
 		myQuantity = theQuantity;
-		myDesp = theDesp;
+//		myImages = theImages;
+		myDesc = theDesc;
 	}
 	
 	public String getTitle() {
@@ -28,8 +27,12 @@ public class Item {
 		return myQuantity;
 	}
 	
+//	public List<Image> getImages() {
+//		return myImages;
+//	}
+	
 	public String getDescription() {
-		return myDesp;
+		return myDesc;
 	}
 	
 	// these below methods are used for the editing
@@ -42,7 +45,22 @@ public class Item {
 	}
 	
 	public void setDescription(final String theDesp) {
-		myDesp = theDesp;
+		myDesc = theDesp;
 	}
-
+	
+//	public void addImage(final Image theImage) {
+//		if (!myImages.contains(theImage))
+//			myImages.add(theImage);
+//	}
+	
+//	public void addMultiImages(final Image[] theImages) {
+//		for (int i = 0; i < theImages.length; i++) {
+//			if(!myImages.contains(theImages[i]))
+//				myImages.add(theImages[i]);
+//		}
+//	}
+	
+//	public void removeImage(final Image theImage) {
+//		myImages.remove(theImage);
+//	}
 }

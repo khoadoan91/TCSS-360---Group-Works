@@ -1,26 +1,34 @@
 package model;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * @author KyleD
- *
+ * @author CodyM
  */
-public class Auction {
+public class Auction implements Comparable<Auction>{
 	
-	private String myDate;
+	private Date myDate;
 	private int myHour;
 	private List<Item> myItems;
 	private boolean isAvailable;
 	
-	public Auction(final List<Item> theItems, final String theDate, final int theHour) {
+	public Auction() {
+		this(null, null, -1);
+	}
+	
+	public Auction(final List<Item> theItems, final Date theDate, final int theHour) {
 		myDate = theDate;
 		myHour = theHour;
 		myItems = new ArrayList<>();
 		myItems.addAll(theItems);
 		isAvailable = false;
+	}
+	
+	public Date getDate(){
+		return (Date) myDate.clone();
 	}
 	
 	public void addItem(final Item theItem) {
@@ -37,15 +45,16 @@ public class Auction {
 	}
 	
 	public String getAuctionDay() {
-		return myDate;
+		return "on " + myDate + " at " + myHour;
 	}
 	
 	public List<Item> getAllItems() {
 		return myItems;
 	}
 	
-	public void setAuctionDay(final String theDate) {
+	public void setAuctionDay(final Date theDate, final int theHour) {
 		myDate = theDate;
+		myHour = theHour;
 	}
 	
 	public void setAvailable(final boolean theAvailable) {
@@ -54,5 +63,15 @@ public class Auction {
 	
 	public boolean isAvailable() {
 		return isAvailable;
+	}
+	
+	public void printAuctionDetail() {
+		System.out.println();
+	}
+	
+	@Override
+	public int compareTo(Auction that) {
+		return this.myDate.compareTo(that.myDate);
+	
 	}
 }

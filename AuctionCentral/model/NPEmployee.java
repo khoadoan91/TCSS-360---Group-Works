@@ -4,7 +4,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+import java.util.Calendar;
 /**
  * @author nabilfadili
  *
@@ -16,37 +16,44 @@ public class NPEmployee extends User {
 		super(username);
 	}
 	
-	public void addAuction(DisplayCalendar myCalendar) {
+	public void addAuction() {
 		Scanner scanner = new Scanner(System.in);
-		String myDate;
-		int myHour;
+		int year, month, date, hour, min;
+		Calendar tempCal = Calendar.getInstance();
+		tempCal.clear();
 		
 		int itemCount;
-		String myTitle, myDesc;
-		int myQuantity;
+		String itemTitl, itemDesc;
+		int itemQt;
 		List<Item> itemList = new ArrayList<>();
 		
 		
-		System.out.println("Date:");
-		myDate = scanner.nextLine();
-		System.out.println("Hour:");
-		myHour = scanner.nextInt();
+		System.out.print("Which day? in format YYYY MM DD\t");
+		year = scanner.nextInt();
+		month = scanner.nextInt();
+		date = scanner.nextInt();
+		System.out.print("Hour and Minute? in format\t");
+		hour = scanner.nextInt();
+		min = scanner.nextInt();
+		
+		System.out.println(year + " " + month + " " + date);
+		tempCal.set(year, month, date, hour, min);
 		
 		//TODO check if the date is available in the calendar
 		
-		System.out.println("How many items:");
+		System.out.print("How many items: ");
 		itemCount = scanner.nextInt();
 		
-		for(int i = 0; i < itemCount; ++i) {
-			System.out.println("Item Title:");
-			myTitle = scanner.nextLine();
-			System.out.println("Item Quantity: ");
-			myQuantity = scanner.nextInt();
+		for(int i = 0; i < itemCount; i++) {
+			System.out.print("Item Title: ");
+			itemTitl = scanner.next();
+			System.out.print("Item Quantity: ");
+			itemQt = scanner.nextInt();
 			System.out.println("Description:");
-			myDesc = scanner.nextLine(); 
-			itemList.add(new Item(myTitle, myQuantity, myDesc));
+			itemDesc = scanner.next(); 
+			itemList.add(new Item(itemTitl, itemQt, itemDesc));
 		}
-		Auction newAuction = new Auction(itemList, myDate, myHour);
+		Auction newAuction = new Auction(itemList, tempCal.getTime(), hour);
 		
 		//TODO add this auction into the calendar
 		
@@ -65,5 +72,10 @@ public class NPEmployee extends User {
 	public void printPermissions() {
 		System.out.println("I can schedule an auction, edit an auction, "
 				+ "or remove an auction.");
+	}
+	
+	public static void main(String[] args) {
+		NPEmployee npe = new NPEmployee("Kyle");
+		npe.addAuction();
 	}
 }
