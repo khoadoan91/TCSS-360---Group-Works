@@ -38,7 +38,7 @@ public class DisplayCalendar extends GregorianCalendar{
 	}
 	
 	public boolean addAuction(final Auction theAuction) {
-		if (!hasMaxAuctions()) {
+		if (!hasMaxAuctions() && checkAvailability(theAuction.getDate())) {
 			myAuctions.add(theAuction);	
 			Collections.sort(myAuctions);
 			return true;
@@ -76,7 +76,7 @@ public class DisplayCalendar extends GregorianCalendar{
 	}
 	//An auction may not be scheduled more than 90 days from the current date
 	private boolean businessRule2(final Date theDate,final List<Auction> theAuctions){
-		if (theDate.getTime() > (getTime().getTime()+(ONE_DAY*90))){
+		if (theDate.getTime() > (getTime().getTime()+(ONE_DAY * 90))){
 			return true;
 		}
 		return false;
@@ -85,8 +85,8 @@ public class DisplayCalendar extends GregorianCalendar{
 	private boolean businessRule3(final Date theDate,final List<Auction> theAuctions){
 		int count = 0;
 		for (Auction myAuction : theAuctions) {
-			if(myAuction.getDate().getTime() >= theDate.getTime() - ONE_DAY*7 
-					|| myAuction.getDate().getTime() >= theDate.getTime() + ONE_DAY*7 ){
+			if(myAuction.getDate().getTime() >= theDate.getTime() - ONE_DAY * 7 
+					|| myAuction.getDate().getTime() >= theDate.getTime() + ONE_DAY * 7 ){
 				count++;
 			}
         }
@@ -100,13 +100,13 @@ public class DisplayCalendar extends GregorianCalendar{
 	private boolean businessRule4(final Date theDate,final List<Auction> theAuctions){
 		int count = 0;
 		for (Auction myAuction : theAuctions) {
-			if(myAuction.getDate().getTime() >= theDate.getTime() - ONE_HOUR*2 
-					|| myAuction.getDate().getTime() >= theDate.getTime() + ONE_HOUR*2 ){
+			if(myAuction.getDate().getTime() >= theDate.getTime() - ONE_HOUR * 2 
+					|| myAuction.getDate().getTime() >= theDate.getTime() + ONE_HOUR * 2 ){
 				return true;
 			}
         }
 		for (Auction myAuction : theAuctions) {
-			if(myAuction.getDate().getTime()%ONE_DAY == theDate.getTime()%ONE_DAY){
+			if(myAuction.getDate().getTime() / ONE_DAY == theDate.getTime() / ONE_DAY){
 				count++;
 			}
         }
@@ -131,24 +131,44 @@ public class DisplayCalendar extends GregorianCalendar{
 	public boolean hasMaxAuctions() {
 		return checkAvailableAuctions() == MAX_AUCTION;
 	}
+	//used for simple tests
 	public String toString(){
-//		String temp = "_____________________________________\n";
-		String temp = "************************************\n";
+		String temp = "A = Ready For Bids          F = Full\n";
+//		temp = temp + "_____________________________________\n";
+//		temp = temp + "************************************\n";
+
+		temp = temp + "|SUN |MON |TUE |WED |THUR|FRI |SAT |\n";
 		int dow = this.get(DAY_OF_WEEK);
 		int dom = this.get(DAY_OF_MONTH);
-		int i = (dow-dom)%7+1;//this should find the first day of the week of the current month but I might be wrong 
-		System.err.print(i);
+		int i = (dow-dom) % 7 + 1;//this should find the first day of the week of the current month but I might be wrong
+//		int i = gc.get(DAY_OF_WEEK_IN_MONTH);//I think this finds day of week
+//		System.err.print(i);
 		int tempdom = 1;
 		//TODO make this different for each month
-		while(tempdom <= 31){
+		while(tempdom <= this.daysInMonth(this.get(MONTH))){
+			int count = 0;
 			temp = temp + "|";
 			for(int o = 1;o < i; o++){
 				temp = temp + "////|";
 			}
 			for(; i <= 7; i++){
-				temp = temp + "A";//TODO make this 0-1-2 depending how many auction are in that day;
-				if(tempdom < 10)temp = temp + " ";
-				temp = temp + " ";
+				//Im assuming this for loop the if statement isnt working
+				for (Auction myAuction : this.myAuctions) {
+					if((myAuction.getDate().getTime() / ONE_DAY) 
+							== (this.getTime().getTime() - (ONE_DAY * (dom - tempdom))) / ONE_DAY)
+						count++;
+		        }
+				temp = temp + count;//TODO make this 0-1-2 depending how many auction are in that day;
+				count = 0;
+				long theDate = this.getTime().getTime() - (ONE_DAY * (dom - tempdom));
+				if (this.checkAvailability(new Date(theDate))
+						|| this.checkAvailability(new Date(theDate + (4 * ONE_HOUR + 1)))){
+					temp = temp + "A";
+				}
+				else
+					temp = temp + "F";
+				if(tempdom < 10)
+					temp = temp + " ";
 				temp = temp + tempdom;
 				temp = temp + "|";
 				tempdom++;
@@ -164,54 +184,35 @@ public class DisplayCalendar extends GregorianCalendar{
 			i = 1;
 		}
 //		temp = temp + "_____________________________________\n";
-		temp = temp + "************************************\n";
+//		temp = temp + "************************************\n";
 		return temp;
 		
 	}
-	//used for simple tests
-	public static String toString(GregorianCalendar gc){
-//		String temp = "_____________________________________\n";
-		String temp = "************************************\n";
-		int dow = gc.get(DAY_OF_WEEK);
-		int dom = gc.get(DAY_OF_MONTH);
-		int i = (dow-dom)%7+1;//this should find the first day of the week of the current month but I might be wrong 
-		System.err.print(i);
-		int tempdom = 1;
-		//TODO make this different for each month
-		while(tempdom <= 31){
-			temp = temp + "|";
-			for(int o = 1;o < i; o++){
-				temp = temp + "////|";
-			}
-			for(; i <= 7; i++){
-				temp = temp + "A";//TODO make this 0-1-2 depending how many auction are in that day;
-				if(tempdom < 10)temp = temp + " ";
-				temp = temp + " ";
-				temp = temp + tempdom;
-				temp = temp + "|";
-				tempdom++;
-				if (tempdom > 31){
-					i++;
-					break;
-				}
-			}
-			for(;i <= 7; i++){
-				temp = temp + "////|";
-			}
-			temp = temp + "\n";
-			i = 1;
+
+	private int daysInMonth(int month){
+		switch (month){
+			case 2 :return checkLeap();
+			case 4 :
+			case 6 :
+			case 9 :
+			case 11:return 30;
+			case 1 :
+			case 3 :
+			case 5 :
+			case 7 :
+			case 8 :
+			case 10:
+			case 12:return 31;
+			default: return -1;
 		}
-//		temp = temp + "_____________________________________\n";
-		temp = temp + "************************************\n";
-		return temp;
-		
 	}
-	//delete this if you want its just for specific testing
+	private int checkLeap(){
+		if (this.isLeapYear(get(YEAR)))
+			return 29;
+		return 28;
+	}
 	public static void main(String[]args){
-		GregorianCalendar gc = new GregorianCalendar(TimeZone.getDefault(),Locale.US);
-		System.out.println(gc.get(DAY_OF_WEEK));
-		System.out.println(gc.get(DAY_OF_MONTH));
-		System.out.println(gc.get((DAY_OF_MONTH/DAY_OF_WEEK)%7));
-		System.out.println(toString(gc));
+		DisplayCalendar dc= new DisplayCalendar();
+		System.out.print(dc.toString());
 	}
 }
