@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class ACEmployee extends User {
 	
+	final private String userType = "ACEmployee";
+
 	public ACEmployee(String username) {
 		super(username);
 	}
@@ -35,6 +37,10 @@ public class ACEmployee extends User {
 	public void selectAuction(Date theDate, int theHour) {
 		//TODO view details of an auction object, including list of items
 		
+	}
+	
+	public String getUserType() {
+		return userType;
 	}
 	
 }

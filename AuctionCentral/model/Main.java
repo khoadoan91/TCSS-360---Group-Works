@@ -22,8 +22,31 @@ public class Main {
 		boolean flag = true;
 		while (flag) {
 			currentUser = login();
-			if (currentUser != null) {flag = false;	}
+			if (currentUser != null) {flag = false;}
 		} 
+		mainMenu(currentUser);
+	}
+	
+	public static void mainMenu(User currentUser) {
+		System.out.println("\nWhat would you like to do?");
+		if (currentUser.getUserType().equals("ACEmployee")) {
+			System.out.println("1. View all auctions\n"
+					+ "2. View specific auction\n"
+					+ "3. Logout");
+		}
+		if (currentUser.getUserType().equals("NPEmployee")) {
+			System.out.println("1. Schedule an auction\n"
+					+ "2. Edit an auction\n"
+					+ "3. Remove an auction\n"
+					+ "4. Logout");
+		}
+		if (currentUser.getUserType().equals("Bidder")) {
+			System.out.println("1. View your current bids\n"
+					+ "2. Make a bid\n"
+					+ "3. Remove a bid\n"
+					+ "4. Edit a bid\n"
+					+ "5. Logout");
+		}
 	}
 	
 	/**
@@ -81,7 +104,7 @@ public class Main {
 			System.out.println("Error reading from file. User = null"); 
 		}
 		if (e.getClass().isInstance(new FileNotFoundException())) {
-			System.out.println("Error reading file.");
+			System.out.println("Error reading file. Does not exist.");
 		}
 		//TODO add exceptions here as they come up so that the user is notified
 		//     of the error.

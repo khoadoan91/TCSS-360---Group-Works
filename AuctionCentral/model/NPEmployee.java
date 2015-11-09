@@ -11,6 +11,7 @@ import java.util.Calendar;
  */
 public class NPEmployee extends User {
 
+	final private String userType = "NPEmployee";
 	
 	public NPEmployee(String username) {
 		super(username);
@@ -67,6 +68,10 @@ public class NPEmployee extends User {
 	}
 	public void removeAuction() {
 		
+	}
+	
+	public String getUserType() {
+		return userType;
 	}
 	
 	public static void main(String[] args) {
