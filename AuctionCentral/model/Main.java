@@ -3,7 +3,6 @@
  */
 package model;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -27,6 +26,13 @@ public class Main {
 		mainMenu(currentUser);
 	}
 	
+	/**
+	 * Main menu of program. Called after login.
+	 * !!!Should each user have a separate "mainMenu" method? Or should this handle
+	 * !!!all of them?
+	 * !!!Might need to return something.
+	 * @param currentUser
+	 */
 	public static void mainMenu(User currentUser) {
 		System.out.println("\nWhat would you like to do?");
 		if (currentUser.getUserType().equals("ACEmployee")) {
