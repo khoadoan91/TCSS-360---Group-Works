@@ -9,13 +9,11 @@ public class Item {
 	
 	private String myTitle;
 	private int myQuantity;
-//	private List<Image> myImages;
 	private String myDesc;
 	
 	public Item(final String theTitle, final int theQuantity, final String theDesc) {
 		myTitle = theTitle;
 		myQuantity = theQuantity;
-//		myImages = theImages;
 		myDesc = theDesc;
 	}
 	
@@ -26,10 +24,6 @@ public class Item {
 	public int getQuantity() {
 		return myQuantity;
 	}
-	
-//	public List<Image> getImages() {
-//		return myImages;
-//	}
 	
 	public String getDescription() {
 		return myDesc;

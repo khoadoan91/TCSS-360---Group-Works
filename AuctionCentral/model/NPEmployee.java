@@ -69,14 +69,6 @@ public class NPEmployee extends User {
 		
 	}
 	
-	/**
-	 * Method for testing
-	 */
-	public void printPermissions() {
-		System.out.println("I can schedule an auction, edit an auction, "
-				+ "or remove an auction.");
-	}
-	
 	public static void main(String[] args) {
 		NPEmployee npe = new NPEmployee("Kyle");
 		npe.addAuction();

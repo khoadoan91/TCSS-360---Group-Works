@@ -37,11 +37,4 @@ public class ACEmployee extends User {
 		
 	}
 	
-	/**
-	 * Method for testing
-	 */
-	public void printPermissions() {
-		System.out.println("I can view the calendar and select an auction to view.");
-	}
-	
 }
