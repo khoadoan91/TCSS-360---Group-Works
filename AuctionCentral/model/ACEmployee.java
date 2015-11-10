@@ -10,7 +10,9 @@ import java.util.List;
 public class ACEmployee extends User {
 	
 	final private String userType = "ACEmployee";
+	//private DisplayCalendar;
 
+	//TODO fix constructor to take the calendar from main
 	public ACEmployee(String username) {
 		super(username);
 	}
@@ -33,7 +35,7 @@ public class ACEmployee extends User {
 	 * !!!the correct auction.
 	 * @param auctionID
 	 */
-	public void selectAuction(Date theDate, int theHour) {
+	public void selectAuction(String auctionName) {
 		//TODO view details of an auction object, including list of items
 		
 	}

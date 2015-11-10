@@ -70,7 +70,7 @@ public class DisplayCalendar extends GregorianCalendar{
 		if(businessRule5(theDate,theAuctions))return false;
 		return true;
 	}
-	//No more than 25 auctions may be scheduledinto the future.
+	//No more than 25 auctions may be scheduled into the future.
 	private boolean businessRule1(final Date theDate,final List<Auction> theAuctiosn){
 		return hasMaxAuctions();
 	}

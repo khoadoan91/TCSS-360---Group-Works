@@ -10,8 +10,12 @@ import java.util.List;
  */
 public class Auction implements Comparable<Auction>{
 	
+	
+	/** The non-profit organization */	
+	private String myOrgName;
+	
 	/** The ID that is initialized by AuctionID. */
-	private final long myID;
+	private final String myAuctionName;
 	
 	/** The date that auction is held. */
 	private Calendar myDate;
@@ -22,20 +26,22 @@ public class Auction implements Comparable<Auction>{
 	/** The boolean for checking if the auction is available. */
 	private boolean isAvailable;
 	
+	
+	
 	/**
 	 * Constructs a Auction object with the info receives from the parameters. 
 	 * @param theItems the list of items in an auction
 	 * @param theDate the day that auction is held
 	 */
-	public Auction(final List<Item> theItems, final Calendar theDate) {
+	public Auction(final String theOrgName, final List<Item> theItems, final Calendar theDate) {
 		if (theItems.size() < 1) {
 			throw new IllegalArgumentException();
 		}
 		if (theItems == null || theDate == null) {
 			throw new NullPointerException();
 		}
-		// suppose that the difference in time between 2 created auction is AT LEAST 1ms
-		myID = Calendar.getInstance().getTimeInMillis();
+		myOrgName = theOrgName;
+		myAuctionName = theOrgName + theDate.toString();
 		myDate = theDate;
 		myItems = new ArrayList<>();
 		myItems.addAll(theItems);
@@ -101,8 +107,8 @@ public class Auction implements Comparable<Auction>{
 	 * Returns an ID of an Auction.
 	 * @return
 	 */
-	public long getAuctionID() {
-		return myID;
+	public String getAuctionName() {
+		return myAuctionName;
 	}
 	
 	public Calendar getDateAuction() {
