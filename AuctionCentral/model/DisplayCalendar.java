@@ -38,7 +38,7 @@ public class DisplayCalendar extends GregorianCalendar{
 	}
 	
 	public boolean addAuction(final Auction theAuction) {
-		if (!hasMaxAuctions() && checkAvailability(theAuction.getDate())) {
+		if (!hasMaxAuctions() && checkAvailability(theAuction.getDateAuction().getTime())) {
 			myAuctions.add(theAuction);	
 			Collections.sort(myAuctions);
 			return true;
@@ -85,8 +85,8 @@ public class DisplayCalendar extends GregorianCalendar{
 	private boolean businessRule3(final Date theDate,final List<Auction> theAuctions){
 		int count = 0;
 		for (Auction myAuction : theAuctions) {
-			if(myAuction.getDate().getTime() >= theDate.getTime() - ONE_DAY * 7 
-					|| myAuction.getDate().getTime() >= theDate.getTime() + ONE_DAY * 7 ){
+			if(myAuction.getDateAuction().getTime().getTime() >= theDate.getTime() - ONE_DAY * 7 
+					|| myAuction.getDateAuction().getTime().getTime() >= theDate.getTime() + ONE_DAY * 7 ){
 				count++;
 			}
         }
@@ -100,13 +100,13 @@ public class DisplayCalendar extends GregorianCalendar{
 	private boolean businessRule4(final Date theDate,final List<Auction> theAuctions){
 		int count = 0;
 		for (Auction myAuction : theAuctions) {
-			if(myAuction.getDate().getTime() >= theDate.getTime() - ONE_HOUR * 2 
-					|| myAuction.getDate().getTime() >= theDate.getTime() + ONE_HOUR * 2 ){
+			if(myAuction.getDateAuction().getTime().getTime() >= theDate.getTime() - ONE_HOUR * 2 
+					|| myAuction.getDateAuction().getTime().getTime() >= theDate.getTime() + ONE_HOUR * 2 ){
 				return true;
 			}
         }
 		for (Auction myAuction : theAuctions) {
-			if(myAuction.getDate().getTime() / ONE_DAY == theDate.getTime() / ONE_DAY){
+			if(myAuction.getDateAuction().getTime().getTime() / ONE_DAY == theDate.getTime() / ONE_DAY){
 				count++;
 			}
         }
@@ -154,7 +154,7 @@ public class DisplayCalendar extends GregorianCalendar{
 			for(; i <= 7; i++){
 				//Im assuming this for loop the if statement isnt working
 				for (Auction myAuction : this.myAuctions) {
-					if((myAuction.getDate().getTime() / ONE_DAY) 
+					if((myAuction.getDateAuction().getTime().getTime() / ONE_DAY) 
 							== (this.getTime().getTime() - (ONE_DAY * (dom - tempdom))) / ONE_DAY)
 						count++;
 		        }
