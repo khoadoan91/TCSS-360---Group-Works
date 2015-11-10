@@ -10,8 +10,10 @@ import java.util.List;
  */
 public class Auction implements Comparable<Auction>{
 	
-	/** The ID that is initialized by AuctionID. */
-	private final long myID;
+	/** The ID of an Auction that is combination of orgName and time. */
+	private final String myAucName;
+	
+	private final String myOrgName;
 	
 	/** The date that auction is held. */
 	private Calendar myDate;
@@ -22,21 +24,32 @@ public class Auction implements Comparable<Auction>{
 	/** The boolean for checking if the auction is available. */
 	private boolean isAvailable;
 	
+	private int hourDur;
+	
+	private int minDur;
+	
 	/**
-	 * Constructs a Auction object with the info receives from the parameters. 
-	 * @param theItems the list of items in an auction
-	 * @param theDate the day that auction is held
+	 * Constructs a Auction object with the info receives from the parameters.
+	 * @param theOrgName
+	 * @param theItems
+	 * @param theDate
+	 * @param timeDuration MUST BE in the format "HH:MM"
 	 */
-	public Auction(final List<Item> theItems, final Calendar theDate) {
+	public Auction(final String theOrgName, final List<Item> theItems, 
+			final Calendar theDate, final String timeDuration) {
 		if (theItems.size() < 1) {
 			throw new IllegalArgumentException();
 		}
 		if (theItems == null || theDate == null) {
 			throw new NullPointerException();
 		}
-		// suppose that the difference in time between 2 created auction is AT LEAST 1ms
-		myID = Calendar.getInstance().getTimeInMillis();
 		myDate = theDate;
+		myOrgName = theOrgName;
+		//TODO modify myAucName
+		myAucName = theOrgName + theDate.toString();
+		String[] time = timeDuration.split(":");
+		hourDur = Integer.parseInt(time[0]);
+		minDur = Integer.parseInt(time[1]);
 		myItems = new ArrayList<>();
 		myItems.addAll(theItems);
 		isAvailable = false;
@@ -98,15 +111,30 @@ public class Auction implements Comparable<Auction>{
 	}
 	
 	/**
+	 * Returns an organization name of the auction.
+	 * @return
+	 */
+	public String getOrganizationNam() {
+		return myOrgName;
+	}
+	
+	/**
 	 * Returns an ID of an Auction.
 	 * @return
 	 */
-	public long getAuctionID() {
-		return myID;
+	public String getAuctionName() {
+		return myAucName;
 	}
 	
-	public Calendar getDateAuction() {
+	public Calendar getDateAuctionStarts() {
 		return (Calendar) myDate.clone();
+	}
+	
+	public Calendar getDateAuctionEnds() {
+		Calendar result = (Calendar) myDate.clone();
+		result.set(Calendar.HOUR, result.get(Calendar.HOUR) + hourDur);
+		result.set(Calendar.MINUTE, result.get(Calendar.MINUTE) + minDur);
+		return result;
 	}
 	
 	/**
@@ -184,5 +212,9 @@ public class Auction implements Comparable<Auction>{
 	@Override
 	public boolean equals(Object theAuction) {
 		return ((Auction) theAuction).myDate.equals(this.myDate);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("Hello World");
 	}
 }

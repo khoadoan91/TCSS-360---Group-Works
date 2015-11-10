@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -38,7 +39,7 @@ public class DisplayCalendar extends GregorianCalendar{
 	}
 	
 	public boolean addAuction(final Auction theAuction) {
-		if (!hasMaxAuctions() && checkAvailability(theAuction.getDateAuction().getTime())) {
+		if (!hasMaxAuctions() && checkAvailability(theAuction.getDateAuctionStarts())) {
 			myAuctions.add(theAuction);	
 			Collections.sort(myAuctions);
 			return true;
@@ -61,32 +62,29 @@ public class DisplayCalendar extends GregorianCalendar{
 	 * @param theDate
 	 * @return
 	 */
-	public boolean checkAvailability(final Date theDate) {
+	public boolean checkAvailability(final Calendar theDate) {
 		List<Auction> theAuctions = getAvailableAuctions();
-		if(businessRule1(theDate,theAuctions))return false;
+		if(hasMaxAuctions())return false;
 		if(businessRule2(theDate,theAuctions))return false;
 		if(businessRule3(theDate,theAuctions))return false;
 		if(businessRule4(theDate,theAuctions))return false;
 		if(businessRule5(theDate,theAuctions))return false;
 		return true;
 	}
-	//No more than 25 auctions may be scheduledinto the future.
-	private boolean businessRule1(final Date theDate,final List<Auction> theAuctiosn){
-		return hasMaxAuctions();
-	}
+	
 	//An auction may not be scheduled more than 90 days from the current date
-	private boolean businessRule2(final Date theDate,final List<Auction> theAuctions){
-		if (theDate.getTime() > (getTime().getTime()+(ONE_DAY * 90))){
+	private boolean businessRule2(final Calendar theDate,final List<Auction> theAuctions){
+		if (theDate.getTimeInMillis() > (Calendar.getInstance().getTimeInMillis() +(ONE_DAY * 90))){
 			return true;
 		}
 		return false;
 	}
 	//No more than 5 auctions may be scheduled for any rolling 7 day period.
-	private boolean businessRule3(final Date theDate,final List<Auction> theAuctions){
+	private boolean businessRule3(final Calendar theDate,final List<Auction> theAuctions){
 		int count = 0;
 		for (Auction myAuction : theAuctions) {
-			if(myAuction.getDateAuction().getTime().getTime() >= theDate.getTime() - ONE_DAY * 7 
-					|| myAuction.getDateAuction().getTime().getTime() >= theDate.getTime() + ONE_DAY * 7 ){
+			if(myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() - ONE_DAY * 7 
+					|| myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() + ONE_DAY * 7 ){
 				count++;
 			}
         }
@@ -97,16 +95,16 @@ public class DisplayCalendar extends GregorianCalendar{
 	}
 	//No more than 2 auctions can be scheduled on the same day, and the start time of the second can be 
 	//no earlier than 2 hours after the end time of the first.
-	private boolean businessRule4(final Date theDate,final List<Auction> theAuctions){
+	private boolean businessRule4(final Calendar theDate,final List<Auction> theAuctions){
 		int count = 0;
 		for (Auction myAuction : theAuctions) {
-			if(myAuction.getDateAuction().getTime().getTime() >= theDate.getTime() - ONE_HOUR * 2 
-					|| myAuction.getDateAuction().getTime().getTime() >= theDate.getTime() + ONE_HOUR * 2 ){
+			if(myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() - ONE_HOUR * 2 
+					|| myAuction.getDateAuctionStarts().getTime().getTime() >= theDate.getTimeInMillis() + ONE_HOUR * 2 ){
 				return true;
 			}
         }
 		for (Auction myAuction : theAuctions) {
-			if(myAuction.getDateAuction().getTime().getTime() / ONE_DAY == theDate.getTime() / ONE_DAY){
+			if(myAuction.getDateAuctionStarts().getTimeInMillis() / ONE_DAY == theDate.getTimeInMillis() / ONE_DAY){
 				count++;
 			}
         }
@@ -116,7 +114,7 @@ public class DisplayCalendar extends GregorianCalendar{
 		return false;
 	}
 	//No more than one auction per year per Non-profit organization can be scheduled
-	private boolean businessRule5(final Date theDate,final List<Auction> theAuctions){
+	private boolean businessRule5(final Calendar theDate,final List<Auction> theAuctions){
 		//TODO this whole method
 		return false;
 	}
@@ -128,6 +126,11 @@ public class DisplayCalendar extends GregorianCalendar{
         }
 		return i;
 	}
+	
+	/**
+	 * First business rule
+	 * @return
+	 */
 	public boolean hasMaxAuctions() {
 		return checkAvailableAuctions() == MAX_AUCTION;
 	}
@@ -154,7 +157,7 @@ public class DisplayCalendar extends GregorianCalendar{
 			for(; i <= 7; i++){
 				//Im assuming this for loop the if statement isnt working
 				for (Auction myAuction : this.myAuctions) {
-					if((myAuction.getDateAuction().getTime().getTime() / ONE_DAY) 
+					if((myAuction.getDateAuctionStarts().getTime().getTime() / ONE_DAY) 
 							== (this.getTime().getTime() - (ONE_DAY * (dom - tempdom))) / ONE_DAY)
 						count++;
 		        }

@@ -37,7 +37,7 @@ public class AuctionTest {
 		Calendar cal = Calendar.getInstance();
 		cal.clear();
 		cal.set(2015, 11, 25, 8, 30);
-		myAuction = new Auction(list, cal);
+		myAuction = new Auction("GoodWill", list, cal, "2:10");
 	}
 
 	/**
