@@ -1,12 +1,12 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 /**
  * @author KyleD
- * @author CodyM
  */
 public class Auction implements Comparable<Auction>{
 	
@@ -45,8 +45,8 @@ public class Auction implements Comparable<Auction>{
 		}
 		myDate = theDate;
 		myOrgName = theOrgName;
-		//TODO modify myAucName
-		myAucName = theOrgName + theDate.toString();
+		myAucName = theOrgName + "-" + (new SimpleDateFormat("MMM").format(theDate.getTime()))
+				+ "-" + theDate.get(Calendar.DAY_OF_MONTH) + "-" + theDate.get(Calendar.YEAR);
 		String[] time = timeDuration.split(":");
 		hourDur = Integer.parseInt(time[0]);
 		minDur = Integer.parseInt(time[1]);
@@ -215,6 +215,15 @@ public class Auction implements Comparable<Auction>{
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("Hello World");
+		List<Item> list = new ArrayList<>();
+		Item item1 = new Item("iPad", 1, "New");
+		Item item2 = new Item("Macbook", 1, "Used");
+		list.add(item1); 
+		list.add(item2);
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(2015, 11, 25, 8, 30);
+		Auction auc = new Auction("GoodWill", list, cal, "2:10");
+		System.out.println(auc.getAuctionName());
 	}
 }
