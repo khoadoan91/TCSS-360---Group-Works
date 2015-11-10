@@ -47,9 +47,7 @@ public class Auction implements Comparable<Auction>{
 		myOrgName = theOrgName;
 		myAucName = theOrgName + "-" + (new SimpleDateFormat("MMM").format(theDate.getTime()))
 				+ "-" + theDate.get(Calendar.DAY_OF_MONTH) + "-" + theDate.get(Calendar.YEAR);
-		String[] time = timeDuration.split(":");
-		hourDur = Integer.parseInt(time[0]);
-		minDur = Integer.parseInt(time[1]);
+		setTimeDuration(timeDuration);
 		myItems = new ArrayList<>();
 		myItems.addAll(theItems);
 		isAvailable = false;
@@ -175,6 +173,17 @@ public class Auction implements Comparable<Auction>{
 	 */
 	public int getMin() {
 		return myDate.get(Calendar.MINUTE);
+	}
+	
+	public void setTimeDuration(final String timeDur) {
+		String time[] = timeDur.split(":");
+		int tempHour = Integer.parseInt(time[0]);
+		int tempMin = Integer.parseInt(time[1]);
+		if (tempHour < 0 || tempMin < 0 || (tempHour == 0 && tempMin == 0)) {
+			throw new IllegalArgumentException();
+		}
+		hourDur = tempHour;
+		minDur = tempMin;
 	}
 	
 	/**
