@@ -2,6 +2,7 @@
 /CalendarTester.class
 /AuctionTest.class
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /BidTest.class
 /BidderTest.class
@@ -9,4 +10,7 @@
 =======
 /ItemTest.class
 >>>>>>> refs/remotes/origin/Kyle
+=======
+/UserTest.class
+>>>>>>> NabilBranch
 /NPEmployeeTest.class

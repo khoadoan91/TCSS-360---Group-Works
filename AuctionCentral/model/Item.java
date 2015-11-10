@@ -39,7 +39,6 @@ public class Item implements Comparable<Item>{
 		myID = Calendar.getInstance().getTimeInMillis();  
 		myTitle = theTitle;
 		myQuantity = theQuantity;
-//		myImages = theImages;
 		myDesc = theDesc;
 	}
 	

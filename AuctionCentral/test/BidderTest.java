@@ -27,14 +27,14 @@ public class BidderTest {
 	
 	@Before
 	public void setup() {
-		myBidder = new Bidder("125 Main St.", "123456789");
+		myBidder = new Bidder("Nina", "125 Main St.", "123456789");
 		myItem = new Item("Golf Clubs", 6, "Six golf clubs");
 		myBid = new Bid(myItem, 225.0);
 	}
 
 	@Test
 	public void testBidder() {
-		Bidder bidder = new Bidder("125 Main St.", "123456789");
+		Bidder bidder = new Bidder("Nina", "125 Main St.", "123456789");
 		assertEquals(myBidder, bidder);
 	}
 

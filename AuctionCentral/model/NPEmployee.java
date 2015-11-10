@@ -72,5 +72,4 @@ public class NPEmployee extends User {
 	public String getUserType() {
 		return userType;
 	}
-
 }

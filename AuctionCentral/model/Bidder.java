@@ -2,15 +2,16 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-
+	
 /**
  * Represents a user which can bid on items in auctions. 
  * 
  * @author Nina Chepovska
  * @version Nov 6, 2015
  */
-public class Bidder {	// TODO implement the User interface
+public class Bidder extends User {	// TODO implement the User interface
 	
+	final private String userType = "Bidder";
 	/** The billing address of the bidder. */
 	private String myAddress;
 	
@@ -26,7 +27,8 @@ public class Bidder {	// TODO implement the User interface
 	 * @param theAddress
 	 * @param theCreditCard
 	 */
-	public Bidder(final String theAddress, final String theCreditCard) {
+	public Bidder(final String userName, final String theAddress, final String theCreditCard) {
+		super(userName);
 		if (theAddress == null) {
 			throw new NullPointerException();
 		} else if (theAddress.isEmpty()) {
@@ -36,7 +38,6 @@ public class Bidder {	// TODO implement the User interface
 		} else if (theCreditCard.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
-		
 		myAddress = theAddress;
 		myCreditCard = theCreditCard;
 		myBids = new ArrayList<Bid>();
@@ -88,4 +89,7 @@ public class Bidder {	// TODO implement the User interface
 		
 		
 	}*/
+	public String getUserType() {
+		return userType;
+	}
 }
