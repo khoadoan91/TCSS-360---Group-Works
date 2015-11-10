@@ -11,6 +11,7 @@ import java.util.Calendar;
  */
 public class NPEmployee extends User {
 
+	final private String userType = "NPEmployee";
 	
 	public NPEmployee(String username) {
 		super(username);
@@ -27,12 +28,11 @@ public class NPEmployee extends User {
 		int itemQt;
 		List<Item> itemList = new ArrayList<>();
 		
-		
-		System.out.print("Which day? in format YYYY MM DD\t");
+		System.out.print("Which day? In format: \"YYYY MM DD\"\n");
 		year = scanner.nextInt();
 		month = scanner.nextInt();
 		date = scanner.nextInt();
-		System.out.print("Hour and Minute? in format\t");
+		System.out.print("Hour and Minute? In format: \"Hour Min\"\n");
 		hour = scanner.nextInt();
 		min = scanner.nextInt();
 		
@@ -50,12 +50,15 @@ public class NPEmployee extends User {
 			System.out.print("Item Quantity: ");
 			itemQt = scanner.nextInt();
 			System.out.println("Description:");
-			itemDesc = scanner.next(); 
+			
+			//TODO Only reads a single token. Figure out a way to read an entire string using Scanner
+			itemDesc = scanner.next();							
 			itemList.add(new Item(itemTitl, itemQt, itemDesc));
 		}
 		Auction newAuction = new Auction(itemList, tempCal);
 		
 		//TODO add this auction into the calendar
+		
 		
 	}
 	public void editAuction() {
@@ -66,16 +69,8 @@ public class NPEmployee extends User {
 		
 	}
 	
-	/**
-	 * Method for testing
-	 */
-	public void printPermissions() {
-		System.out.println("I can schedule an auction, edit an auction, "
-				+ "or remove an auction.");
+	public String getUserType() {
+		return userType;
 	}
-	
-	public static void main(String[] args) {
-		NPEmployee npe = new NPEmployee("Kyle");
-		npe.addAuction();
-	}
+
 }
