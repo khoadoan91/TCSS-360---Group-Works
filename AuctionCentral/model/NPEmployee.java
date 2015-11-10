@@ -53,7 +53,7 @@ public class NPEmployee extends User {
 			itemDesc = scanner.next(); 
 			itemList.add(new Item(itemTitl, itemQt, itemDesc));
 		}
-		Auction newAuction = new Auction(itemList, tempCal.getTime(), hour);
+		Auction newAuction = new Auction(itemList, tempCal);
 		
 		//TODO add this auction into the calendar
 		
