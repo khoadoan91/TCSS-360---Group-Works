@@ -6,9 +6,9 @@ import java.util.List;
 
 /**
  * @author KyleD
- *
+ * @author CodyM
  */
-public class Auction {
+public class Auction implements Comparable<Auction>{
 	
 	private Date myDate;
 	private int myHour;
@@ -25,6 +25,10 @@ public class Auction {
 		myItems = new ArrayList<>();
 		myItems.addAll(theItems);
 		isAvailable = false;
+	}
+	
+	public Date getDate(){
+		return (Date) myDate.clone();
 	}
 	
 	public void addItem(final Item theItem) {
@@ -63,5 +67,11 @@ public class Auction {
 	
 	public void printAuctionDetail() {
 		System.out.println();
+	}
+	
+	@Override
+	public int compareTo(Auction that) {
+		return this.myDate.compareTo(that.myDate);
+	
 	}
 }
