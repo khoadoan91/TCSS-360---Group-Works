@@ -22,7 +22,11 @@ public class Main {
 		while (flag) {
 			currentUser = login();
 			if (currentUser != null) {flag = false;}
-		} 
+		}
+		
+		//TODO Instantiate DisplayCalendar
+		// load auction into calendar
+		
 		if (currentUser.getUserType().equals("ACEmployee")) {
 			ACEmployeeMainMenu();
 		}
@@ -104,9 +108,9 @@ public class Main {
 		if (userType.equals("NPEmployee")) {
 			return new NPEmployee(username);
 		}
-//		if (userType.equals("Bidder")) {
-//			return new Bidder(username);
-//		}
+		if (userType.equals("Bidder")) {
+			return new Bidder(username);
+		}
 		return null;
 	}
 	
@@ -117,10 +121,10 @@ public class Main {
 	 */
 	public static void errorMessage(Exception e) {
 		if (e == null) {
-			System.out.println("Error reading from file. User = null"); 
+			System.err.println("Error reading from file. User = null"); 
 		}
 		if (e.getClass().isInstance(new FileNotFoundException())) {
-			System.out.println("Error reading file. Does not exist.");
+			System.err.println("Error reading file. Does not exist.");
 		}
 		//TODO add exceptions here as they come up so that the user is notified
 		//     of the error.

@@ -12,8 +12,8 @@ public class Auction implements Comparable<Auction>{
 	
 	/** The ID of an Auction that is combination of orgName and time. */
 	private final String myAucName;
-	
-	private final String myOrgName;
+	/** The non-profit organization */	
+	private String myOrgName;
 	
 	/** The date that auction is held. */
 	private Calendar myDate;
@@ -23,7 +23,7 @@ public class Auction implements Comparable<Auction>{
 	
 	/** The boolean for checking if the auction is available. */
 	private boolean isAvailable;
-	
+
 	private int hourDur;
 	
 	private int minDur;

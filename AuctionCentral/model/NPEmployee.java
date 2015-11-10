@@ -13,6 +13,12 @@ public class NPEmployee extends User {
 
 	final private String userType = "NPEmployee";
 	
+	private String myOrgName;
+	private Auction myAuction;
+	private DisplayCalendar myCalendar;
+	
+	//TODO fix constructor to take the calendar from main
+	// add myAuction from the calendar singleton
 	public NPEmployee(String username) {
 		super(username);
 	}
@@ -20,8 +26,8 @@ public class NPEmployee extends User {
 	public void addAuction() {
 		Scanner scanner = new Scanner(System.in);
 		int year, month, date, hour, min;
-		Calendar tempCal = Calendar.getInstance();
-		tempCal.clear();
+		//Calendar tempCal = Calendar.getInstance();
+		//tempCal.clear();
 		
 		int itemCount;
 		String itemTitl, itemDesc;
@@ -36,8 +42,7 @@ public class NPEmployee extends User {
 		hour = scanner.nextInt();
 		min = scanner.nextInt();
 		
-		System.out.println(year + " " + month + " " + date);
-		tempCal.set(year, month, date, hour, min);
+		//tempCal.set(year, month, date, hour, min);
 		
 		//TODO check if the date is available in the calendar
 		
@@ -52,10 +57,12 @@ public class NPEmployee extends User {
 			System.out.println("Description:");
 			
 			//TODO Only reads a single token. Figure out a way to read an entire string using Scanner
-			itemDesc = scanner.next();							
+			itemDesc = scanner.next();	
+			System.out.println(itemDesc);
 			itemList.add(new Item(itemTitl, itemQt, itemDesc));
 		}
-		Auction newAuction = new Auction(itemList, tempCal);
+		//myAuction = new Auction(itemList, tempCal);
+		
 		
 		//TODO add this auction into the calendar
 		
@@ -71,5 +78,10 @@ public class NPEmployee extends User {
 	
 	public String getUserType() {
 		return userType;
+	}
+	
+	public static void main(String[] args) {
+		NPEmployee testUser = new NPEmployee("NPEmployee");
+		testUser.addAuction();
 	}
 }

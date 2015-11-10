@@ -12,6 +12,7 @@ import java.util.List;
 public class Bidder extends User {	// TODO implement the User interface
 	
 	final private String userType = "Bidder";
+	
 	/** The billing address of the bidder. */
 	private String myAddress;
 	
@@ -27,19 +28,8 @@ public class Bidder extends User {	// TODO implement the User interface
 	 * @param theAddress
 	 * @param theCreditCard
 	 */
-	public Bidder(final String userName, final String theAddress, final String theCreditCard) {
+	public Bidder(final String userName) {
 		super(userName);
-		if (theAddress == null) {
-			throw new NullPointerException();
-		} else if (theAddress.isEmpty()) {
-			throw new IllegalArgumentException();
-		} else if (theCreditCard == null) {
-			throw new NullPointerException();
-		} else if (theCreditCard.isEmpty()) {
-			throw new IllegalArgumentException();
-		}
-		myAddress = theAddress;
-		myCreditCard = theCreditCard;
 		myBids = new ArrayList<Bid>();
 	}
 	
