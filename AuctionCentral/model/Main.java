@@ -65,9 +65,9 @@ public class Main {
 		if (userType.equals("NPEmployee")) {
 			return new NPEmployee(username);
 		}
-		if (userType.equals("Bidder")) {
-			return new Bidder(username);
-		}
+//		if (userType.equals("Bidder")) {
+//			return new Bidder(username);
+//		}
 		return null;
 	}
 	
