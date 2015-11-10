@@ -1,4 +1,3 @@
-
 package model;
 
 import java.util.Date;
@@ -10,6 +9,8 @@ import java.util.List;
  */
 public class ACEmployee extends User {
 	
+	final private String userType = "ACEmployee";
+
 	public ACEmployee(String username) {
 		super(username);
 	}
@@ -37,11 +38,8 @@ public class ACEmployee extends User {
 		
 	}
 	
-	/**
-	 * Method for testing
-	 */
-	public void printPermissions() {
-		System.out.println("I can view the calendar and select an auction to view.");
+	public String getUserType() {
+		return userType;
 	}
 	
 }
