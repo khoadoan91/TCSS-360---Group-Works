@@ -28,8 +28,8 @@ public class Bidder extends User {	// TODO implement the User interface
 	 * @param theAddress
 	 * @param theCreditCard
 	 */
-	public Bidder(final String userName) {
-		super(userName);
+	public Bidder(final String userName, DisplayCalendar myCalendar) {
+		super(userName, myCalendar);
 		myBids = new ArrayList<Bid>();
 	}
 	

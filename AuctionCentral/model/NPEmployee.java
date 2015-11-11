@@ -15,12 +15,11 @@ public class NPEmployee extends User {
 	
 	private String myOrgName;
 	private Auction myAuction;
-	private DisplayCalendar myCalendar;
 	
 	//TODO fix constructor to take the calendar from main
 	// add myAuction from the calendar singleton
-	public NPEmployee(String username) {
-		super(username);
+	public NPEmployee(String username, DisplayCalendar myCalendar) {
+		super(username, myCalendar);
 	}
 	
 	public void addAuction() {
