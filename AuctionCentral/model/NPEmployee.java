@@ -22,6 +22,11 @@ public class NPEmployee extends User {
 		super(username, myCalendar);
 	}
 	
+	@Deprecated
+	public NPEmployee(String username) {
+		super(username);
+	}
+	
 	public void addAuction() {
 		Scanner scanner = new Scanner(System.in);
 		int year, month, date, hour, min;
@@ -80,7 +85,7 @@ public class NPEmployee extends User {
 	}
 	
 	public static void main(String[] args) {
-		NPEmployee testUser = new NPEmployee("NPEmployee");
+		NPEmployee testUser = new NPEmployee("NPEmployee",null);
 		testUser.addAuction();
 	}
 }

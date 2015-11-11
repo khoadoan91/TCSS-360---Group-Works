@@ -11,7 +11,12 @@ public class User {
 	
 	public User(String username, DisplayCalendar myCalendar) {
 		this.username = username;
-		this.myCalender = myCalendar;
+		this.myCalendar = myCalendar;
+	}
+	
+	@Deprecated
+	public User(String username) {
+		this.username = username;
 	}
 	
 	public DisplayCalendar getDisplayCalendar(){

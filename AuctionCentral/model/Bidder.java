@@ -33,6 +33,12 @@ public class Bidder extends User {	// TODO implement the User interface
 		myBids = new ArrayList<Bid>();
 	}
 	
+	@Deprecated
+	public Bidder(final String userName) {
+		super(userName);
+		myBids = new ArrayList<Bid>();
+	}
+	
 	/**
 	 * Gets all the bids the bidder has made.
 	 * 

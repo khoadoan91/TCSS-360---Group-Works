@@ -164,12 +164,12 @@ public class DisplayCalendar extends GregorianCalendar{
 				temp = temp + count;//TODO make this 0-1-2 depending how many auction are in that day;
 				count = 0;
 				long theDate = this.getTime().getTime() - (ONE_DAY * (dom - tempdom));
-				if (this.checkAvailability(new Date(theDate))
-						|| this.checkAvailability(new Date(theDate + (4 * ONE_HOUR + 1)))){
-					temp = temp + "A";
-				}
-				else
-					temp = temp + "F";
+//				if (this.checkAvailability(new Date(theDate))//TODO fix this
+//						|| this.checkAvailability(new Date(theDate + (4 * ONE_HOUR + 1)))){
+//					temp = temp + "A";
+//				}
+//				else
+					temp = temp + " ";
 				if(tempdom < 10)
 					temp = temp + " ";
 				temp = temp + tempdom;

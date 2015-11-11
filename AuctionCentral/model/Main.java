@@ -5,6 +5,9 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -79,6 +82,13 @@ public class Main {
 		String loginInput = scanner.nextLine();
 		
 		File inputFile = new File("user_list.txt");
+		List<Auction> myAuctionList = new ArrayList<Auction>();
+		//TODO read a file into this list
+		//read file oursavedAuctions.txt
+		//while(something){
+		//	myAuctionList.add(new Auction("something from file?"))
+		//}
+		DisplayCalendar myCalendar = new DisplayCalendar(myAuctionList);
 		try {
 			scanner = new Scanner(inputFile);
 		} catch (FileNotFoundException e) {
@@ -103,13 +113,13 @@ public class Main {
 			return null;
 		}
 		if (userType.equals("ACEmployee")) {
-			return new ACEmployee(username);
+			return new ACEmployee(username, myCalendar);
 		}
 		if (userType.equals("NPEmployee")) {
-			return new NPEmployee(username);
+			return new NPEmployee(username, myCalendar);
 		}
 		if (userType.equals("Bidder")) {
-			return new Bidder(username);
+			return new Bidder(username, myCalendar);
 		}
 		return null;
 	}
