@@ -28,6 +28,7 @@ public class Main {
 		ArrayList<Item> items = readItemListFile();
 		ArrayList<Auction> auctions = readAuctionListFile(items);
 		
+		//Tests output of reading the files
 		for (int i = 0; i < auctions.size(); i++) {
 			System.out.println(auctions.get(i).getAuctionName() + "\n" +
 					auctions.get(i).getOrganizationNam() + "\n" +
@@ -35,6 +36,11 @@ public class Main {
 					+ auctions.get(i).getDayOfMonth() + "-" 
 					+ auctions.get(i).getYear() + "\n" +
 					auctions.get(i).getHour() + ":" + auctions.get(i).getMin());
+			List<Item> theItems = auctions.get(i).getAllItems();
+			for (int j = 0; j < theItems.size(); j++) {
+				System.out.print(theItems.get(j).getTitle() + ", ");
+			}
+			System.out.println("\n");
 	    }
 		
 		
@@ -135,6 +141,12 @@ public class Main {
 		return null;
 	}
 	
+	/**
+	 * Reads/parses the auction txt file and creates an Auction object for each line.
+	 * Auction txt file must be in sync with the item txt file for this to work.
+	 * @param allItems is a list of all items read in for all auctions.
+	 * @return a list of Auction objects.
+	 */
 	public static ArrayList<Auction> readAuctionListFile(ArrayList<Item> allItems) {
 		ArrayList<Auction> auctionList = new ArrayList<>();
 		String orgName, timeDuration;
@@ -180,6 +192,11 @@ public class Main {
 		}
 		return auctionList;
 	}
+	/**
+	 * Reads/parses the item txt file and creates an Item object for each line.
+	 * Item txt file must be in sync with the auction txt file for this to work.
+	 * @return a list of all Item objects for all auctions.
+	 */
 	
 	public static ArrayList<Item> readItemListFile() {
 		ArrayList<Item> items = new ArrayList<>();				
