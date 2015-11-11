@@ -22,38 +22,21 @@ import java.util.Scanner;
 public class Main {
 
 	/**
+	 * @author nabilfadili
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		ArrayList<Item> items = readItemListFile();
 		ArrayList<Auction> auctions = readAuctionListFile(items);
-		
-		//Tests output of reading the files
-		for (int i = 0; i < auctions.size(); i++) {
-			System.out.println(auctions.get(i).getAuctionName() + "\n" +
-					auctions.get(i).getOrganizationNam() + "\n" +
-					auctions.get(i).getMonth() + "-" 
-					+ auctions.get(i).getDayOfMonth() + "-" 
-					+ auctions.get(i).getYear() + "\n" +
-					auctions.get(i).getHour() + ":" + auctions.get(i).getMin());
-			List<Item> theItems = auctions.get(i).getAllItems();
-			for (int j = 0; j < theItems.size(); j++) {
-				System.out.print(theItems.get(j).getTitle() + ", ");
-			}
-			System.out.println("\n");
-	    }
-		
-		
+		//testFileaccuracy(auctions);
+		DisplayCalendar calendar = new DisplayCalendar(auctions);
+	
 		User currentUser = null;
 		boolean flag = true;
 		while (flag) {
 			currentUser = login();
 			if (currentUser != null) {flag = false;}
 		}
-		
-		//TODO Instantiate DisplayCalendar
-		// load auction into calendar
-		
 		if (currentUser.getUserType().equals("ACEmployee")) {
 			ACEmployeeMainMenu();
 		}
@@ -66,6 +49,7 @@ public class Main {
 	}
 	
 	/**
+	 * @author nabilfadili
 	 * ACEmployee main menu of program. Called after login.
 	 */
 	public static void ACEmployeeMainMenu() {
@@ -75,6 +59,7 @@ public class Main {
 				+ "3. Logout");	
 	}
 	/**
+	 * @author nabilfadili
 	 * NPEmployee main menu of program. Called after login.
 	 */
 	public static void NPEmployeeMainMenu() {
@@ -85,6 +70,7 @@ public class Main {
 				+ "4. Logout");
 	}
 	/**
+	 * @author nabilfadili
 	 * Bidder main menu of program. Called after login.
 	 */
 	public static void bidderMainMenu() {
@@ -97,6 +83,7 @@ public class Main {
 	}
 	
 	/**
+	 * @author nabilfadili
 	 * Decides which user object to create and return to the main program
 	 * @return User
 	 */
@@ -142,6 +129,7 @@ public class Main {
 	}
 	
 	/**
+	 * @author nabilfadili
 	 * Reads/parses the auction txt file and creates an Auction object for each line.
 	 * Auction txt file must be in sync with the item txt file for this to work.
 	 * @param allItems is a list of all items read in for all auctions.
@@ -193,6 +181,7 @@ public class Main {
 		return auctionList;
 	}
 	/**
+	 * @author nabilfadili
 	 * Reads/parses the item txt file and creates an Item object for each line.
 	 * Item txt file must be in sync with the auction txt file for this to work.
 	 * @return a list of all Item objects for all auctions.
@@ -220,6 +209,7 @@ public class Main {
 	}
 	
 	/**
+	 * @author nabilfadili
 	 * Used to pass various exceptions and generate the appropriate error message
 	 * for the user.
 	 * @param e
@@ -233,6 +223,23 @@ public class Main {
 		}
 		//TODO add exceptions here as they come up so that the user is notified
 		//     of the error.
+	}
+	
+	public static void testFileaccuracy(ArrayList<Auction> auctions) {
+		//Tests output of reading the files
+		for (int i = 0; i < auctions.size(); i++) {
+			System.out.println(auctions.get(i).getAuctionName() + "\n" +
+					auctions.get(i).getOrganizationNam() + "\n" +
+					auctions.get(i).getMonth() + "-" 
+					+ auctions.get(i).getDayOfMonth() + "-" 
+					+ auctions.get(i).getYear() + "\n" +
+					auctions.get(i).getHour() + ":" + auctions.get(i).getMin());
+			List<Item> theItems = auctions.get(i).getAllItems();
+			for (int j = 0; j < theItems.size(); j++) {
+				System.out.print(theItems.get(j).getTitle() + ", ");
+			}
+			System.out.println("\n");
+	    }
 	}
 
 }
