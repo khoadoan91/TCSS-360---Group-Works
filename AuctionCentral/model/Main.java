@@ -3,8 +3,16 @@
  */
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -17,6 +25,19 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		ArrayList<Item> items = readItemListFile();
+		ArrayList<Auction> auctions = readAuctionListFile(items);
+		
+		for (int i = 0; i < auctions.size(); i++) {
+			System.out.println(auctions.get(i).getAuctionName() + "\n" +
+					auctions.get(i).getOrganizationNam() + "\n" +
+					auctions.get(i).getMonth() + "-" 
+					+ auctions.get(i).getDayOfMonth() + "-" 
+					+ auctions.get(i).getYear() + "\n" +
+					auctions.get(i).getHour() + ":" + auctions.get(i).getMin());
+	    }
+		
+		
 		User currentUser = null;
 		boolean flag = true;
 		while (flag) {
@@ -112,6 +133,73 @@ public class Main {
 			return new Bidder(username);
 		}
 		return null;
+	}
+	
+	public static ArrayList<Auction> readAuctionListFile(ArrayList<Item> allItems) {
+		ArrayList<Auction> auctionList = new ArrayList<>();
+		String orgName, timeDuration;
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy");
+		List<Item> auctionItems;
+		int itemsPerAuction;                //Keeps track of where to be adding items from in the allItems list. WATCH THIS
+		int itemListCounter = 0;
+		try {
+			File file = new File("auction_list.txt");
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			String line;
+			String[] tokens;			
+										   
+			while ((line = bufferedReader.readLine()) != null) {
+				tokens = line.split(", ");
+				//Set orgName
+				orgName = tokens[0];
+				
+				//Creating item list
+				itemsPerAuction = Integer.parseInt(tokens[1]);			      //quantity of items
+				auctionItems = new ArrayList<>(itemsPerAuction);  
+				for (int i = 0; i < itemsPerAuction; ++i) {
+					auctionItems.add(allItems.get(itemListCounter + i));
+				}
+				itemListCounter += itemsPerAuction;                           //increment for the next auction's items
+				
+				//Creating calendar object
+				cal.setTime(sdf.parse(tokens[2]));
+				
+				//Set duration
+				timeDuration = tokens[3];
+				
+				//Create Auction item
+				auctionList.add(new Auction(orgName, auctionItems, cal, timeDuration));
+			}
+			bufferedReader.close();
+		}
+		catch(IOException | ParseException e) {
+			e.printStackTrace();
+			System.out.println("Error reading auction file.");
+		}
+		return auctionList;
+	}
+	
+	public static ArrayList<Item> readItemListFile() {
+		ArrayList<Item> items = new ArrayList<>();				
+		try {
+			File file = new File("item_list.txt");
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			String line;
+			String[] tokens;
+			while ((line = bufferedReader.readLine()) != null) {
+				tokens = line.split(", ");
+				items.add(new Item(tokens[0], Integer.parseInt(tokens[1]), tokens[2]));
+			}
+			bufferedReader.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Error reading item file.");
+		}
+		return items;
 	}
 	
 	/**
