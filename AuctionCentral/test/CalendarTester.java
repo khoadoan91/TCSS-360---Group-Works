@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CalendarTester {
-	
+
 	private DisplayCalendar myEmptyCal;
 
 	@Before

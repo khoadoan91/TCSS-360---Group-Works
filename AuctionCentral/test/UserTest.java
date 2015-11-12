@@ -18,7 +18,7 @@ public class UserTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		//TODO get this to work correctly!
+		// TODO get this to work correctly!
 	}
 
 	/**

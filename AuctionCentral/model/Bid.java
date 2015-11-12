@@ -1,7 +1,7 @@
 package model;
 
 /**
- * A class which represents an item bid in an auction. 
+ * A class which represents an item bid in an auction.
  * 
  * @author Nina Chepovska
  * @version Nov 6, 2015
@@ -10,13 +10,13 @@ public class Bid {
 
 	/** The item that was bid on. */
 	private Item myItem;
-	
+
 	/** The dollar amount that was bid. */
 	private double myBidAmount;
-	
+
 	/**
-	 * Constructs a new Bid object.  
-	 *  
+	 * Constructs a new Bid object.
+	 * 
 	 * @param theItem
 	 * @param theBidAmount
 	 */
@@ -24,13 +24,13 @@ public class Bid {
 		if (theItem == null) {
 			throw new NullPointerException();
 		} else if (theBidAmount <= 0.0) {
-			throw new IllegalArgumentException(); 
+			throw new IllegalArgumentException();
 		}
-		
+
 		myItem = theItem;
-		myBidAmount = theBidAmount; 
+		myBidAmount = theBidAmount;
 	}
-	
+
 	/**
 	 * Gets the item that was bid on.
 	 * 
@@ -39,7 +39,7 @@ public class Bid {
 	public Item getItem() {
 		return myItem;
 	}
-	
+
 	/**
 	 * Gets the amount that was bid.
 	 * 
@@ -48,7 +48,7 @@ public class Bid {
 	public double getBidAmount() {
 		return myBidAmount;
 	}
-	
+
 	/**
 	 * Sets the bid amount.
 	 * 
@@ -56,9 +56,9 @@ public class Bid {
 	 */
 	public void setBidAmount(final double theBidAmount) {
 		if (theBidAmount <= 0.0) {
-			throw new IllegalArgumentException(); 
+			throw new IllegalArgumentException();
 		}
-		
+
 		myBidAmount = theBidAmount;
 	}
 }

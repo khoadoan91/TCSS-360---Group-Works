@@ -20,22 +20,22 @@ import model.Item;
  * @version
  */
 public class BidderTest {
-	
+
 	Bidder myBidder;
 	Item myItem;
 	Bid myBid;
-	
+
 	@Before
 	public void setup() {
-		//myBidder = new Bidder("Nina", "125 Main St.", "123456789");
+		// myBidder = new Bidder("Nina", "125 Main St.", "123456789");
 		myItem = new Item("Golf Clubs", 6, "Six golf clubs");
 		myBid = new Bid(myItem, 225.0);
 	}
 
 	@Test
 	public void testBidder() {
-		//Bidder bidder = new Bidder("Nina", "125 Main St.", "123456789");
-		//assertEquals(myBidder, bidder);
+		// Bidder bidder = new Bidder("Nina", "125 Main St.", "123456789");
+		// assertEquals(myBidder, bidder);
 	}
 
 	@Test
@@ -46,13 +46,13 @@ public class BidderTest {
 	}
 
 	@Test
-	public void testAddBid() {	
+	public void testAddBid() {
 		myBidder.addBid(myBid);
 		assertTrue(myBidder.viewBids().contains(myBid));
 	}
 
 	@Test
-	public void testRemoveBid() {	
+	public void testRemoveBid() {
 		myBidder.addBid(myBid);
 		myBidder.removeBid(myBid);
 		assertTrue(!myBidder.viewBids().contains(myBid));

@@ -21,7 +21,7 @@ import org.junit.Test;
  * @author KyleD
  */
 public class AuctionTest {
-	
+
 	private Auction myAuction;
 
 	/**
@@ -32,7 +32,7 @@ public class AuctionTest {
 		List<Item> list = new ArrayList<>();
 		Item item1 = new Item("iPad", 1, "New");
 		Item item2 = new Item("Macbook", 1, "Used");
-		list.add(item1); 
+		list.add(item1);
 		list.add(item2);
 		Calendar cal = Calendar.getInstance();
 		cal.clear();
@@ -47,12 +47,12 @@ public class AuctionTest {
 	public void testAddItemWithNull() {
 		myAuction.addItem(null);
 	}
-	
+
 	@Test
 	public void testAddItemNotContainInList() {
 		assertTrue(myAuction.addItem(new Item("Nexus", 1, "Used")));
 	}
-	
+
 	@Test
 	public void testAddItemContainedInList() {
 		assertFalse(myAuction.addItem(new Item("iPad", 2, "Used")));
@@ -65,7 +65,7 @@ public class AuctionTest {
 	public void testRemoveItemWithNull() {
 		myAuction.removeItem(null);
 	}
-	
+
 	@Test
 	public void testRemoveItem() {
 		Item item = new Item("iPad", 1, "NEW");
@@ -80,7 +80,7 @@ public class AuctionTest {
 	public void testGetItemWithNull() {
 		myAuction.getItem(null);
 	}
-	
+
 	@Test
 	public void testGetItem() {
 		Item item = new Item("iPAD", 1, "NEW");

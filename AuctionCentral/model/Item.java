@@ -6,24 +6,25 @@ import java.util.Calendar;
  * @author KyleD
  *
  */
-public class Item implements Comparable<Item>{
-	
+public class Item implements Comparable<Item> {
+
 	/** The ID that is initialized by ItemID. */
 	private final long myID;
-	
+
 	/** The title of the item. */
 	private String myTitle;
-	
+
 	/** The quantity of the item. */
 	private int myQuantity;
-	
-//	private List<Image> myImages;
-	
+
+	// private List<Image> myImages;
+
 	/** The description of the item. */
 	private String myDesc;
-	
+
 	/**
 	 * Constructs an item with parameters info.
+	 * 
 	 * @param theTitle
 	 * @param theQuantity
 	 * @param theDesc
@@ -35,51 +36,57 @@ public class Item implements Comparable<Item>{
 		if (theTitle == null || theDesc == null) {
 			throw new NullPointerException();
 		}
-		// suppose that the difference in time between 2 created items is AT LEAST 1ms
-		myID = Calendar.getInstance().getTimeInMillis();  
+		// suppose that the difference in time between 2 created items is AT
+		// LEAST 1ms
+		myID = Calendar.getInstance().getTimeInMillis();
 		myTitle = theTitle;
 		myQuantity = theQuantity;
 		myDesc = theDesc;
 	}
-	
+
 	/**
 	 * Returns the title.
+	 * 
 	 * @return
 	 */
 	public String getTitle() {
 		return myTitle;
 	}
-	
+
 	/**
 	 * Returns the quantity.
+	 * 
 	 * @return
 	 */
 	public int getQuantity() {
 		return myQuantity;
 	}
-	
+
 	/**
 	 * Returns the ID of the item.
+	 * 
 	 * @return
 	 */
 	public long getItemID() {
 		return myID;
 	}
-	
-//	public List<Image> getImages() {
-//		return myImages;
-//	}
-	
+
+	// public List<Image> getImages() {
+	// return myImages;
+	// }
+
 	/**
 	 * Returns the description.
+	 * 
 	 * @return
 	 */
 	public String getDescription() {
 		return myDesc;
 	}
-	
+
 	/**
 	 * Sets the title of the item.
+	 * 
 	 * @param theTitle
 	 */
 	public void setTitle(final String theTitle) {
@@ -88,9 +95,10 @@ public class Item implements Comparable<Item>{
 		}
 		myTitle = theTitle;
 	}
-	
+
 	/**
 	 * Sets the quantity of the item.
+	 * 
 	 * @param theQt
 	 */
 	public void setQuantity(final int theQt) {
@@ -99,9 +107,10 @@ public class Item implements Comparable<Item>{
 		}
 		myQuantity = theQt;
 	}
-	
+
 	/**
 	 * Sets the Description of the item.
+	 * 
 	 * @param theDesp
 	 */
 	public void setDescription(final String theDesc) {
@@ -110,28 +119,28 @@ public class Item implements Comparable<Item>{
 		}
 		myDesc = theDesc;
 	}
-	
-//	public void addImage(final Image theImage) {
-//		if (!myImages.contains(theImage))
-//			myImages.add(theImage);
-//	}
-	
-//	public void addMultiImages(final Image[] theImages) {
-//		for (int i = 0; i < theImages.length; i++) {
-//			if(!myImages.contains(theImages[i]))
-//				myImages.add(theImages[i]);
-//		}
-//	}
-	
-//	public void removeImage(final Image theImage) {
-//		myImages.remove(theImage);
-//	}
+
+	// public void addImage(final Image theImage) {
+	// if (!myImages.contains(theImage))
+	// myImages.add(theImage);
+	// }
+
+	// public void addMultiImages(final Image[] theImages) {
+	// for (int i = 0; i < theImages.length; i++) {
+	// if(!myImages.contains(theImages[i]))
+	// myImages.add(theImages[i]);
+	// }
+	// }
+
+	// public void removeImage(final Image theImage) {
+	// myImages.remove(theImage);
+	// }
 
 	@Override
 	public int compareTo(final Item theItem) {
 		return this.myTitle.compareToIgnoreCase(theItem.myTitle);
 	}
-	
+
 	@Override
 	public boolean equals(Object theItem) {
 		return ((Item) theItem).myTitle.equalsIgnoreCase(this.myTitle);

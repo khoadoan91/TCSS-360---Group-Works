@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  */
 public class ItemTest {
-	
+
 	private Item myItem1;
 	private Item myItem2;
 

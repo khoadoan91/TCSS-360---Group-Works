@@ -18,10 +18,10 @@ import model.Item;
  * @version
  */
 public class BidTest {
-	
+
 	Item myItem;
 	Bid myBid;
-	
+
 	@Before
 	public void setup() {
 		myItem = new Item("Golf Clubs", 6, "Six golf clubs");

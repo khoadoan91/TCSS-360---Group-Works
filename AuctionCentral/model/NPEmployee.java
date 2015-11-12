@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Calendar;
+
 /**
  * @author nabilfadili
  *
@@ -12,28 +13,28 @@ import java.util.Calendar;
 public class NPEmployee extends User {
 
 	final private String userType = "NPEmployee";
-	
+
 	private String myOrgName;
 	private Auction myAuction;
 	private DisplayCalendar myCalendar;
-	
-	//TODO fix constructor to take the calendar from main
+
+	// TODO fix constructor to take the calendar from main
 	// add myAuction from the calendar singleton
 	public NPEmployee(String username) {
 		super(username);
 	}
-	
+
 	public void addAuction() {
 		Scanner scanner = new Scanner(System.in);
 		int year, month, date, hour, min;
-		//Calendar tempCal = Calendar.getInstance();
-		//tempCal.clear();
-		
+		// Calendar tempCal = Calendar.getInstance();
+		// tempCal.clear();
+
 		int itemCount;
 		String itemTitl, itemDesc;
 		int itemQt;
 		List<Item> itemList = new ArrayList<>();
-		
+
 		System.out.print("Which day? In format: \"YYYY MM DD\"\n");
 		year = scanner.nextInt();
 		month = scanner.nextInt();
@@ -41,45 +42,45 @@ public class NPEmployee extends User {
 		System.out.print("Hour and Minute? In format: \"Hour Min\"\n");
 		hour = scanner.nextInt();
 		min = scanner.nextInt();
-		
-		//tempCal.set(year, month, date, hour, min);
-		
-		//TODO check if the date is available in the calendar
-		
+
+		// tempCal.set(year, month, date, hour, min);
+
+		// TODO check if the date is available in the calendar
+
 		System.out.print("How many items: ");
 		itemCount = scanner.nextInt();
-		
-		for(int i = 0; i < itemCount; i++) {
+
+		for (int i = 0; i < itemCount; i++) {
 			System.out.print("Item Title: ");
 			itemTitl = scanner.next();
 			System.out.print("Item Quantity: ");
 			itemQt = scanner.nextInt();
 			System.out.println("Description:");
-			
-			//TODO Only reads a single token. Figure out a way to read an entire string using Scanner
-			itemDesc = scanner.next();	
+
+			// TODO Only reads a single token. Figure out a way to read an
+			// entire string using Scanner
+			itemDesc = scanner.next();
 			System.out.println(itemDesc);
 			itemList.add(new Item(itemTitl, itemQt, itemDesc));
 		}
-		//myAuction = new Auction(itemList, tempCal);
-		
-		
-		//TODO add this auction into the calendar
-		
-		
+		// myAuction = new Auction(itemList, tempCal);
+
+		// TODO add this auction into the calendar
+
 	}
+
 	public void editAuction() {
-		
-		
+
 	}
+
 	public void removeAuction() {
-		
+
 	}
-	
+
 	public String getUserType() {
 		return userType;
 	}
-	
+
 	public static void main(String[] args) {
 		NPEmployee testUser = new NPEmployee("NPEmployee");
 		testUser.addAuction();
