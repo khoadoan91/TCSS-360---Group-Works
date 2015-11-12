@@ -161,7 +161,6 @@ public class Main {
 		boolean flag = true;
 		do {
 			User currentUser = null;
-			//boolean flag2 = true;
 			while (flag) {
 				currentUser = login();
 				if (currentUser != null) {flag = false;}
@@ -443,20 +442,4 @@ public class Main {
 		//     of the error.
 	}
 	
-	public static void testFileaccuracy(ArrayList<Auction> auctions) {
-		//Tests output of reading the files
-		for (int i = 0; i < auctions.size(); i++) {
-			System.out.println(auctions.get(i).getAuctionName() + "\n" +
-					auctions.get(i).getOrganizationNam() + "\n" +
-					auctions.get(i).getMonth() + "-" 
-					+ auctions.get(i).getDayOfMonth() + "-" 
-					+ auctions.get(i).getYear() + "\n" +
-					auctions.get(i).getHour() + ":" + auctions.get(i).getMin());
-			List<Item> theItems = auctions.get(i).getAllItems();
-			for (int j = 0; j < theItems.size(); j++) {
-				System.out.print(theItems.get(j).getTitle() + ", ");
-			}
-			System.out.println("\n");
-	    }
-	}
 }
