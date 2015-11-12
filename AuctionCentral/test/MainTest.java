@@ -29,32 +29,6 @@ public class MainTest {
 	}
 
 	@Test
-	public void testACEmployeeMainMenu() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testNPEmployeeMainMenu() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testBidderMainMenu() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testLogout() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testLogin() {
-		
-		
-	}
-
-	@Test
 	public void testReadAuctionListFile() {
 		//assertEquals(testAuctions.get(0).getAuctionName(), "GOODWILL-INDUSTRIES-OCT-26-2015");
 		assertEquals(testAuctions.get(0).getOrganizationNam(), "GOODWILL-INDUSTRIES");
@@ -63,8 +37,7 @@ public class MainTest {
 		assertEquals(testAuctions.get(0).getDayOfMonth(), 26);
 		assertEquals(testAuctions.get(0).getYear(), 2015);
 		assertEquals(testAuctions.get(0).getHour(), 2);
-		System.out.println(testAuctions.get(0).getMin());
-		//assertEquals(testAuctions.get(0).getMin(), 30);
+		assertEquals(testAuctions.get(0).getMin(), 30);
 	}
 
 	@Test
@@ -75,6 +48,16 @@ public class MainTest {
 		assertEquals(testItems.get(1).getTitle(), "Harry Potter (series)");
 		assertEquals(testItems.get(1).getQuantity(), 8);
 		assertEquals(testItems.get(1).getDescription(), "The entire series of Harry Potter books by J.K. Rowling");
+	}
+	
+	@Test
+	public void testLogout() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testLogin() {	
+		fail("Not yet implemented");
 	}
 
 }

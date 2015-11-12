@@ -206,7 +206,9 @@ public class Auction implements Comparable<Auction> {
 	 * @return
 	 */
 	public int getHour() {
-		return myDate.get(Calendar.HOUR_OF_DAY);
+		//FIXME
+		//return myDate.get(Calendar.HOUR_OF_DAY);
+		return hourDur;
 	}
 
 	/**
@@ -215,7 +217,9 @@ public class Auction implements Comparable<Auction> {
 	 * @return
 	 */
 	public int getMin() {
-		return myDate.get(Calendar.MINUTE);
+		//FIXME
+		//return myDate.get(Calendar.MINUTE);
+		return minDur;
 	}
 	
 	public void setStartingTime(final String time) {
