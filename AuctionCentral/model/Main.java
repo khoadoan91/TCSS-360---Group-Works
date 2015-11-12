@@ -158,7 +158,6 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
 	
 		User currentUser = null;
 		boolean flag = true;
@@ -231,13 +230,16 @@ public class Main {
 			errorMessage(e);
 		}
 		
-		String username = null, userType = null;
+		String username = null, userType = null, orgName = null;
 		while (scanner.hasNext()) {
 			username = scanner.next();
 			if (loginInput.equalsIgnoreCase(username)) {				
 				System.out.println("Welcome " + username + "!");
 				userType = scanner.next();
-				System.out.println("Logged in as: " + userType);
+				if (userType.equals("NPEmployee")) {
+					orgName = scanner.next();
+				}
+				System.out.println("Logged in as: " + userType + " (" + orgName + ")");
 				break;
 			}
 			else {
@@ -253,7 +255,7 @@ public class Main {
 		}
 		if (userType.equals("NPEmployee")) {
 			// FIXME NPEmployee needs to have the third parameter to store theOrgName
-			return new NPEmployee(username, myCalendar);
+			return new NPEmployee(username, orgName, myCalendar);
 		}
 		if (userType.equals("Bidder")) {
 			return new Bidder(username, myCalendar);

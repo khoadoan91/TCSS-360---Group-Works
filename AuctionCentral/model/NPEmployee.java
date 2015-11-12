@@ -33,7 +33,8 @@ public class NPEmployee extends User {
 		super(username, cal);
 		myOrgName = orgName;
 		myCalendar = cal;
-		scan = new Scanner(System.in);
+		//FIXME What is this for????
+		//scan = new Scanner(System.in);
 	}
 
 	public void addAuction() {
