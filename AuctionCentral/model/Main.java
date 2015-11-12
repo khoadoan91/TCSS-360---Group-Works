@@ -158,29 +158,32 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-	
-		User currentUser = null;
 		boolean flag = true;
-		while (flag) {
-			currentUser = login();
-			if (currentUser != null) {flag = false;}
-		}
-		if (currentUser.getUserType().equals("ACEmployee")) {
-			ACEmployeeMainMenu((ACEmployee)currentUser);
-		}
-		if (currentUser.getUserType().equals("NPEmployee")) {
-			NPEmployeeMainMenu((NPEmployee)currentUser);
-		}
-		if (currentUser.getUserType().equals("Bidder")) {
-			bidderMainMenu((Bidder)currentUser);
-		}
+		do {
+			User currentUser = null;
+			//boolean flag2 = true;
+			while (flag) {
+				currentUser = login();
+				if (currentUser != null) {flag = false;}
+			}
+			flag = true;
+			if (currentUser.getUserType().equals("ACEmployee")) {
+				flag = ACEmployeeMainMenu((ACEmployee)currentUser);
+			}
+			if (currentUser.getUserType().equals("NPEmployee")) {
+				flag = NPEmployeeMainMenu((NPEmployee)currentUser);
+			}
+			if (currentUser.getUserType().equals("Bidder")) {
+				flag = bidderMainMenu((Bidder)currentUser);
+			}
+		} while (flag);
 	}
 	
 	/**
 	 * @author nabilfadili
 	 * ACEmployee main menu of program. Called after login.
 	 */
-	public static void ACEmployeeMainMenu(ACEmployee currentUser) {
+	public static boolean ACEmployeeMainMenu(ACEmployee currentUser) {
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
 			System.out.println("\nWhat would you like to do?");
@@ -199,8 +202,7 @@ public class Main {
 				currentUser.viewCalendar();
 				break;
 			case 4:
-				scanner.close();
-				return;
+				return logout(currentUser);
 			}
 		}
 	}
@@ -208,7 +210,7 @@ public class Main {
 	 * @author nabilfadili
 	 * NPEmployee main menu of program. Called after login.
 	 */
-	public static void NPEmployeeMainMenu(NPEmployee currentUser) {
+	public static boolean NPEmployeeMainMenu(NPEmployee currentUser) {
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
 			System.out.println("\nWhat would you like to do?");
@@ -227,8 +229,7 @@ public class Main {
 				currentUser.removeAuction();
 				break;
 			case 4:
-				scanner.close();
-				return;
+				return logout(currentUser);
 			}
 		}
 	}
@@ -236,7 +237,7 @@ public class Main {
 	 * @author nabilfadili
 	 * Bidder main menu of program. Called after login.
 	 */
-	public static void bidderMainMenu(Bidder currentUser) {
+	public static boolean bidderMainMenu(Bidder currentUser) {
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
 			System.out.println("\nWhat would you like to do?");
@@ -258,10 +259,39 @@ public class Main {
 			case 4:
 				break;
 			case 5:
-				scanner.close();
-				return;
+				return logout(currentUser);
 			}
 		}
+	}
+	
+	/**
+	 * Writes changes to the auction list and item list txt files that were
+	 * made during the session. This includes added and removed bids.
+	 * @param endUser made the the changes and thus narrows down where the txt fields will be changed.
+	 */
+	public static boolean logout(User endUser) {
+		Scanner scanner = new Scanner(System.in);
+		if (endUser.getUserType().equals("ACEmployee")) {	
+			
+		}
+		if (endUser.getUserType().equals("NPEmployee")) {
+			
+		}
+		if (endUser.getUserType().equals("Bidder")) {
+			
+		}
+		do {
+			System.out.println("Login as another user?\n" + "1. Yes\n" + "2. No");
+			switch (scanner.nextInt()) {
+			case 1:
+				return true;
+			case 2:
+				return false;
+			default:
+				System.out.println("Invalid input.");
+				break;
+			} 
+		} while(true);
 	}
 	
 	/**
