@@ -30,9 +30,25 @@ public class User {
 	public String getUserType() {
 		return "User unspecified";
 	}
-
+	
+	
+	/**
+	 * This method is meant for override by the User Subclasses
+	 */
 	public void viewAuctionList() {
 		System.out.println("Login Error. You are not an ACEmployee");
+	}
+	/**
+	 * This method is meant for override by the User Subclasses
+	 */
+	public void selectAuction() {
+		System.out.println("Login Error. You are not an ACEmployee");
+	}
+	/**
+	 * This method is meant for override by the User Subclasses
+	 */
+	public void viewCalendar() {
+		System.out.println("Login Error. You are not an ACEmployee.");
 	}
 
 }

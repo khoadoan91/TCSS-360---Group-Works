@@ -24,7 +24,6 @@ public class ACEmployee extends User {
 	 */
 	public void viewAuctionList() {
 		// TODO access calendar object and display upcoming auctions
-		System.out.println(myCalendar.toString());
 	}
 
 	/**
@@ -35,9 +34,12 @@ public class ACEmployee extends User {
 	 * 
 	 * @param auctionID
 	 */
-	public void selectAuction(String auctionName) {
+	public void selectAuction() {
 		// TODO view details of an auction object, including list of items
-
+	}
+	
+	public void viewCalendar() {
+		System.out.println(myCalendar.toString());
 	}
 
 	public String getUserType() {

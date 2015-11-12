@@ -187,16 +187,20 @@ public class Main {
 			System.out.println("\nWhat would you like to do?");
 			System.out.println("1. View all auctions\n"
 					+ "2. View specific auction\n"
-					+ "3. Logout");	
+					+ "3. View the calendar"
+					+ "4. Logout");	
 			choice = scanner.nextInt();
 			switch (choice) {
 			case 1:
 				currentUser.viewAuctionList();
 				break;
 			case 2:
-				
+				currentUser.selectAuction();
 				break;
 			case 3:
+				currentUser.viewCalendar();
+				break;
+			case 4:
 				return;
 			}
 		}
