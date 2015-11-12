@@ -172,7 +172,7 @@ public class Main {
 			NPEmployeeMainMenu((NPEmployee)currentUser);
 		}
 		if (currentUser.getUserType().equals("Bidder")) {
-			bidderMainMenu();
+			bidderMainMenu((Bidder)currentUser);
 		}
 	}
 	
@@ -221,10 +221,10 @@ public class Main {
 				currentUser.addAuction();
 				break;
 			case 2:
-				currentUser.selectAuction();
+				currentUser.editAuction();
 				break;
 			case 3:
-				currentUser.viewCalendar();
+				currentUser.removeAuction();
 				break;
 			case 4:
 				scanner.close();
@@ -236,13 +236,32 @@ public class Main {
 	 * @author nabilfadili
 	 * Bidder main menu of program. Called after login.
 	 */
-	public static void bidderMainMenu() {
-		System.out.println("\nWhat would you like to do?");
-		System.out.println("1. View your current bids\n"
-				+ "2. Make a bid\n"
-				+ "3. Remove a bid\n"
-				+ "4. Edit a bid\n"
-				+ "5. Logout");	
+	public static void bidderMainMenu(Bidder currentUser) {
+		Scanner scanner = new Scanner(System.in);
+		while(true) {
+			System.out.println("\nWhat would you like to do?");
+			System.out.println("1. View your current bids\n"
+					+ "2. Make a bid\n"
+					+ "3. Remove a bid\n"
+					+ "4. Edit a bid\n"
+					+ "5. Logout");	
+			switch (scanner.nextInt()) {
+			case 1:
+				
+				break;
+			case 2:
+				
+				break;
+			case 3:
+				
+				break;
+			case 4:
+				break;
+			case 5:
+				scanner.close();
+				return;
+			}
+		}
 	}
 	
 	/**
