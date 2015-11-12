@@ -292,8 +292,6 @@ public class DisplayCalendar extends GregorianCalendar {
 
 	public static void main(String[] args) {
 		DisplayCalendar dc = new DisplayCalendar();
-		System.out.println(dc.displayCalendar(Calendar.getInstance()));
-		System.out.println("Hit P to go previous month.\t\tHit N to go next month.");
-		
+		System.out.println(dc);
 	}
 }

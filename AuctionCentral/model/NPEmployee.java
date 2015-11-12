@@ -18,15 +18,19 @@ public class NPEmployee extends User {
 	private Auction myAuction;
 	private DisplayCalendar myCalendar;
 	private Scanner scan;
-
-	// FIXME fix constructor to take the calendar from main
+	
 	// add myAuction from the calendar singleton
+	public NPEmployee(String username, DisplayCalendar myCalendar) {
+		super(username, myCalendar);
+	}
+	
+	@Deprecated
 	public NPEmployee(String username) {
 		this(username, "", new DisplayCalendar());
 	}
 	
 	public NPEmployee(String username, String orgName, DisplayCalendar cal) {
-		super(username);
+		super(username, cal);
 		myOrgName = orgName;
 		myCalendar = cal;
 		scan = new Scanner(System.in);
@@ -70,8 +74,7 @@ public class NPEmployee extends User {
 		}
 		myAuction = new Auction(myOrgName, itemList, tempCal, timeDur);
 
-		// TODO add this auction into the calendar
-
+		myCalendar.addAuction(myAuction);
 	}
 
 	public void editAuction() {
@@ -143,7 +146,7 @@ public class NPEmployee extends User {
 	}
 
 	public static void main(String[] args) {
-		NPEmployee testUser = new NPEmployee("NPEmployee");
+		NPEmployee testUser = new NPEmployee("NPEmployee",null);
 		testUser.addAuction();
 		testUser.editAuction();
 	}

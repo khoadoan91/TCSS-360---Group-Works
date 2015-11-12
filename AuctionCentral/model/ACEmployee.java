@@ -8,15 +8,20 @@ import java.util.List;
  *
  */
 public class ACEmployee extends User {
-
+	
 	final private String userType = "ACEmployee";
 	// private DisplayCalendar;
 
 	// TODO fix constructor to take the calendar from main
-	public ACEmployee(String username) {
-		super(username);
+	public ACEmployee(String username, DisplayCalendar myCalendar) {
+		super(username, myCalendar);
 	}
-
+	
+//	@Deprecated
+//	public ACEmployee(String username) {
+//		super(username);
+//	}
+	
 	/**
 	 * Accesses calendar singleton and returns a list of upcoming auctions.
 	 * !!!Should this return a list or simply print the list?? !!!This would
