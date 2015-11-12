@@ -265,6 +265,7 @@ public class Main {
 	}
 	
 	/**
+	 * @author nabilfadili
 	 * Writes changes to the auction list and item list txt files that were
 	 * made during the session. This includes added and removed bids.
 	 * @param endUser made the the changes and thus narrows down where the txt fields will be changed.
@@ -338,7 +339,6 @@ public class Main {
 			return new ACEmployee(username, myCalendar);
 		}
 		if (userType.equals("NPEmployee")) {
-			// FIXME NPEmployee needs to have the third parameter to store theOrgName
 			return new NPEmployee(username, orgName, myCalendar);
 		}
 		if (userType.equals("Bidder")) {
