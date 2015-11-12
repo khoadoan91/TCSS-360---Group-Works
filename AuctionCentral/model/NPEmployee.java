@@ -146,7 +146,7 @@ public class NPEmployee extends User {
 	}
 
 	public static void main(String[] args) {
-		NPEmployee testUser = new NPEmployee("NPEmployee",null);
+		NPEmployee testUser = new NPEmployee("NPEmployee", "GoodWill", new DisplayCalendar());
 		testUser.addAuction();
 		testUser.editAuction();
 	}

@@ -277,6 +277,15 @@ public class Auction implements Comparable<Auction> {
 	public boolean isAvailable() {
 		return isAvailable;
 	}
+	
+	@Override
+	public String toString() {
+		String result = myOrgName + " " + myDate.getTime() + "\n";
+		for (int i = 0; i < myItems.size(); i++) {
+			result += (i + 1) + ") " + myItems.get(i) + "\n";
+		}
+		return result;
+	}
 
 	@Override
 	public int compareTo(Auction theAuction) {
