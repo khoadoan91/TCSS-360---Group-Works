@@ -36,6 +36,7 @@ public class ACEmployee extends User {
 	 */
 	public void selectAuction() {
 		// TODO view details of an auction object, including list of items
+		//This methods should show the list of auctions and then let the user choose one to view.
 	}
 	
 	public void viewCalendar() {

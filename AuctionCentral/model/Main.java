@@ -166,10 +166,10 @@ public class Main {
 			if (currentUser != null) {flag = false;}
 		}
 		if (currentUser.getUserType().equals("ACEmployee")) {
-			ACEmployeeMainMenu(currentUser);
+			ACEmployeeMainMenu((ACEmployee)currentUser);
 		}
 		if (currentUser.getUserType().equals("NPEmployee")) {
-			NPEmployeeMainMenu();
+			NPEmployeeMainMenu((NPEmployee)currentUser);
 		}
 		if (currentUser.getUserType().equals("Bidder")) {
 			bidderMainMenu();
@@ -180,17 +180,15 @@ public class Main {
 	 * @author nabilfadili
 	 * ACEmployee main menu of program. Called after login.
 	 */
-	public static void ACEmployeeMainMenu(User currentUser) {
+	public static void ACEmployeeMainMenu(ACEmployee currentUser) {
 		Scanner scanner = new Scanner(System.in);
-		int choice;
 		while (true) {
 			System.out.println("\nWhat would you like to do?");
 			System.out.println("1. View all auctions\n"
 					+ "2. View specific auction\n"
-					+ "3. View the calendar"
+					+ "3. View the calendar\n"
 					+ "4. Logout");	
-			choice = scanner.nextInt();
-			switch (choice) {
+			switch (scanner.nextInt()) {
 			case 1:
 				currentUser.viewAuctionList();
 				break;
@@ -201,6 +199,7 @@ public class Main {
 				currentUser.viewCalendar();
 				break;
 			case 4:
+				scanner.close();
 				return;
 			}
 		}
@@ -209,12 +208,29 @@ public class Main {
 	 * @author nabilfadili
 	 * NPEmployee main menu of program. Called after login.
 	 */
-	public static void NPEmployeeMainMenu() {
-		System.out.println("\nWhat would you like to do?");
-		System.out.println("1. Schedule an auction\n"
-				+ "2. Edit an auction\n"
-				+ "3. Remove an auction\n"
-				+ "4. Logout");
+	public static void NPEmployeeMainMenu(NPEmployee currentUser) {
+		Scanner scanner = new Scanner(System.in);
+		while(true) {
+			System.out.println("\nWhat would you like to do?");
+			System.out.println("1. Schedule an auction\n"
+					+ "2. Edit an auction\n"
+					+ "3. Remove an auction\n"
+					+ "4. Logout");
+			switch (scanner.nextInt()) {
+			case 1:
+				currentUser.addAuction();
+				break;
+			case 2:
+				currentUser.selectAuction();
+				break;
+			case 3:
+				currentUser.viewCalendar();
+				break;
+			case 4:
+				scanner.close();
+				return;
+			}
+		}
 	}
 	/**
 	 * @author nabilfadili
