@@ -10,17 +10,10 @@ import java.util.List;
 public class ACEmployee extends User {
 	
 	final private String userType = "ACEmployee";
-	// private DisplayCalendar;
 
-	// TODO fix constructor to take the calendar from main
 	public ACEmployee(String username, DisplayCalendar myCalendar) {
 		super(username, myCalendar);
 	}
-	
-//	@Deprecated
-//	public ACEmployee(String username) {
-//		super(username);
-//	}
 	
 	/**
 	 * Accesses calendar singleton and returns a list of upcoming auctions.
@@ -29,9 +22,9 @@ public class ACEmployee extends User {
 	 * 
 	 * @return
 	 */
-	public List<Auction> viewAuctionList() {
+	public void viewAuctionList() {
 		// TODO access calendar object and display upcoming auctions
-		return null;
+		System.out.println(myCalendar.toString());
 	}
 
 	/**

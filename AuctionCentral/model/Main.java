@@ -166,7 +166,7 @@ public class Main {
 			if (currentUser != null) {flag = false;}
 		}
 		if (currentUser.getUserType().equals("ACEmployee")) {
-			ACEmployeeMainMenu();
+			ACEmployeeMainMenu(currentUser);
 		}
 		if (currentUser.getUserType().equals("NPEmployee")) {
 			NPEmployeeMainMenu();
@@ -180,11 +180,26 @@ public class Main {
 	 * @author nabilfadili
 	 * ACEmployee main menu of program. Called after login.
 	 */
-	public static void ACEmployeeMainMenu() {
-		System.out.println("\nWhat would you like to do?");
-		System.out.println("1. View all auctions\n"
-				+ "2. View specific auction\n"
-				+ "3. Logout");	
+	public static void ACEmployeeMainMenu(User currentUser) {
+		Scanner scanner = new Scanner(System.in);
+		int choice;
+		while (true) {
+			System.out.println("\nWhat would you like to do?");
+			System.out.println("1. View all auctions\n"
+					+ "2. View specific auction\n"
+					+ "3. Logout");	
+			choice = scanner.nextInt();
+			switch (choice) {
+			case 1:
+				currentUser.viewAuctionList();
+				break;
+			case 2:
+				
+				break;
+			case 3:
+				return;
+			}
+		}
 	}
 	/**
 	 * @author nabilfadili
@@ -320,8 +335,7 @@ public class Main {
 	 * Reads/parses the item txt file and creates an Item object for each line.
 	 * Item txt file must be in sync with the auction txt file for this to work.
 	 * @return a list of all Item objects for all auctions.
-	 */
-	
+	 */	
 	public static ArrayList<Item> readItemListFile() {
 		ArrayList<Item> items = new ArrayList<>();				
 		try {

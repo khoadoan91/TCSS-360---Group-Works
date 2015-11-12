@@ -31,4 +31,8 @@ public class User {
 		return "User unspecified";
 	}
 
+	public void viewAuctionList() {
+		System.out.println("Login Error. You are not an ACEmployee");
+	}
+
 }
