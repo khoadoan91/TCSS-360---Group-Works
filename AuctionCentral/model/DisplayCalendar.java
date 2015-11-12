@@ -152,7 +152,10 @@ public class DisplayCalendar extends GregorianCalendar {
 	}
 
 	// used for simple tests
-//	public String toString() {
+	@Override
+	public String toString() {
+		return displayCalendar(Calendar.getInstance());
+	}
 //		String temp = "A = Ready For Bids          F = Full\n";
 //		// temp = temp + "_____________________________________\n";
 //		// temp = temp + "************************************\n";
@@ -213,11 +216,12 @@ public class DisplayCalendar extends GregorianCalendar {
 //
 //	}
 	
-	public String toString() {
-		Calendar calShow = Calendar.getInstance();
-		calShow.clear();
-		calShow.set(2015, 0, 1);   // last parameter must be 1. If not, uncomment the next line.
-//		calShow.set(Calendar.DAY_OF_MONTH, 1);
+	public String displayCalendar(final Calendar time) {
+		Calendar calShow = (Calendar) time.clone();
+//		Calendar calShow = Calendar.getInstance();
+//		calShow.clear();
+//		calShow.set(2015, 0, 1);   // last parameter must be 1. If not, uncomment the next line.
+		calShow.set(Calendar.DAY_OF_MONTH, 1);
 		String result = new SimpleDateFormat("MMMMMMMMM").format(calShow.getTime()).toUpperCase();
 		result += " " + calShow.get(Calendar.YEAR) + "\t\t F = Filled\n";
 		result += "  Sun   Mon   Tue   Wed   Thu   Fri   Sat  \n";
@@ -288,6 +292,8 @@ public class DisplayCalendar extends GregorianCalendar {
 
 	public static void main(String[] args) {
 		DisplayCalendar dc = new DisplayCalendar();
-		System.out.print(dc.toString());
+		System.out.println(dc.displayCalendar(Calendar.getInstance()));
+		System.out.println("Hit P to go previous month.\t\tHit N to go next month.");
+		
 	}
 }

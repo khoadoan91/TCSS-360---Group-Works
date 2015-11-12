@@ -217,6 +217,13 @@ public class Auction implements Comparable<Auction> {
 	public int getMin() {
 		return myDate.get(Calendar.MINUTE);
 	}
+	
+	public void setStartingTime(final String time) {
+		String start[] = time.split(":");
+		// TODO Check condition to throw exception.
+		myDate.set(Calendar.HOUR, Integer.parseInt(start[0]));
+		myDate.set(Calendar.MINUTE, Integer.parseInt(start[1]));
+	}
 
 	public void setTimeDuration(final String timeDur) {
 		String time[] = timeDur.split(":");
@@ -238,7 +245,19 @@ public class Auction implements Comparable<Auction> {
 		if (theDate == null) {
 			throw new NullPointerException();
 		}
-		myDate = theDate;
+		myDate = (Calendar) theDate.clone();
+	}
+	
+	public void setDate(final int date) {
+		myDate.set(Calendar.DAY_OF_MONTH, date);
+	}
+	
+	public void setMonth(final int month) {
+		myDate.set(Calendar.MONTH, month);
+	}
+	
+	public void setYear(final int year) {
+		myDate.set(Calendar.YEAR, year);
 	}
 
 	/**

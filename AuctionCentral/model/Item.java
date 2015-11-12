@@ -135,6 +135,11 @@ public class Item implements Comparable<Item> {
 	// public void removeImage(final Image theImage) {
 	// myImages.remove(theImage);
 	// }
+	@Override
+	public String toString() {
+		return myTitle + "\nQuantity: " + myQuantity 
+				+"\nDescription: " + myDesc;
+	}
 
 	@Override
 	public int compareTo(final Item theItem) {
