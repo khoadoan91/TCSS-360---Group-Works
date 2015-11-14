@@ -2,62 +2,194 @@ package model;
 
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * @author KyleD
  * @author CodyM
  */
-// TODO serialize
-public class DisplayCalendar extends GregorianCalendar {
+public class DisplayCalendar {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;// this is the default?
+	public static final int ONE_YEAR = 365;
 	public static final int MAX_AUCTION = 25;
-	public static final long ONE_DAY = 1000 * 60 * 60 * 24;
-	public static final long ONE_HOUR = 1000 * 60 * 60;
+	public static final int NINETY_DAY_FROM_NOW = 90;
+//	public static final long ONE_DAY = 1000 * 60 * 60 * 24;
+//	public static final long ONE_HOUR = 1000 * 60 * 60;
 
-	private List<Auction> myAuctions;
+//	private List<Auction> myAuctions; 
+	private List<Auction> myPastAuctions;
+	private List<Auction> myUpcomingAuctions;
 
 	public DisplayCalendar() {
-		super(TimeZone.getDefault(), Locale.US);
-		myAuctions = new ArrayList<>();
+		
 	}
 
 	public DisplayCalendar(final List<Auction> theAuction) {
-		this();
-		myAuctions.addAll(theAuction);
-		Collections.sort(myAuctions);
+		myPastAuctions = new LinkedList<>();
+		myUpcomingAuctions = new LinkedList<>(theAuction);
+		Calendar now = Calendar.getInstance();
+		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
+			if (myUpcomingAuctions.get(i).getDateAuctionStarts().compareTo(now) < 0) {
+				myPastAuctions.add(myUpcomingAuctions.get(i));
+			}
+		}
+		myUpcomingAuctions.removeAll(myPastAuctions);
+		Collections.sort(myUpcomingAuctions);
+		Collections.sort(myPastAuctions);
+//		myAuctions.addAll(theAuction);
+//		Collections.sort(myAuctions);
 	}
 
-	public boolean addAuction(final Auction theAuction) {
-		if (!hasMaxAuctions() && checkAvailability(theAuction.getDateAuctionStarts())) {
-			myAuctions.add(theAuction);
-			Collections.sort(myAuctions);
+	/**
+	 * First business rule:
+	 * No more than 25 auctions may be scheduled into the future.
+	 * False is good -> we can add more auctions.
+	 * @return
+	 */
+	public boolean hasExceededAuction() {
+		return myUpcomingAuctions.size() >= MAX_AUCTION;
+//		return checkAvailableAuctions() == MAX_AUCTION;
+	}
+	
+	/**
+	 * Second business rule: 
+	 * An auction may not be scheduled more than 90 days from the current date.
+	 * False is good -> we can add the auction into the calendar.
+	 * @param theAuc the new Auction
+	 * @return
+	 */
+	public boolean hasMoreThan90Days(final Auction theAuc) {
+		Calendar ninetyFromNow = Calendar.getInstance();
+		ninetyFromNow.set(Calendar.DAY_OF_MONTH, 
+				ninetyFromNow.get(Calendar.DAY_OF_MONTH) + NINETY_DAY_FROM_NOW);
+		if (theAuc.getDateAuctionStarts().compareTo(ninetyFromNow) > 0)
 			return true;
+		return false;
+	}
+	
+	/**
+	 * Third business rule:
+	 * No more than 5 auctions may be scheduled for any rolling 7 day period.
+	 * @param theAuc the new Auction
+	 * @return
+	 */
+	public boolean hasMore5AuctionsIn7Days(final Auction theAuc) {
+		// TODO how to determine which 7 days are?
+		return false;
+	}
+	
+	/**
+	 * Fourth business rule: part a
+	 * No more than 2 auctions can be scheduled on the same day, and the start time of the second 
+	 * can be no earlier than 2 hours after the end time of the first.
+	 * @param theAuc the new Auction
+	 * @return -1 if there are 2 Auctions in same day
+	 */
+	private int has2AuctionsInSameDay(final Auction theAuc) {
+		Calendar newAuction = theAuc.getDateAuctionStarts();
+		int count = 0, indexAuction = -1;
+		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
+			Calendar auc2 = myUpcomingAuctions.get(i).getDateAuctionStarts();
+			if (auc2.get(Calendar.MONTH) == newAuction.get(Calendar.MONTH) 
+					&& auc2.get(Calendar.DAY_OF_MONTH) == newAuction.get(Calendar.DAY_OF_MONTH)) {
+				count++;
+				indexAuction = i;
+			}
+			if (count == 2) break;  // no need to check the rest.
+		}
+		if (count == 2) return -1;
+		return indexAuction;
+	}
+	
+	/**
+	 * Fourth business rule: part b
+	 * No more than 2 auctions can be scheduled on the same day, and the start time of the second 
+	 * can be no earlier than 2 hours after the end time of the first.
+	 * False is good. We allow to add the new Auction.
+	 * @param theAuc
+	 * @return
+	 */
+	public boolean has2HoursBetween2Auctions(final Auction theAuc) {
+		Calendar newAuction = theAuc.getDateAuctionStarts();
+		int indexAuc = has2AuctionsInSameDay(theAuc);
+		if (indexAuc == -1) { // there are 2 auctions at the same day.
+			return true;
+		}  
+		Calendar oldAuction = myUpcomingAuctions.get(indexAuc).getDateAuctionStarts();
+		// the old auction starts first.
+		if (newAuction.get(Calendar.HOUR) > oldAuction.get(Calendar.HOUR)) {
+			if (newAuction.get(Calendar.HOUR)   // start time of new one subtract end time of old one.
+				- myUpcomingAuctions.get(indexAuc).getDateAuctionEnds().get(Calendar.HOUR) > 2) {
+				return false;
+			} else return true;
+		} else { // the new auction start first.
+			if (oldAuction.get(Calendar.HOUR) 	// start time of old one subtract end time of new one.
+					- theAuc.getDateAuctionEnds().get(Calendar.HOUR) > 2) {
+				return false;
+			} else return true;
+		}
+	}
+	
+	/**
+	 * Fifth business rule: No more than one auction per year per 
+	 * Non-profit organization can be scheduled.
+	 * True is good -> it means that the NPE has one auction per year.
+	 * @param theAuction
+	 * @return
+	 */
+	public boolean hasAuctionPerNPperYear(final Auction theAuction) {
+		Calendar aucTime = theAuction.getDateAuctionStarts();
+		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
+			if (myPastAuctions.get(i).getOrganizationNam().equals(theAuction.getOrganizationNam())) {
+				if (aucTime.get(Calendar.DAY_OF_YEAR) 	// the day of new one subtract the day of old one
+		- myPastAuctions.get(i).getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) > ONE_YEAR) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
 
-	public List<Auction> getAllAuctions() {
-		return myAuctions;
+	//FIXME 
+	public boolean addAuction(final Auction theAuction) {
+		if (!hasExceededAuction() && !hasMoreThan90Days(theAuction) 
+				&& !hasMore5AuctionsIn7Days(theAuction) && !has2HoursBetween2Auctions(theAuction)
+				&& hasAuctionPerNPperYear(theAuction)){
+			myUpcomingAuctions.add(theAuction);
+			Collections.sort(myUpcomingAuctions);
+			return true;
+		}
+		return false;
+//		if (!hasExceededAuction() && checkAvailability(theAuction.getDateAuctionStarts())) {
+//			myAuctions.add(theAuction);
+//			Collections.sort(myAuctions);
+//			return true;
+//		}
+//		return false;
+	}
+	
+	public List<Auction> getUpcomingAuctions() {
+		return myUpcomingAuctions;
 	}
 
-	public List<Auction> getAvailableAuctions() {
-		List<Auction> temp = new ArrayList<>();
-		for (Auction myAuction : myAuctions) {
-			if (myAuction.isAvailable())
-				temp.add(myAuction);
-		}
-		return temp;
-	}
+//	public List<Auction> getAllAuctions() {
+//		return myAuctions;
+//	}
+
+//	public List<Auction> getAvailableAuctions() {
+//		List<Auction> temp = new ArrayList<>();
+//		for (Auction myAuction : myAuctions) {
+//			if (myAuction.isAvailable())
+//				temp.add(myAuction);
+//		}
+//		return temp;
+//	}
 
 	/**
 	 * TODO check the business rules
@@ -65,91 +197,83 @@ public class DisplayCalendar extends GregorianCalendar {
 	 * @param theDate
 	 * @return
 	 */
-	public boolean checkAvailability(final Calendar theDate) {
-		List<Auction> theAuctions = getAvailableAuctions();
-		if (hasMaxAuctions())
-			return false;
-		if (businessRule2(theDate, theAuctions))
-			return false;
-		if (businessRule3(theDate, theAuctions))
-			return false;
-		if (businessRule4(theDate, theAuctions))
-			return false;
-		if (businessRule5(theDate, theAuctions))
-			return false;
-		return true;
-	}
+//	public boolean checkAvailability(final Calendar theDate) {
+//		List<Auction> theAuctions = getAvailableAuctions();
+//		if (hasExceededAuction())
+//			return false;
+//		if (businessRule2(theDate, theAuctions))
+//			return false;
+//		if (businessRule3(theDate, theAuctions))
+//			return false;
+//		if (businessRule4(theDate, theAuctions))
+//			return false;
+//		if (businessRule5(theDate, theAuctions))
+//			return false;
+//		return true;
+//	}
 
 	// An auction may not be scheduled more than 90 days from the current date
-	private boolean businessRule2(final Calendar theDate, final List<Auction> theAuctions) {
-		if (theDate.getTimeInMillis() > (Calendar.getInstance().getTimeInMillis() + (ONE_DAY * 90))) {
-			return true;
-		}
-		return false;
-	}
+//	private boolean businessRule2(final Calendar theDate, final List<Auction> theAuctions) {
+//		if (theDate.getTimeInMillis() > (Calendar.getInstance().getTimeInMillis() + (ONE_DAY * 90))) {
+//			return true;
+//		}
+//		return false;
+//	}
 
+	// FIXME (Kyle) does it only check the first 7 days from now?? How's about the next 7 days?
 	// No more than 5 auctions may be scheduled for any rolling 7 day period.
-	private boolean businessRule3(final Calendar theDate, final List<Auction> theAuctions) {
-		int count = 0;
-		for (Auction myAuction : theAuctions) {
-			if (myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() - ONE_DAY * 7
-					|| myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() + ONE_DAY * 7) {
-				count++;
-			}
-		}
-		if (count >= 5) {
-			return true;
-		}
-		return false;
-	}
+//	private boolean businessRule3(final Calendar theDate, final List<Auction> theAuctions) {
+//		int count = 0;
+//		for (Auction myAuction : theAuctions) {
+//			if (myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() - ONE_DAY * 7
+//					|| myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() + ONE_DAY * 7) {
+//				count++;
+//			}
+//		}
+//		if (count >= 5) {
+//			return true;
+//		}
+//		return false;
+//	}
 
 	// No more than 2 auctions can be scheduled on the same day, and the start
 	// time of the second can be
 	// no earlier than 2 hours after the end time of the first.
-	private boolean businessRule4(final Calendar theDate, final List<Auction> theAuctions) {
-		int count = 0;
-		for (Auction myAuction : theAuctions) {
-			if (myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() - ONE_HOUR * 2
-					|| myAuction.getDateAuctionStarts().getTime().getTime() >= theDate.getTimeInMillis()
-							+ ONE_HOUR * 2) {
-				return true;
-			}
-		}
-		for (Auction myAuction : theAuctions) {
-			if (myAuction.getDateAuctionStarts().getTimeInMillis() / ONE_DAY == theDate.getTimeInMillis() / ONE_DAY) {
-				count++;
-			}
-		}
-		if (count >= 2) {
-			return true;
-		}
-		return false;
-	}
+//	private boolean businessRule4(final Calendar theDate, final List<Auction> theAuctions) {
+//		int count = 0;
+//		for (Auction myAuction : theAuctions) {
+//			if (myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() - ONE_HOUR * 2
+//					|| myAuction.getDateAuctionStarts().getTime().getTime() >= theDate.getTimeInMillis()
+//							+ ONE_HOUR * 2) {
+//				return true;
+//			}
+//		}
+//		for (Auction myAuction : theAuctions) {
+//			if (myAuction.getDateAuctionStarts().getTimeInMillis() / ONE_DAY == theDate.getTimeInMillis() / ONE_DAY) {
+//				count++;
+//			}
+//		}
+//		if (count >= 2) {
+//			return true;
+//		}
+//		return false;
+//	}
 
 	// No more than one auction per year per Non-profit organization can be
 	// scheduled
-	private boolean businessRule5(final Calendar theDate, final List<Auction> theAuctions) {
-		// TODO this whole method
-		return false;
-	}
+//	private boolean businessRule5(final Calendar theDate, final List<Auction> theAuctions) {
+//		
+//		return false;
+//	}
 
-	private int checkAvailableAuctions() {
-		int i = 0;
-		for (Auction myAuction : myAuctions) {
-			if (myAuction.isAvailable())
-				i++;
-		}
-		return i;
-	}
-
-	/**
-	 * First business rule
-	 * 
-	 * @return
-	 */
-	public boolean hasMaxAuctions() {
-		return checkAvailableAuctions() == MAX_AUCTION;
-	}
+//	private int checkAvailableAuctions() {
+//		int i = 0;
+//		for (Auction myAuction : myAuctions) {
+//			if (myAuction.isAvailable())
+//				i++;
+//		}
+//		return i;
+//	}
 
 	// used for simple tests
 	@Override
@@ -218,9 +342,8 @@ public class DisplayCalendar extends GregorianCalendar {
 	
 	public String displayCalendar(final Calendar time) {
 		Calendar calShow = (Calendar) time.clone();
-//		Calendar calShow = Calendar.getInstance();
-//		calShow.clear();
-//		calShow.set(2015, 0, 1);   // last parameter must be 1. If not, uncomment the next line.
+		// aucMonth is already sorted.
+		List<Integer> aucDates = viewAuctionsInMonth(calShow.get(Calendar.MONTH));
 		calShow.set(Calendar.DAY_OF_MONTH, 1);
 		String result = new SimpleDateFormat("MMMMMMMMM").format(calShow.getTime()).toUpperCase();
 		result += " " + calShow.get(Calendar.YEAR) + "\t\t F = Filled\n";
@@ -248,16 +371,29 @@ public class DisplayCalendar extends GregorianCalendar {
 				}
 			}
 			result += "|\n";
-			// Use for loop to fill out the Auction in a calendar. 
-//			for (int j = i - 7; j < i; j++) {
-//				result += "|   ";
-				// Check if there are auctions in a day.
-				// Replace if with F. If not, keep the character '=' 
-//			}
-			result += "|   = |   = |   = |   = |   = |   = |   = |\n";
-			result += "|   = |   = |   = |   = |   = |   = |   = |\n";
+			// Use for loop to fill out the Auction in a calendar.
+			for (int k = 0; k < 2; k++) {
+				for (int j = i - 7; j < i; j++) {
+					result += "|   ";
+					if (aucDates.contains(j)) {
+						aucDates.remove(aucDates.indexOf(j));
+						result += "F ";
+					} else result += "= ";
+				}
+				result += "|\n";
+			}
 			result += "===========================================\n";
 				
+		}
+		return result;
+	}
+	
+	private List<Integer> viewAuctionsInMonth(final int month) {
+		List<Integer> result = new ArrayList<>();
+		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
+			if (myUpcomingAuctions.get(i).getMonth() == month) {
+				result.add(myUpcomingAuctions.get(i).getDayOfMonth());
+			}
 		}
 		return result;
 	}

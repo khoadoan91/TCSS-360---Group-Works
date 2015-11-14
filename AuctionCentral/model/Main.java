@@ -1,138 +1,4 @@
-//<<<<<<< HEAD
-///**
-// * 
-// */
-//package model;
-//
-//import java.io.File;
-//import java.io.FileNotFoundException;
-//import java.util.Scanner;
-//
-///**
-// * @author nabilfadili
-// *
-// */
-//public class Main {
-//
-//	/**
-//	 * @param args
-//	 */
-//	public static void main(String[] args) {
-//		User currentUser = null;
-//		boolean flag = true;
-//		while (flag) {
-//			currentUser = login();
-//			if (currentUser != null) {
-//				flag = false;
-//			}
-//		}
-//
-//		// TODO Instantiate DisplayCalendar
-//		// load auction into calendar
-//
-//		if (currentUser.getUserType().equals("ACEmployee")) {
-//			ACEmployeeMainMenu();
-//		}
-//		if (currentUser.getUserType().equals("NPEmployee")) {
-//			NPEmployeeMainMenu();
-//		}
-//		if (currentUser.getUserType().equals("Bidder")) {
-//			bidderMainMenu();
-//		}
-//	}
-//
-//	/**
-//	 * ACEmployee main menu of program. Called after login.
-//	 */
-//	public static void ACEmployeeMainMenu() {
-//		System.out.println("\nWhat would you like to do?");
-//		System.out.println("1. View all auctions\n" + "2. View specific auction\n" + "3. Logout");
-//	}
-//
-//	/**
-//	 * NPEmployee main menu of program. Called after login.
-//	 */
-//	public static void NPEmployeeMainMenu() {
-//		System.out.println("\nWhat would you like to do?");
-//		System.out
-//				.println("1. Schedule an auction\n" + "2. Edit an auction\n" + "3. Remove an auction\n" + "4. Logout");
-//	}
-//
-//	/**
-//	 * Bidder main menu of program. Called after login.
-//	 */
-//	public static void bidderMainMenu() {
-//		System.out.println("\nWhat would you like to do?");
-//		System.out.println("1. View your current bids\n" + "2. Make a bid\n" + "3. Remove a bid\n" + "4. Edit a bid\n"
-//				+ "5. Logout");
-//	}
-//
-//	/**
-//	 * Decides which user object to create and return to the main program
-//	 * 
-//	 * @return User
-//	 */
-//	public static User login() {
-//		Scanner scanner = new Scanner(System.in);
-//		System.out.print("Enter username:");
-//		String loginInput = scanner.nextLine();
-//
-//		File inputFile = new File("user_list.txt");
-//		try {
-//			scanner = new Scanner(inputFile);
-//		} catch (FileNotFoundException e) {
-//			errorMessage(e);
-//		}
-//
-//		String username = null, userType = null;
-//		while (scanner.hasNext()) {
-//			username = scanner.next();
-//			if (loginInput.equalsIgnoreCase(username)) {
-//				System.out.println("Welcome " + username + "!");
-//				userType = scanner.next();
-//				System.out.println("Logged in as: " + userType);
-//				break;
-//			} else {
-//				scanner.nextLine();
-//			}
-//		}
-//		if (userType == null) {
-//			System.out.println("Thats not a valid username");
-//			return null;
-//		}
-//		if (userType.equals("ACEmployee")) {
-//			return new ACEmployee(username);
-//		}
-//		if (userType.equals("NPEmployee")) {
-//			return new NPEmployee(username);
-//		}
-//		if (userType.equals("Bidder")) {
-//			return new Bidder(username);
-//		}
-//		return null;
-//	}
-//
-//	/**
-//	 * Used to pass various exceptions and generate the appropriate error
-//	 * message for the user.
-//	 * 
-//	 * @param e
-//	 */
-//	public static void errorMessage(Exception e) {
-//		if (e == null) {
-//			System.err.println("Error reading from file. User = null");
-//		}
-//		if (e.getClass().isInstance(new FileNotFoundException())) {
-//			System.err.println("Error reading file. Does not exist.");
-//		}
-//		// TODO add exceptions here as they come up so that the user is notified
-//		// of the error.
-//	}
-//
-//=======
-/**
- * 
- */
+
 package model;
 
 import java.io.BufferedReader;
@@ -141,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -158,7 +25,6 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
 	
 		User currentUser = null;
 		boolean flag = true;
@@ -167,13 +33,13 @@ public class Main {
 			if (currentUser != null) {flag = false;}
 		}
 		if (currentUser.getUserType().equals("ACEmployee")) {
-			ACEmployeeMainMenu();
+			ACEmployeeMainMenu((ACEmployee)currentUser);
 		}
 		if (currentUser.getUserType().equals("NPEmployee")) {
-			NPEmployeeMainMenu();
+			NPEmployeeMainMenu((NPEmployee)currentUser);
 		}
 		if (currentUser.getUserType().equals("Bidder")) {
-			bidderMainMenu();
+			bidderMainMenu((Bidder)currentUser);
 		}
 	}
 	
@@ -181,34 +47,88 @@ public class Main {
 	 * @author nabilfadili
 	 * ACEmployee main menu of program. Called after login.
 	 */
-	public static void ACEmployeeMainMenu() {
-		System.out.println("\nWhat would you like to do?");
-		System.out.println("1. View all auctions\n"
-				+ "2. View specific auction\n"
-				+ "3. Logout");	
+	public static void ACEmployeeMainMenu(ACEmployee currentUser) {
+		Scanner scanner = new Scanner(System.in);
+		while (true) {
+			System.out.println("\nWhat would you like to do?");
+			System.out.println("1. View all auctions\n"
+					+ "2. View specific auction\n"
+					+ "3. View the calendar\n"
+					+ "4. Logout");	
+			switch (scanner.nextInt()) {
+			case 1:
+				currentUser.viewAuctionList();
+				break;
+			case 2:
+				currentUser.selectAuction();
+				break;
+			case 3:
+				currentUser.viewCalendar();
+				break;
+			case 4:
+				scanner.close();
+				return;
+			}
+		}
 	}
 	/**
 	 * @author nabilfadili
 	 * NPEmployee main menu of program. Called after login.
 	 */
-	public static void NPEmployeeMainMenu() {
-		System.out.println("\nWhat would you like to do?");
-		System.out.println("1. Schedule an auction\n"
-				+ "2. Edit an auction\n"
-				+ "3. Remove an auction\n"
-				+ "4. Logout");
+	public static void NPEmployeeMainMenu(NPEmployee currentUser) {
+		Scanner scanner = new Scanner(System.in);
+		while(true) {
+			System.out.println("\nWhat would you like to do?");
+			System.out.println("1. Schedule an auction\n"
+					+ "2. Edit an auction\n"
+					+ "3. Remove an auction\n"
+					+ "4. Logout");
+			switch (scanner.nextInt()) {
+			case 1:
+				currentUser.addAuction();
+				break;
+			case 2:
+				currentUser.editAuction();
+				break;
+			case 3:
+				currentUser.removeAuction();
+				break;
+			case 4:
+				scanner.close();
+				return;
+			}
+		}
 	}
 	/**
 	 * @author nabilfadili
 	 * Bidder main menu of program. Called after login.
 	 */
-	public static void bidderMainMenu() {
-		System.out.println("\nWhat would you like to do?");
-		System.out.println("1. View your current bids\n"
-				+ "2. Make a bid\n"
-				+ "3. Remove a bid\n"
-				+ "4. Edit a bid\n"
-				+ "5. Logout");	
+	public static void bidderMainMenu(Bidder currentUser) {
+		Scanner scanner = new Scanner(System.in);
+		while(true) {
+			System.out.println("\nWhat would you like to do?");
+			System.out.println("1. View your current bids\n"
+					+ "2. Make a bid\n"
+					+ "3. Remove a bid\n"
+					+ "4. Edit a bid\n"
+					+ "5. Logout");	
+			switch (scanner.nextInt()) {
+			case 1:
+				
+				break;
+			case 2:
+				
+				break;
+			case 3:
+				
+				break;
+			case 4:
+				break;
+			case 5:
+				scanner.close();
+				return;
+			}
+		}
 	}
 	
 	/**
@@ -231,13 +151,16 @@ public class Main {
 			errorMessage(e);
 		}
 		
-		String username = null, userType = null;
+		String username = null, userType = null, orgName = null;
 		while (scanner.hasNext()) {
 			username = scanner.next();
 			if (loginInput.equalsIgnoreCase(username)) {				
 				System.out.println("Welcome " + username + "!");
 				userType = scanner.next();
-				System.out.println("Logged in as: " + userType);
+				if (userType.equals("NPEmployee")) {
+					orgName = scanner.next();
+				}
+				System.out.println("Logged in as: " + userType + " (" + orgName + ")");
 				break;
 			}
 			else {
@@ -253,7 +176,7 @@ public class Main {
 		}
 		if (userType.equals("NPEmployee")) {
 			// FIXME NPEmployee needs to have the third parameter to store theOrgName
-			return new NPEmployee(username, myCalendar);
+			return new NPEmployee(username, orgName, myCalendar);
 		}
 		if (userType.equals("Bidder")) {
 			return new Bidder(username, myCalendar);
@@ -318,8 +241,7 @@ public class Main {
 	 * Reads/parses the item txt file and creates an Item object for each line.
 	 * Item txt file must be in sync with the auction txt file for this to work.
 	 * @return a list of all Item objects for all auctions.
-	 */
-	
+	 */	
 	public static ArrayList<Item> readItemListFile() {
 		ArrayList<Item> items = new ArrayList<>();				
 		try {
@@ -330,7 +252,8 @@ public class Main {
 			String[] tokens;
 			while ((line = bufferedReader.readLine()) != null) {
 				tokens = line.split(", ");
-				items.add(new Item(tokens[0], Integer.parseInt(tokens[1]), tokens[2]));
+				items.add(new Item(tokens[0], Integer.parseInt(tokens[1]), 
+						new BigDecimal(tokens[2]), tokens[3]));
 			}
 			bufferedReader.close();
 		}

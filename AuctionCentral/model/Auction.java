@@ -27,6 +27,7 @@
 
 package model;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,7 +39,7 @@ import java.util.List;
 public class Auction implements Comparable<Auction> {
 
 	/** The ID of an Auction that is combination of orgName and time. */
-	private final String myAucName;
+	private String myAucName;
 	/** The non-profit organization */
 	private String myOrgName;
 
@@ -78,12 +79,28 @@ public class Auction implements Comparable<Auction> {
 		}
 		myDate.set(Calendar.MONTH, myDate.get(Calendar.MONTH) - 1);
 		myOrgName = theOrgName;
-		myAucName = theOrgName + "-" + (new SimpleDateFormat("MMM").format(myDate.getTime())) 
-				+ "-" + theDate.get(Calendar.DAY_OF_MONTH) + "-" + theDate.get(Calendar.YEAR);
+		getAuctionName();
 		setTimeDuration(timeDuration);
 		myItems = new ArrayList<>();
 		myItems.addAll(theItems);
-		isAvailable = false;
+		isAvailable = true;
+	}
+	
+	public Auction(final String theAucName, final List<Item> theItems, final String startTime, 
+			final String timeDur) throws ParseException {
+		myAucName = theAucName;
+		myItems = theItems;
+		myOrgName = theAucName.substring(0, theAucName.length() - 12);
+		String[] aucInfo = theAucName.split("-");
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM");
+		cal.setTime(sdf.parse(aucInfo[aucInfo.length - 3]));
+		cal.set(Calendar.YEAR, Integer.parseInt(aucInfo[aucInfo.length - 1]));
+		cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(aucInfo[aucInfo.length - 2]));
+		myDate = cal;
+		setStartingTime(startTime);
+		setTimeDuration(timeDur);
 	}
 
 	/**
@@ -130,10 +147,10 @@ public class Auction implements Comparable<Auction> {
 	 * 
 	 * @return a string about the date and hour
 	 */
-	public String printAuctionDay() {
-		return "on " + myDate.get(Calendar.MONDAY) + ", " + myDate.get(Calendar.DAY_OF_MONTH) + " "
-				+ myDate.get(Calendar.YEAR) + " at " + myDate.get(Calendar.HOUR_OF_DAY);
-	}
+//	public String printAuctionDay() {
+//		return "on " + myDate.get(Calendar.MONDAY) + ", " + myDate.get(Calendar.DAY_OF_MONTH) + " "
+//				+ myDate.get(Calendar.YEAR) + " at " + myDate.get(Calendar.HOUR_OF_DAY);
+//	}
 
 	/**
 	 * Returns a list of all items in a auction.
@@ -159,6 +176,8 @@ public class Auction implements Comparable<Auction> {
 	 * @return
 	 */
 	public String getAuctionName() {
+		myAucName = myOrgName + "-" + (new SimpleDateFormat("MMM").format(myDate.getTime())) 
+				+ "-" + myDate.get(Calendar.DAY_OF_MONTH) + "-" + myDate.get(Calendar.YEAR);
 		return myAucName;
 	}
 
@@ -197,7 +216,7 @@ public class Auction implements Comparable<Auction> {
 	 * @return
 	 */
 	public int getMonth() {
-		return myDate.get(Calendar.MONTH);
+		return myDate.get(Calendar.MONTH); // FIXME subtract by 1;
 	}
 
 	/**
@@ -299,10 +318,10 @@ public class Auction implements Comparable<Auction> {
 
 	public static void main(String[] args) {
 		List<Item> list = new ArrayList<>();
-		Item item1 = new Item("iPad", 1, "New");
-		Item item2 = new Item("Macbook", 1, "Used");
-		list.add(item1);
-		list.add(item2);
+//		Item item1 = new Item("iPad", 1, "New");
+//		Item item2 = new Item("Macbook", 1, "Used");
+//		list.add(item1);
+//		list.add(item2);
 		Calendar cal = Calendar.getInstance();
 		cal.set(2015, 8, 25, 8, 30);
 		System.out.println(cal.get(Calendar.MONTH));

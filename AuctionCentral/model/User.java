@@ -30,5 +30,6 @@ public class User {
 	public String getUserType() {
 		return "User unspecified";
 	}
+	
 
 }

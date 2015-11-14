@@ -17,6 +17,6 @@ public class CalendarTester {
 
 	@Test
 	public void testHasMaxAuctions1() {
-		assertFalse(myEmptyCal.hasMaxAuctions());
+		assertFalse(myEmptyCal.hasExceedAuction());
 	}
 }
