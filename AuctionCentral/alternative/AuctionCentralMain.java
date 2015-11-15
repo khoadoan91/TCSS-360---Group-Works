@@ -74,7 +74,8 @@ public class AuctionCentralMain {
 			List<Item> itemsPerAuc = new LinkedList<>();
 			while ((line = in.readLine()) != null) {
                  String aucInfo[] = line.split(", ");
-                 for (int i = 0; i < Integer.parseInt(aucInfo[1]); i++) {
+                 int itemNumber = Integer.parseInt(aucInfo[1]);
+                 for (int i = 0; i < itemNumber; i++) {
                 	 itemsPerAuc.add(allItems.get(itemCount++)); 
                  }
                  result.add(new Auction(aucInfo[0], itemsPerAuc, aucInfo[2], aucInfo[3]));

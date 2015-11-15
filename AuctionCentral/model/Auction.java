@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -81,15 +82,17 @@ public class Auction implements Comparable<Auction> {
 		myOrgName = theOrgName;
 		getAuctionName();
 		setTimeDuration(timeDuration);
-		myItems = new ArrayList<>();
-		myItems.addAll(theItems);
+		myItems = new LinkedList<>(theItems);
 		isAvailable = true;
 	}
 	
 	public Auction(final String theAucName, final List<Item> theItems, final String startTime, 
 			final String timeDur) throws ParseException {
+		if (theItems.size() < 1) {
+			throw new IllegalArgumentException();
+		}
 		myAucName = theAucName;
-		myItems = theItems;
+		myItems = new LinkedList<>(theItems);
 		myOrgName = theAucName.substring(0, theAucName.length() - 12);
 		String[] aucInfo = theAucName.split("-");
 		Calendar cal = Calendar.getInstance();
@@ -120,26 +123,22 @@ public class Auction implements Comparable<Auction> {
 	/**
 	 * Removes an item from an Auction.
 	 * 
-	 * @param theItem
+	 * @param theItemTitle
 	 */
-	public void removeItem(final Item theItem) {
-		if (theItem == null) {
+	public boolean removeItem(final String theItemTitle) {
+		if (theItemTitle == null) {
 			throw new NullPointerException();
 		}
-		myItems.remove(theItem);
-	}
-
-	/**
-	 * Returns an item.
-	 * 
-	 * @param theItem
-	 * @return the item.
-	 */
-	public Item getItem(final Item theItem) {
-		if (theItem == null) {
-			throw new NullPointerException();
+		if (theItemTitle.length() == 0) {
+			throw new IllegalArgumentException();
 		}
-		return myItems.get(myItems.indexOf(theItem));
+		for (int i = 0; i < myItems.size(); i++) {
+			if (myItems.get(i).getTitle().equals(theItemTitle)) {
+				myItems.remove(i);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -158,7 +157,7 @@ public class Auction implements Comparable<Auction> {
 	 * @return a list of items
 	 */
 	public List<Item> getAllItems() {
-		return myItems;
+		return new LinkedList<>(myItems);
 	}
 
 	/**
@@ -187,7 +186,7 @@ public class Auction implements Comparable<Auction> {
 
 	public Calendar getDateAuctionEnds() {
 		Calendar result = (Calendar) myDate.clone();
-		result.set(Calendar.HOUR, result.get(Calendar.HOUR) + hourDur);
+		result.set(Calendar.HOUR_OF_DAY, result.get(Calendar.HOUR_OF_DAY) + hourDur);
 		result.set(Calendar.MINUTE, result.get(Calendar.MINUTE) + minDur);
 		return result;
 	}
@@ -216,7 +215,7 @@ public class Auction implements Comparable<Auction> {
 	 * @return
 	 */
 	public int getMonth() {
-		return myDate.get(Calendar.MONTH); // FIXME subtract by 1;
+		return myDate.get(Calendar.MONTH); 
 	}
 
 	/**
@@ -224,7 +223,7 @@ public class Auction implements Comparable<Auction> {
 	 * 
 	 * @return
 	 */
-	public int getHour() {
+	public int getStartHour() {
 		return myDate.get(Calendar.HOUR_OF_DAY);
 	}
 
@@ -233,14 +232,14 @@ public class Auction implements Comparable<Auction> {
 	 * 
 	 * @return
 	 */
-	public int getMin() {
+	public int getStartMin() {
 		return myDate.get(Calendar.MINUTE);
 	}
 	
 	public void setStartingTime(final String time) {
 		String start[] = time.split(":");
 		// TODO Check condition to throw exception.
-		myDate.set(Calendar.HOUR, Integer.parseInt(start[0]));
+		myDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(start[0]));
 		myDate.set(Calendar.MINUTE, Integer.parseInt(start[1]));
 	}
 
@@ -301,7 +300,7 @@ public class Auction implements Comparable<Auction> {
 	public String toString() {
 		String result = myOrgName + " " + myDate.getTime() + "\n";
 		for (int i = 0; i < myItems.size(); i++) {
-			result += (i + 1) + ") " + myItems.get(i) + "\n";
+			result += "--> " + myItems.get(i) + "\n";
 		}
 		return result;
 	}

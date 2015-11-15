@@ -92,12 +92,10 @@ public class DisplayCalendar {
 	 * @return -1 if there are 2 Auctions in same day
 	 */
 	private int has2AuctionsInSameDay(final Auction theAuc) {
-		Calendar newAuction = theAuc.getDateAuctionStarts();
 		int count = 0, indexAuction = -1;
 		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
-			Calendar auc2 = myUpcomingAuctions.get(i).getDateAuctionStarts();
-			if (auc2.get(Calendar.MONTH) == newAuction.get(Calendar.MONTH) 
-					&& auc2.get(Calendar.DAY_OF_MONTH) == newAuction.get(Calendar.DAY_OF_MONTH)) {
+			if (myUpcomingAuctions.get(i).getYear() == theAuc.getYear()
+					&& myUpcomingAuctions.get(i).getMonth() == theAuc.getMonth()) {
 				count++;
 				indexAuction = i;
 			}
@@ -116,21 +114,18 @@ public class DisplayCalendar {
 	 * @return
 	 */
 	public boolean has2HoursBetween2Auctions(final Auction theAuc) {
-		Calendar newAuction = theAuc.getDateAuctionStarts();
 		int indexAuc = has2AuctionsInSameDay(theAuc);
 		if (indexAuc == -1) { // there are 2 auctions at the same day.
 			return true;
 		}  
-		Calendar oldAuction = myUpcomingAuctions.get(indexAuc).getDateAuctionStarts();
+		Auction oldAuction = myUpcomingAuctions.get(indexAuc);
 		// the old auction starts first.
-		if (newAuction.get(Calendar.HOUR) > oldAuction.get(Calendar.HOUR)) {
-			if (newAuction.get(Calendar.HOUR)   // start time of new one subtract end time of old one.
-				- myUpcomingAuctions.get(indexAuc).getDateAuctionEnds().get(Calendar.HOUR) > 2) {
+		if (theAuc.getStartHour() > oldAuction.getStartHour()) {
+			if (theAuc.getStartHour() - oldAuction.getDateAuctionEnds().get(Calendar.HOUR_OF_DAY) > 2) {
 				return false;
 			} else return true;
 		} else { // the new auction start first.
-			if (oldAuction.get(Calendar.HOUR) 	// start time of old one subtract end time of new one.
-					- theAuc.getDateAuctionEnds().get(Calendar.HOUR) > 2) {
+			if (oldAuction.getStartHour() - theAuc.getDateAuctionEnds().get(Calendar.HOUR_OF_DAY) > 2) {
 				return false;
 			} else return true;
 		}
@@ -425,9 +420,4 @@ public class DisplayCalendar {
 //			return 29;
 //		return 28;
 //	}
-
-	public static void main(String[] args) {
-		DisplayCalendar dc = new DisplayCalendar();
-		System.out.println(dc);
-	}
 }

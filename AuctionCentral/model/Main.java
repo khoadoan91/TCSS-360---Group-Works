@@ -289,7 +289,7 @@ public class Main {
 					auctions.get(i).getMonth() + "-" 
 					+ auctions.get(i).getDayOfMonth() + "-" 
 					+ auctions.get(i).getYear() + "\n" +
-					auctions.get(i).getHour() + ":" + auctions.get(i).getMin());
+					auctions.get(i).getStartHour() + ":" + auctions.get(i).getStartMin());
 			List<Item> theItems = auctions.get(i).getAllItems();
 			for (int j = 0; j < theItems.size(); j++) {
 				System.out.print(theItems.get(j).getTitle() + ", ");

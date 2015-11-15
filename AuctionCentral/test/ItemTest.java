@@ -4,6 +4,9 @@
 package test;
 
 import static org.junit.Assert.*;
+
+import java.math.BigDecimal;
+
 import model.Item;
 
 import org.junit.Before;
@@ -23,8 +26,8 @@ public class ItemTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		myItem1 = new Item("iPad", 5, "Used, in good condition");
-		myItem2 = new Item("Nexus 6", 1, "Used, broken screen");
+		myItem1 = new Item("iPad", 5, new BigDecimal("339.99"), "Used, in good condition");
+		myItem2 = new Item("Nexus 6", 1, new BigDecimal("450.00"), "Used, broken screen");
 	}
 
 	/**

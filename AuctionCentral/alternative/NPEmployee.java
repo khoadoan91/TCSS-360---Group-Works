@@ -122,7 +122,9 @@ public class NPEmployee implements User {
 				System.out.println("Choose your edit.");
 				System.out.println("1. Edit Title");
 				System.out.println("2. Edit Quantity");
-				System.out.println("1. Edit Description");
+				System.out.println("3. Edit Starting Price");
+				System.out.println("4. Edit Description");
+				System.out.println("5. Remove an item");
 				switch (scanner.nextInt()) {
 					case 1: 
 						System.out.print("New Title : ");
@@ -130,9 +132,16 @@ public class NPEmployee implements User {
 					case 2: 
 						System.out.print("New Quantity : ");
 						items.get(i - 1).setQuantity(scanner.nextInt()); break;
-					case 3: 
+					case 3:
+						System.out.print("New Starting Price: ");
+						items.get(i - 1).setStartingPrice(new BigDecimal(scanner.next())); break;
+					case 4: 
 						System.out.print("New Description : ");
 						items.get(i - 1).setDescription(scanner.next()); break;
+					case 5:
+						System.out.println("Item was removed!");
+						myAuction.removeItem(items.remove(i - 1).getTitle()); break;
+					default: break;
 				}
 			}
 		}
