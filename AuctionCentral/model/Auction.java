@@ -206,9 +206,7 @@ public class Auction implements Comparable<Auction> {
 	 * @return
 	 */
 	public int getHour() {
-		//FIXME
-		//return myDate.get(Calendar.HOUR_OF_DAY);
-		return hourDur;
+		return myDate.get(Calendar.HOUR_OF_DAY);	
 	}
 
 	/**
@@ -217,9 +215,7 @@ public class Auction implements Comparable<Auction> {
 	 * @return
 	 */
 	public int getMin() {
-		//FIXME
-		//return myDate.get(Calendar.MINUTE);
-		return minDur;
+		return myDate.get(Calendar.MINUTE);
 	}
 	
 	public void setStartingTime(final String time) {
@@ -303,16 +299,16 @@ public class Auction implements Comparable<Auction> {
 		System.out.println(cal.get(Calendar.MONTH));
 		Auction auc = new Auction("GoodWill", list, cal, "2:10");
 		System.out.println(auc.getAuctionName());
-//		System.out.println(auc.getYear());
-//		System.out.println(auc.getMonth());
-//		System.out.println(auc.getDayOfMonth());
-//		System.out.println(auc.getHour());
-//		System.out.println(auc.getMin());
+		System.out.println(auc.getYear());
+		System.out.println(auc.getMonth());
+		System.out.println(auc.getDayOfMonth());
+		System.out.println(auc.getHour());
+		System.out.println(auc.getMin());
 //		System.out.println(Calendar.getInstance().get(Calendar.MONTH));
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 //		System.out.println(new SimpleDateFormat("MMMMMMMMM").format(cal.get(Calendar.MONTH)).toUpperCase());
-		System.out.println(cal.get(Calendar.DAY_OF_WEEK_IN_MONTH));
-		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(cal.get(Calendar.DAY_OF_WEEK_IN_MONTH));
+//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
 		System.out.println(cal.getTime());
 	}
 }

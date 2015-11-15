@@ -30,7 +30,8 @@ public class MainTest {
 
 	@Test
 	public void testReadAuctionListFile() {
-		//assertEquals(testAuctions.get(0).getAuctionName(), "GOODWILL-INDUSTRIES-OCT-26-2015");
+		System.out.println(testAuctions.get(0).getAuctionName());
+		assertEquals(testAuctions.get(0).getAuctionName(), "GOODWILL-INDUSTRIES-OCT-26-2015");
 		assertEquals(testAuctions.get(0).getOrganizationNam(), "GOODWILL-INDUSTRIES");
 		assertEquals(testAuctions.get(0).getAllItems().size(), 3);
 		//assertEquals(testAuctions.get(0).getMonth(), 10);
