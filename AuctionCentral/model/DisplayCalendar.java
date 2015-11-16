@@ -79,8 +79,24 @@ public class DisplayCalendar {
 	 * @param theAuc the new Auction
 	 * @return
 	 */
+    //TODO adjust for leap years
 	public boolean hasMore5AuctionsIn7Days(final Auction theAuc) {
-		// TODO how to determine which 7 days are?
+   int count;
+		for (Auction myAuction1 : myUpcomingAuctions) {
+         count = 0;
+         if (theAuc.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) >= (myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR + 7)) ||
+            theAuc.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) <= (myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR - 7)))
+            continue;
+         for (Auction myAuction2 : myUpcomingAuctions) {
+            if (myAuction2.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) >= (myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR + 7)) ||
+               myAuction2.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) <= (myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR - 7))){
+               count++;
+            }
+            if (count >= 5){
+               return true;
+            }
+         }
+      }
 		return false;
 	}
 	
