@@ -91,6 +91,7 @@ public class NPEmployee implements User {
 		myAuction = new Auction(myOrgName, itemList, tempCal, timeDur);
 		boolean isSucess = cal.addAuction(myAuction);
 		if (!isSucess) {
+			myAuction = null;
 			System.out.println("Oops!! We are not allowed to add your auction!");
 		} else System.out.println("You sucessfully add your auction!");
 	}
@@ -164,7 +165,8 @@ public class NPEmployee implements User {
 		myAuction.setDate(scanner.nextInt());
 	}
 
-	public void removeAuction() {
+	public void removeAuction(final DisplayCalendar cal) {
+		cal.removeAuction(myAuction);
 		myAuction = null;
 	}
 	
@@ -199,7 +201,7 @@ public class NPEmployee implements User {
 			switch (scanner.nextInt()) {
 				case 1: addAuction(scanner, cal); break;
 				case 2: editAuction(scanner); break;
-				case 3: removeAuction(); break;
+				case 3: removeAuction(cal); break;
 				case 4: viewMyAuction(); break;
 				default: isQuit = true; break;
 			}

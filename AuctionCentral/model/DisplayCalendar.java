@@ -89,13 +89,15 @@ public class DisplayCalendar {
 	 * No more than 2 auctions can be scheduled on the same day, and the start time of the second 
 	 * can be no earlier than 2 hours after the end time of the first.
 	 * @param theAuc the new Auction
-	 * @return -1 if there are 2 Auctions in same day
+	 * @return -1 if there are 2 Auctions in same day, -2 if the new Auction is not in 
+	 * any other Auctions day.
 	 */
 	private int has2AuctionsInSameDay(final Auction theAuc) {
-		int count = 0, indexAuction = -1;
+		int count = 0, indexAuction = -2;
 		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
 			if (myUpcomingAuctions.get(i).getYear() == theAuc.getYear()
-					&& myUpcomingAuctions.get(i).getMonth() == theAuc.getMonth()) {
+					&& myUpcomingAuctions.get(i).getMonth() == theAuc.getMonth() 
+					&& myUpcomingAuctions.get(i).getDayOfMonth() == theAuc.getDayOfMonth()) {
 				count++;
 				indexAuction = i;
 			}
@@ -117,7 +119,7 @@ public class DisplayCalendar {
 		int indexAuc = has2AuctionsInSameDay(theAuc);
 		if (indexAuc == -1) { // there are 2 auctions at the same day.
 			return true;
-		}  
+		} else if (indexAuc == -2) return false; 
 		Auction oldAuction = myUpcomingAuctions.get(indexAuc);
 		// the old auction starts first.
 		if (theAuc.getStartHour() > oldAuction.getStartHour()) {
@@ -140,18 +142,19 @@ public class DisplayCalendar {
 	 */
 	public boolean hasAuctionPerNPperYear(final Auction theAuction) {
 		Calendar aucTime = theAuction.getDateAuctionStarts();
-		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
+		for (int i = 0; i < myPastAuctions.size(); i++) {
 			if (myPastAuctions.get(i).getOrganizationNam().equals(theAuction.getOrganizationNam())) {
 				if (aucTime.get(Calendar.DAY_OF_YEAR) 	// the day of new one subtract the day of old one
-		- myPastAuctions.get(i).getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) > ONE_YEAR) {
+		- myPastAuctions.get(i).getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) >= ONE_YEAR) {
 					return true;
+				} else {
+					return false;
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 
-	//FIXME 
 	public boolean addAuction(final Auction theAuction) {
 		if (!hasExceededAuction() && !hasMoreThan90Days(theAuction) 
 				&& !hasMore5AuctionsIn7Days(theAuction) && !has2HoursBetween2Auctions(theAuction)
@@ -167,6 +170,10 @@ public class DisplayCalendar {
 //			return true;
 //		}
 //		return false;
+	}
+	
+	public void removeAuction(final Auction theAuction) {
+		myUpcomingAuctions.remove(theAuction);
 	}
 	
 	public List<Auction> getUpcomingAuctions() {
