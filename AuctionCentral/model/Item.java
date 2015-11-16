@@ -1,5 +1,7 @@
 package model;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.Calendar;
 
 /**
@@ -21,6 +23,9 @@ public class Item implements Comparable<Item> {
 
 	/** The description of the item. */
 	private String myDesc;
+	
+	/** Starting price of the item. */
+	private BigDecimal myStartingPrice;
 
 	/**
 	 * Constructs an item with parameters info.
@@ -29,7 +34,8 @@ public class Item implements Comparable<Item> {
 	 * @param theQuantity
 	 * @param theDesc
 	 */
-	public Item(final String theTitle, final int theQuantity, final String theDesc) {
+	public Item(final String theTitle, final int theQuantity, final BigDecimal price, 
+			final String theDesc) {
 		if (theTitle.length() == 0 || theQuantity < 1 || theDesc.length() == 0) {
 			throw new IllegalArgumentException();
 		}
@@ -41,6 +47,7 @@ public class Item implements Comparable<Item> {
 		myID = Calendar.getInstance().getTimeInMillis();
 		myTitle = theTitle;
 		myQuantity = theQuantity;
+		myStartingPrice = price;
 		myDesc = theDesc;
 	}
 
@@ -74,6 +81,10 @@ public class Item implements Comparable<Item> {
 	// public List<Image> getImages() {
 	// return myImages;
 	// }
+	
+	public BigDecimal getStartingPrice() {
+		return myStartingPrice;
+	}
 
 	/**
 	 * Returns the description.
@@ -107,6 +118,10 @@ public class Item implements Comparable<Item> {
 		}
 		myQuantity = theQt;
 	}
+	
+	public void setStartingPrice(final BigDecimal price) {
+		myStartingPrice = price;
+	}
 
 	/**
 	 * Sets the Description of the item.
@@ -137,8 +152,13 @@ public class Item implements Comparable<Item> {
 	// }
 	@Override
 	public String toString() {
-		return myTitle + "\nQuantity: " + myQuantity 
-				+"\nDescription: " + myDesc;
+		return myTitle + "\nQuantity: " + myQuantity + "\nStarting Price: " 
+				+ NumberFormat.getCurrencyInstance().format(myStartingPrice)
+				+ "\nDescription: " + myDesc ;
+	}
+	
+	public String toStringTextFile() {
+		return (myTitle + ", " + myQuantity + ", " + myStartingPrice + ", " + myDesc);
 	}
 
 	@Override

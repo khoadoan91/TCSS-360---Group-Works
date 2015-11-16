@@ -1,6 +1,10 @@
 
 package model;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +27,7 @@ public class NPEmployee extends User {
 	public NPEmployee(String username, DisplayCalendar myCalendar) {
 		super(username, myCalendar);
 	}
-	
+	 
 	@Deprecated
 	public NPEmployee(String username) {
 		this(username, "", new DisplayCalendar());
@@ -33,8 +37,8 @@ public class NPEmployee extends User {
 		super(username, cal);
 		myOrgName = orgName;
 		myCalendar = cal;
-		//FIXME What is this for????
-		//scan = new Scanner(System.in);
+		
+		scan = new Scanner(System.in);
 	}
 
 	public void addAuction() {
@@ -42,7 +46,7 @@ public class NPEmployee extends User {
 		Calendar tempCal = Calendar.getInstance();
 		tempCal.clear();
 		int itemCount;
-		String itemTitl, itemDesc;
+		String itemTitl = "", itemDesc = "";
 		int itemQt;
 		List<Item> itemList = new ArrayList<>();
 
@@ -60,18 +64,25 @@ public class NPEmployee extends User {
 		System.out.print("How many items: ");
 		itemCount = scan.nextInt();
 
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		for (int i = 0; i < itemCount; i++) {
-			System.out.print("Item Title: ");
-			itemTitl = scan.next();
+			System.out.print("\nItem Title: ");
+			try {
+				itemTitl = reader.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			System.out.print("Item Quantity: ");
 			itemQt = scan.nextInt();
-			System.out.println("Description:");
-
-			// TODO Only reads a single token. Figure out a way to read an
-			// entire string using Scanner
-			itemDesc = scan.next();
-			System.out.println(itemDesc);
-			itemList.add(new Item(itemTitl, itemQt, itemDesc));
+			System.out.print("Starting price: ");
+			BigDecimal startPrice = new BigDecimal(scan.next());
+			System.out.print("Description: ");
+			try {
+				itemDesc = reader.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			itemList.add(new Item(itemTitl, itemQt, startPrice, itemDesc));
 		}
 		myAuction = new Auction(myOrgName, itemList, tempCal, timeDur);
 
