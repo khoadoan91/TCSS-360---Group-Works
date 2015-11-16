@@ -323,26 +323,26 @@ public class Auction implements Comparable<Auction> {
 	}
 
 	public static void main(String[] args) {
-		List<Item> list = new ArrayList<>();
-//		Item item1 = new Item("iPad", 1, "New");
-//		Item item2 = new Item("Macbook", 1, "Used");
-//		list.add(item1);
-//		list.add(item2);
-		Calendar cal = Calendar.getInstance();
-		cal.set(2015, 8, 25, 8, 30);
-		System.out.println(cal.get(Calendar.MONTH));
-		Auction auc = new Auction("GoodWill", list, cal, "2:10");
-		System.out.println(auc.getAuctionName());
-		System.out.println(auc.getYear());
-		System.out.println(auc.getMonth());
-		System.out.println(auc.getDayOfMonth());
-		System.out.println(auc.getHour());
-		System.out.println(auc.getMin());
-//		System.out.println(Calendar.getInstance().get(Calendar.MONTH));
-		cal.set(Calendar.DAY_OF_MONTH, 1);
-//		System.out.println(new SimpleDateFormat("MMMMMMMMM").format(cal.get(Calendar.MONTH)).toUpperCase());
-//		System.out.println(cal.get(Calendar.DAY_OF_WEEK_IN_MONTH));
-//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
-		System.out.println(cal.getTime());
+//		List<Item> list = new ArrayList<>();
+////		Item item1 = new Item("iPad", 1, "New");
+////		Item item2 = new Item("Macbook", 1, "Used");
+////		list.add(item1);
+////		list.add(item2);
+//		Calendar cal = Calendar.getInstance();
+//		cal.set(2015, 8, 25, 8, 30);
+//		System.out.println(cal.get(Calendar.MONTH));
+//		Auction auc = new Auction("GoodWill", list, cal, "2:10");
+//		System.out.println(auc.getAuctionName());
+//		System.out.println(auc.getYear());
+//		System.out.println(auc.getMonth());
+//		System.out.println(auc.getDayOfMonth());
+////		System.out.println(auc.getHour());
+////		System.out.println(auc.getMin());
+////		System.out.println(Calendar.getInstance().get(Calendar.MONTH));
+//		cal.set(Calendar.DAY_OF_MONTH, 1);
+////		System.out.println(new SimpleDateFormat("MMMMMMMMM").format(cal.get(Calendar.MONTH)).toUpperCase());
+////		System.out.println(cal.get(Calendar.DAY_OF_WEEK_IN_MONTH));
+////		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(cal.getTime());
 	}
 }
