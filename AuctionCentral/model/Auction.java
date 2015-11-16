@@ -304,6 +304,10 @@ public class Auction implements Comparable<Auction> {
 		}
 		return result;
 	}
+	
+	public String toStringTextFile() {
+		return (myAucName + ", " + getAllItems().size() + ", " + getStartHour() + ":" + getStartMin() + ", " + hourDur + ":" + minDur);
+	}
 
 	@Override
 	public int compareTo(Auction theAuction) {

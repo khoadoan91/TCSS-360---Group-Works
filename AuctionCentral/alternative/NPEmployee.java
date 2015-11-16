@@ -2,8 +2,11 @@
 package alternative;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -205,5 +208,33 @@ public class NPEmployee implements User {
 				default: isQuit = true; break;
 			}
 		} while (!isQuit);
+		exit(scanner, cal);
+	}
+	private void exit(Scanner scanner, DisplayCalendar cal) {
+		PrintWriter auctionWriter = null, itemWriter = null;
+		try {
+			auctionWriter = new PrintWriter("auction_list3.txt", "UTF-8");
+			itemWriter = new PrintWriter("item_list2.txt", "UTF-8");
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}		
+		 
+		
+//		ArrayList<Auction> allAuctions = new ArrayList<>();
+//		allAuctions.addAll(cal.getPastAuctions());
+//		allAuctions.addAll(cal.getUpcomingAuctions());
+		
+		for (int i = 0; i < cal.getPastAuctions().size(); ++i) {
+			//System.out.println(cal.getPastAuctions().get(i).getAllItems().get);		WRONG
+			auctionWriter.println(cal.getPastAuctions().get(i).toStringTextFile());
+			itemWriter.println(cal.getPastAuctions().get(i).getAllItems().toString());
+		}
+		for (int i = 0; i < cal.getUpcomingAuctions().size(); ++i) {
+			auctionWriter.println(cal.getUpcomingAuctions().get(i).toStringTextFile());
+			itemWriter.println(cal.getUpcomingAuctions().get(i).getAllItems().toString());    //WRONG
+		}
+		auctionWriter.close();
+		itemWriter.close();
+		
 	}
 }

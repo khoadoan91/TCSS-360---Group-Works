@@ -156,6 +156,10 @@ public class Item implements Comparable<Item> {
 				+ NumberFormat.getCurrencyInstance().format(myStartingPrice)
 				+ "\nDescription: " + myDesc ;
 	}
+	
+	public String toStringTextFile() {
+		return null;
+	}
 
 	@Override
 	public int compareTo(final Item theItem) {

@@ -177,6 +177,9 @@ public class DisplayCalendar {
 	public List<Auction> getUpcomingAuctions() {
 		return myUpcomingAuctions;
 	}
+	public List<Auction> getPastAuctions() {
+		return myPastAuctions;
+	}
 
 //	public List<Auction> getAllAuctions() {
 //		return myAuctions;

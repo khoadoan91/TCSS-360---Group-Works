@@ -42,6 +42,8 @@ public class AuctionCentralMain {
 		return null;
 	}
 	
+	
+	
 	private void readUserFile(File userInput, List<Auction> auctionList) {
 		try {
 			Scanner scan = new Scanner(userInput);
@@ -116,7 +118,7 @@ public class AuctionCentralMain {
 		return result;
 	}
 	
-	public void promptLogin() {
+	private void promptLogin() {
 		Scanner scanner = new Scanner(System.in);
 		boolean isLogin = false;
 		String user;
@@ -133,6 +135,7 @@ public class AuctionCentralMain {
 		myUsers.get(user).run(scanner, myCalendar);
 		scanner.close();
 	}
+
 	
 	/**
 	 * @param args
