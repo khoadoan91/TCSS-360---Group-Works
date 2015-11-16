@@ -199,7 +199,7 @@ public class NPEmployee implements User {
 			System.out.println("2.  Edit my auction");
 			System.out.println("3.  Remove my auction");
 			System.out.println("4.  View my current auction");
-			System.out.print("------Done?? want to exit? type other number ");
+			System.out.print("------Done?? want to exit? type other number");
 			switch (scanner.nextInt()) {
 				case 1: addAuction(scanner, cal); break;
 				case 2: editAuction(scanner); break;
@@ -210,37 +210,28 @@ public class NPEmployee implements User {
 		} while (!isQuit);
 		exit(scanner, cal);
 	}
+	
 	private void exit(Scanner scanner, DisplayCalendar cal) {
 		PrintWriter auctionWriter = null, itemWriter = null;
 		try {
-			auctionWriter = new PrintWriter("auction_list3.txt", "UTF-8");
-			itemWriter = new PrintWriter("item_list2.txt", "UTF-8");
+			auctionWriter = new PrintWriter("current_auction_list.txt", "UTF-8");
+			itemWriter = new PrintWriter("current_item_list.txt", "UTF-8");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}		
-		 
-		
-//		ArrayList<Auction> allAuctions = new ArrayList<>();
-//		allAuctions.addAll(cal.getPastAuctions());
-//		allAuctions.addAll(cal.getUpcomingAuctions());
-		int itemCounter = 0;
 		for (int i = 0; i < cal.getPastAuctions().size(); ++i) {
-			//System.out.println(cal.getPastAuctions().get(i).getAllItems().get);		WRONG
 			auctionWriter.println(cal.getPastAuctions().get(i).toStringTextFile());
 			for (int j = 0; j < cal.getPastAuctions().get(i).getAllItems().size(); ++j) {
 				itemWriter.println(cal.getPastAuctions().get(i).getAllItems().get(j).toStringTextFile());
-				//++itemCounter;
 			}
 		}
 		for (int i = 0; i < cal.getUpcomingAuctions().size(); ++i) {
 			auctionWriter.println(cal.getUpcomingAuctions().get(i).toStringTextFile());
 			for (int j = 0; j < cal.getUpcomingAuctions().get(i).getAllItems().size(); ++j) {
 				itemWriter.println(cal.getUpcomingAuctions().get(i).getAllItems().get(j).toStringTextFile());
-				//++itemCounter;
 			}
 		}
 		auctionWriter.close();
 		itemWriter.close();
-		
 	}
 }

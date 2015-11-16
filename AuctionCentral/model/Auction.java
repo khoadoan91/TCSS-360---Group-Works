@@ -306,7 +306,8 @@ public class Auction implements Comparable<Auction> {
 	}
 	
 	public String toStringTextFile() {
-		return (myAucName + ", " + getAllItems().size() + ", " + getStartHour() + ":" + getStartMin() + ", " + hourDur + ":" + minDur);
+		return (myAucName + ", " + getAllItems().size() + ", " + getStartHour() 
+				+ ":" + getStartMin() + ", " + hourDur + ":" + minDur);
 	}
 
 	@Override
