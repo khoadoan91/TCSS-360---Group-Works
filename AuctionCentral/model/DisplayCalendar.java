@@ -92,10 +92,12 @@ public class DisplayCalendar {
 	 * @return -1 if there are 2 Auctions in same day
 	 */
 	private int has2AuctionsInSameDay(final Auction theAuc) {
-		int count = 0, indexAuction = -1;
+		int count = 0, indexAuction = -2;
 		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
 			if (myUpcomingAuctions.get(i).getYear() == theAuc.getYear()
-					&& myUpcomingAuctions.get(i).getMonth() == theAuc.getMonth()) {
+					&& myUpcomingAuctions.get(i).getMonth() == theAuc.getMonth()
+					&& myUpcomingAuctions.get(i).getDayOfMonth() == theAuc.getDayOfMonth()) {
+				System.out.println(i);
 				count++;
 				indexAuction = i;
 			}
@@ -118,6 +120,9 @@ public class DisplayCalendar {
 		if (indexAuc == -1) { // there are 2 auctions at the same day.
 			return true;
 		}  
+		else if (indexAuc == -2) {
+			return false;
+		}
 		Auction oldAuction = myUpcomingAuctions.get(indexAuc);
 		// the old auction starts first.
 		if (theAuc.getStartHour() > oldAuction.getStartHour()) {
@@ -134,13 +139,13 @@ public class DisplayCalendar {
 	/**
 	 * Fifth business rule: No more than one auction per year per 
 	 * Non-profit organization can be scheduled.
-	 * True is good -> it means that the NPE has one auction per year.
+	 * False is good -> it means that the NPE has one auction per year.
 	 * @param theAuction
 	 * @return
 	 */
 	public boolean hasAuctionPerNPperYear(final Auction theAuction) {
 		Calendar aucTime = theAuction.getDateAuctionStarts();
-		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
+		for (int i = 0; i < myPastAuctions.size(); i++) {
 			if (myPastAuctions.get(i).getOrganizationNam().equals(theAuction.getOrganizationNam())) {
 				if (aucTime.get(Calendar.DAY_OF_YEAR) 	// the day of new one subtract the day of old one
 		- myPastAuctions.get(i).getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) > ONE_YEAR) {
@@ -155,7 +160,7 @@ public class DisplayCalendar {
 	public boolean addAuction(final Auction theAuction) {
 		if (!hasExceededAuction() && !hasMoreThan90Days(theAuction) 
 				&& !hasMore5AuctionsIn7Days(theAuction) && !has2HoursBetween2Auctions(theAuction)
-				&& hasAuctionPerNPperYear(theAuction)){
+				&& !hasAuctionPerNPperYear(theAuction)){
 			myUpcomingAuctions.add(theAuction);
 			Collections.sort(myUpcomingAuctions);
 			return true;

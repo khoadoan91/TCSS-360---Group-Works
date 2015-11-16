@@ -92,6 +92,7 @@ public class NPEmployee implements User {
 		boolean isSucess = cal.addAuction(myAuction);
 		if (!isSucess) {
 			System.out.println("Oops!! We are not allowed to add your auction!");
+			myAuction = null;
 		} else System.out.println("You sucessfully add your auction!");
 	}
 
