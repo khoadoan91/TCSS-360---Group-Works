@@ -86,7 +86,7 @@ public class DisplayCalendarTest {
       DC.addAuction(TESTAuction));
       day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 1);
       TESTAuction = new Auction("THEORGOFTESTING", null, day, "03-01");
-      assertFalse(hasAuctionPerNPperYear(TESTAuction));
+      assertTrue(hasAuctionPerNPperYear(TESTAuction));
    }
 
    /** A test that always fails. **/
