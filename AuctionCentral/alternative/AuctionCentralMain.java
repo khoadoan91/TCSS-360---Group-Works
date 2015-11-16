@@ -142,8 +142,8 @@ public class AuctionCentralMain {
 	 */
 	public static void main(String[] args) {
 		File inputFile = new File("user_list.txt");
-		File auctionFile = new File("auction_list2.txt");
-		File itemFile = new File("item_list.txt");
+		File auctionFile = new File("auction_list3.txt");
+		File itemFile = new File("item_list2.txt");
 		AuctionCentralMain main = new AuctionCentralMain(inputFile, auctionFile, itemFile);
 		main.promptLogin();
 	}

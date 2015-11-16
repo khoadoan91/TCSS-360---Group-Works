@@ -223,15 +223,21 @@ public class NPEmployee implements User {
 //		ArrayList<Auction> allAuctions = new ArrayList<>();
 //		allAuctions.addAll(cal.getPastAuctions());
 //		allAuctions.addAll(cal.getUpcomingAuctions());
-		
+		int itemCounter = 0;
 		for (int i = 0; i < cal.getPastAuctions().size(); ++i) {
 			//System.out.println(cal.getPastAuctions().get(i).getAllItems().get);		WRONG
 			auctionWriter.println(cal.getPastAuctions().get(i).toStringTextFile());
-			itemWriter.println(cal.getPastAuctions().get(i).getAllItems().toString());
+			for (int j = 0; j < cal.getPastAuctions().get(i).getAllItems().size(); ++j) {
+				itemWriter.println(cal.getPastAuctions().get(i).getAllItems().get(j).toStringTextFile());
+				//++itemCounter;
+			}
 		}
 		for (int i = 0; i < cal.getUpcomingAuctions().size(); ++i) {
 			auctionWriter.println(cal.getUpcomingAuctions().get(i).toStringTextFile());
-			itemWriter.println(cal.getUpcomingAuctions().get(i).getAllItems().toString());    //WRONG
+			for (int j = 0; j < cal.getUpcomingAuctions().get(i).getAllItems().size(); ++j) {
+				itemWriter.println(cal.getUpcomingAuctions().get(i).getAllItems().get(j).toStringTextFile());
+				//++itemCounter;
+			}
 		}
 		auctionWriter.close();
 		itemWriter.close();

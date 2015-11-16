@@ -158,7 +158,7 @@ public class Item implements Comparable<Item> {
 	}
 	
 	public String toStringTextFile() {
-		return null;
+		return (myTitle + ", " + myQuantity + ", " + myStartingPrice + ", " + myDesc);
 	}
 
 	@Override
