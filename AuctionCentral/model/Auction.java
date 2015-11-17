@@ -53,6 +53,9 @@ public class Auction implements Comparable<Auction> {
 
 	/** The boolean for checking if the auction is available. */
 //	private boolean isAvailable;
+	
+	/** The bids that have been made on items in this auction. */
+	private List<Bid> myBids;
 
 	private int hourDur;
 
@@ -84,6 +87,7 @@ public class Auction implements Comparable<Auction> {
 		getAuctionName();
 		setTimeDuration(timeDuration);
 		myItems = new LinkedList<>(theItems);
+		myBids = new ArrayList<Bid>();
 //		isAvailable = true;
 	}
 
@@ -122,6 +126,19 @@ public class Auction implements Comparable<Auction> {
       }
       return new Auction(sb.toString(), null, theDate,"01-01");
    }
+   
+   public void addBid(final Bid theBid) {
+		myBids.add(theBid);
+	}
+   public void removeBid(final Bid theBid) {
+		if (theBid == null) {
+			throw new NullPointerException();
+		}
+		myBids.remove(theBid);
+	}
+   
+   
+   
 	/**
 	 * Adds an item to an Auction if the item is not in the Auction.
 	 *

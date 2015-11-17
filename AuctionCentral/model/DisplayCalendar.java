@@ -84,15 +84,15 @@ public class DisplayCalendar {
    int count;
 		for (Auction myAuction1 : myUpcomingAuctions) {
          count = 0;
-         if (theAuc.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) >= (myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR + 7)) ||
-            theAuc.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) <= (myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR - 7)))
+         if (myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) >= (theAuc.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR + 7)) ||
+        		 myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) <= (theAuc.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR - 7)))
             continue;
          for (Auction myAuction2 : myUpcomingAuctions) {
-            if (myAuction2.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) >= (myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR + 7)) ||
-               myAuction2.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) <= (myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR - 7))){
+            if (myAuction2.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) <= (myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR + 7)) ||
+               myAuction2.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) >= (myAuction1.getDateAuctionStarts().get(Calendar.DAY_OF_YEAR - 7))){
                count++;
             }
-            if (count >= 5){
+            if (count >= 4){
                return true;
             }
          }
@@ -108,7 +108,7 @@ public class DisplayCalendar {
 	 * @return -1 if there are 2 Auctions in same day, -2 if the new Auction is not in
 	 * any other Auctions day.
 	 */
-	private int has2AuctionsInSameDay(final Auction theAuc) {
+	public int has2AuctionsInSameDay(final Auction theAuc) {
 		int count = 0, indexAuction = -2;
 		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
 			if (myUpcomingAuctions.get(i).getYear() == theAuc.getYear()

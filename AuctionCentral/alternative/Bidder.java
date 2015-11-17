@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import model.Auction;
 import model.Bid;
 import model.DisplayCalendar;
 
@@ -96,10 +97,35 @@ public class Bidder implements User {
 //	public String getUserType() {
 //		return userType;
 //	}
+	
+	public void viewUpcomingAuction(Scanner scanner, DisplayCalendar cal) {
+		System.out.println("Please pick one auction for detail. ");
+		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
+		for (int i = 0; i < upcomingAuc.size(); i++) {
+			System.out.println((i + 1) + ") " + upcomingAuc.get(i));
+		}
+		int pickAuc = scanner.nextInt();
+		for (int i = 1; i <= upcomingAuc.size(); i++) {
+			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1).displayAuction());
+		}
+	}
+	
 
 	@Override
 	public void run(Scanner scanner, DisplayCalendar cal) {
-		// TODO Auto-generated method stub
+		boolean isQuit = false;
+		do {
+			System.out.println(cal);
+			System.out.println("Please choose an option below.");
+			System.out.println("1.  Choose an available auction");
+			System.out.println("2.  Change a bid on an item");
+			System.out.print("------Done!! want to exit? type any number ");
+			switch (scanner.nextInt()) {
+				case 1: viewUpcomingAuction(scanner, cal); break;
+				case 2: break;
+				default: isQuit = true; break;
+			}
+		} while (!isQuit);
 		
 	}
 }
