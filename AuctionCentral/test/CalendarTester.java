@@ -1,15 +1,15 @@
 package test;
 
 
-import model.Auction;
-import model.DisplayCalendar;
-
 import org.junit.Assert;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import current.Auction;
+import current.DisplayCalendar;
 
 import java.util.Calendar;
 

@@ -4,7 +4,7 @@
 package test;
 
 import static org.junit.Assert.*;
-import model.NPEmployee;
+import old.NPEmployee;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class NPEmployeeTest {
 	}
 
 	/**
-	 * Test method for {@link model.NPEmployee#getUserType()}.
+	 * Test method for {@link old.NPEmployee#getUserType()}.
 	 */
 	@Test
 	public void testGetUserType() {
@@ -32,7 +32,7 @@ public class NPEmployeeTest {
 	}
 
 	/**
-	 * Test method for {@link model.NPEmployee#NPEmployee(java.lang.String)}.
+	 * Test method for {@link old.NPEmployee#NPEmployee(java.lang.String)}.
 	 */
 	@Test
 	public void testNPEmployee() {
@@ -40,7 +40,7 @@ public class NPEmployeeTest {
 	}
 
 	/**
-	 * Test method for {@link model.NPEmployee#addAuction()}.
+	 * Test method for {@link old.NPEmployee#addAuction()}.
 	 */
 	@Test
 	public void testAddAuction() {
@@ -48,7 +48,7 @@ public class NPEmployeeTest {
 	}
 
 	/**
-	 * Test method for {@link model.NPEmployee#editAuction()}.
+	 * Test method for {@link old.NPEmployee#editAuction()}.
 	 */
 	@Test
 	public void testEditAuction() {
@@ -56,7 +56,7 @@ public class NPEmployeeTest {
 	}
 
 	/**
-	 * Test method for {@link model.NPEmployee#removeAuction()}.
+	 * Test method for {@link old.NPEmployee#removeAuction()}.
 	 */
 	@Test
 	public void testRemoveAuction() {

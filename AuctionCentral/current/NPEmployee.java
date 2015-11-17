@@ -1,5 +1,5 @@
 
-package alternative;
+package current;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,31 +13,15 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Calendar;
 
-import model.Auction;
-import model.DisplayCalendar;
-import model.Item;
-
 /**
  * @author nabilfadili
  * @author KyleD
  */
 public class NPEmployee implements User {
 
-//	final private String userType = "NPEmployee";
 
 	private String myOrgName;
 	private Auction myAuction;
-//	private DisplayCalendar myCalendar;  
-	
-//	// add myAuction from the calendar singleton
-//	public NPEmployee(String username, DisplayCalendar myCalendar) {
-//		super(username, myCalendar);
-//	}
-//	
-//	@Deprecated
-//	public NPEmployee(String username) {
-//		this(username, "", new DisplayCalendar());
-//	}
 	
 	public NPEmployee(final String orgName, final Auction theAuc) {
 		myOrgName = orgName;
@@ -199,15 +183,6 @@ public class NPEmployee implements User {
 			System.out.println(myAuction);
 		}
 	}
-
-//	public String getUserType() {
-//		return userType;
-//	}
-
-//	public static void main(String[] args) {
-//		NPEmployee testUser = new NPEmployee("Goodwill", new DisplayCalendar());
-//		testUser.run(new Scanner(System.in));
-//	}
 
 	@Override
 	public void run(Scanner scanner, DisplayCalendar cal) {

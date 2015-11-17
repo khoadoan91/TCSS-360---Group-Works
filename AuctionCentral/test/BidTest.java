@@ -6,13 +6,14 @@ import java.awt.Image;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import old.Bidder;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Bid;
-import model.Bidder;
-import model.DisplayCalendar;
-import model.Item;
+import current.Bid;
+import current.DisplayCalendar;
+import current.Item;
 
 /**
  * JUnit tests for the Bid class.

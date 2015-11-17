@@ -2,7 +2,7 @@
 package test;
 
 import static org.junit.Assert.*;
-import model.User;
+import old.User;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class UserTest {
 	}
 
 	/**
-	 * Test method for {@link model.User#getUsername()}.
+	 * Test method for {@link old.User#getUsername()}.
 	 */
 	@Test
 	public void testGetUsername() {
@@ -31,7 +31,7 @@ public class UserTest {
 	}
 
 	/**
-	 * Test method for {@link model.User#getUserType()}.
+	 * Test method for {@link old.User#getUserType()}.
 	 */
 	@Test
 	public void testGetUserType() {

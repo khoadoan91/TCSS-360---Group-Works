@@ -1,10 +1,7 @@
-package alternative;
+package current;
 
 import java.util.List;
 import java.util.Scanner;
-
-import model.DisplayCalendar;
-import model.Auction;
 
 /**
  * @author nabilfadili
@@ -12,25 +9,9 @@ import model.Auction;
  */
 public class ACEmployee implements User {
 	
-//	final private String userType = "ACEmployee";
-//	private DisplayCalendar myCalendar;
-
-	// TODO fix constructor to take the calendar from main
-//	public ACEmployee(DisplayCalendar theCalendar) {
-//		myCalendar = theCalendar; 
-//	}
-	
-//	@Deprecated
-//	public ACEmployee(String username) {
-//		super(username);
-//	}
-	
 	/**
-	 * Accesses calendar singleton and returns a list of upcoming auctions.
-	 * !!!Should this return a list or simply print the list?? !!!This would
-	 * mean changing the return type to void and printing from this method.
+	 * Accesses calendar singleton and prints upcoming auctions.
 	 * 
-	 * @return
 	 */
 	public void viewUpcomingAuction(Scanner scanner, DisplayCalendar cal) {
 		System.out.println("Please pick one auction for detail. ");
@@ -45,22 +26,8 @@ public class ACEmployee implements User {
 	}
 
 	/**
-	 * Prints details of an Auction object. !!!Would need to access the calendar
-	 * singleton and get an Auction object directly !!!from it. Or call
-	 * viewAuctionList() and then iterate through the list till we find !!!the
-	 * correct auction.
-	 * 
-	 * @param auctionID
+	 * Runs main menu and prompts for an ACEmployee.
 	 */
-//	public void selectAuction(Scanner scanner) {
-//		// TODO view details of an auction object, including list of items
-//	
-//	}
-
-//	public String getUserType() {
-//		return userType;
-//	}
-
 	@Override
 	public void run(Scanner scanner, DisplayCalendar cal) {
 		boolean isQuit = false;

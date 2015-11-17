@@ -1,10 +1,9 @@
 /**
  * 
  */
-package alternative;
+package current;
 
 import java.util.Scanner;
-import model.DisplayCalendar;
 
 /**
  * @author KyleD

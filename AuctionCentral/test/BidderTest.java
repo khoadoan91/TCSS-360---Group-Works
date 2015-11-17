@@ -8,14 +8,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import old.Bidder;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Auction;
-import model.Bid;
-import model.Bidder;
-import model.DisplayCalendar;
-import model.Item;
+import current.Auction;
+import current.Bid;
+import current.DisplayCalendar;
+import current.Item;
 
 /**
  * JUnit tests for the Bidder class.
