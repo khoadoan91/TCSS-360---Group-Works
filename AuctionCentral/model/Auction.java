@@ -51,7 +51,7 @@ public class Auction implements Comparable<Auction> {
 	private List<Item> myItems;
 
 	/** The boolean for checking if the auction is available. */
-	private boolean isAvailable;
+//	private boolean isAvailable;
 
 	private int hourDur;
 
@@ -83,7 +83,7 @@ public class Auction implements Comparable<Auction> {
 		getAuctionName();
 		setTimeDuration(timeDuration);
 		myItems = new LinkedList<>(theItems);
-		isAvailable = true;
+//		isAvailable = true;
 	}
 	
 	public Auction(final String theAucName, final List<Item> theItems, final String startTime, 
@@ -283,18 +283,18 @@ public class Auction implements Comparable<Auction> {
 	 * 
 	 * @param theAvailable
 	 */
-	public void setAvailable(final boolean theAvailable) {
-		isAvailable = theAvailable;
-	}
+//	public void setAvailable(final boolean theAvailable) {
+//		isAvailable = theAvailable;
+//	}
 
 	/**
 	 * Checks if the auction is available.
 	 * 
 	 * @return
 	 */
-	public boolean isAvailable() {
-		return isAvailable;
-	}
+//	public boolean isAvailable() {
+//		return isAvailable;
+//	}
 	
 	@Override
 	public String toString() {

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class DisplayCalendar {
 
 	/**
-	 * 
+	 *
 	 */
 	public static final int ONE_YEAR = 365;
 	public static final int MAX_AUCTION = 25;
@@ -22,12 +22,12 @@ public class DisplayCalendar {
 //	public static final long ONE_DAY = 1000 * 60 * 60 * 24;
 //	public static final long ONE_HOUR = 1000 * 60 * 60;
 
-//	private List<Auction> myAuctions; 
+//	private List<Auction> myAuctions;
 	private List<Auction> myPastAuctions;
 	private List<Auction> myUpcomingAuctions;
 
 	public DisplayCalendar() {
-		
+
 	}
 
 	public DisplayCalendar(final List<Auction> theAuction) {
@@ -56,9 +56,9 @@ public class DisplayCalendar {
 		return myUpcomingAuctions.size() >= MAX_AUCTION;
 //		return checkAvailableAuctions() == MAX_AUCTION;
 	}
-	
+
 	/**
-	 * Second business rule: 
+	 * Second business rule:
 	 * An auction may not be scheduled more than 90 days from the current date.
 	 * False is good -> we can add the auction into the calendar.
 	 * @param theAuc the new Auction
@@ -66,13 +66,13 @@ public class DisplayCalendar {
 	 */
 	public boolean hasMoreThan90Days(final Auction theAuc) {
 		Calendar ninetyFromNow = Calendar.getInstance();
-		ninetyFromNow.set(Calendar.DAY_OF_MONTH, 
+		ninetyFromNow.set(Calendar.DAY_OF_MONTH,
 				ninetyFromNow.get(Calendar.DAY_OF_MONTH) + NINETY_DAY_FROM_NOW);
 		if (theAuc.getDateAuctionStarts().compareTo(ninetyFromNow) > 0)
 			return true;
 		return false;
 	}
-	
+
 	/**
 	 * Third business rule:
 	 * No more than 5 auctions may be scheduled for any rolling 7 day period.
@@ -83,21 +83,23 @@ public class DisplayCalendar {
 		// TODO how to determine which 7 days are?
 		return false;
 	}
-	
+
 	/**
 	 * Fourth business rule: part a
-	 * No more than 2 auctions can be scheduled on the same day, and the start time of the second 
+	 * No more than 2 auctions can be scheduled on the same day, and the start time of the second
 	 * can be no earlier than 2 hours after the end time of the first.
 	 * @param theAuc the new Auction
-	 * @return -1 if there are 2 Auctions in same day
+	 * @return -1 if there are 2 Auctions in same day, -2 if the new Auction is not in
+	 * any other Auctions day.
 	 */
 	private int has2AuctionsInSameDay(final Auction theAuc) {
 		int count = 0, indexAuction = -2;
 		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
 			if (myUpcomingAuctions.get(i).getYear() == theAuc.getYear()
+
 					&& myUpcomingAuctions.get(i).getMonth() == theAuc.getMonth()
 					&& myUpcomingAuctions.get(i).getDayOfMonth() == theAuc.getDayOfMonth()) {
-				System.out.println(i);
+
 				count++;
 				indexAuction = i;
 			}
@@ -106,10 +108,10 @@ public class DisplayCalendar {
 		if (count == 2) return -1;
 		return indexAuction;
 	}
-	
+
 	/**
 	 * Fourth business rule: part b
-	 * No more than 2 auctions can be scheduled on the same day, and the start time of the second 
+	 * No more than 2 auctions can be scheduled on the same day, and the start time of the second
 	 * can be no earlier than 2 hours after the end time of the first.
 	 * False is good. We allow to add the new Auction.
 	 * @param theAuc
@@ -119,10 +121,8 @@ public class DisplayCalendar {
 		int indexAuc = has2AuctionsInSameDay(theAuc);
 		if (indexAuc == -1) { // there are 2 auctions at the same day.
 			return true;
-		}  
-		else if (indexAuc == -2) {
-			return false;
-		}
+
+		} else if (indexAuc == -2) return false; 
 		Auction oldAuction = myUpcomingAuctions.get(indexAuc);
 		// the old auction starts first.
 		if (theAuc.getStartHour() > oldAuction.getStartHour()) {
@@ -135,9 +135,9 @@ public class DisplayCalendar {
 			} else return true;
 		}
 	}
-	
+
 	/**
-	 * Fifth business rule: No more than one auction per year per 
+	 * Fifth business rule: No more than one auction per year per
 	 * Non-profit organization can be scheduled.
 	 * False is good -> it means that the NPE has one auction per year.
 	 * @param theAuction
@@ -148,17 +148,18 @@ public class DisplayCalendar {
 		for (int i = 0; i < myPastAuctions.size(); i++) {
 			if (myPastAuctions.get(i).getOrganizationNam().equals(theAuction.getOrganizationNam())) {
 				if (aucTime.get(Calendar.DAY_OF_YEAR) 	// the day of new one subtract the day of old one
-		- myPastAuctions.get(i).getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) > ONE_YEAR) {
+		- myPastAuctions.get(i).getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) >= ONE_YEAR) {
 					return true;
+				} else {
+					return false;
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 
-	//FIXME 
 	public boolean addAuction(final Auction theAuction) {
-		if (!hasExceededAuction() && !hasMoreThan90Days(theAuction) 
+		if (!hasExceededAuction() && !hasMoreThan90Days(theAuction)
 				&& !hasMore5AuctionsIn7Days(theAuction) && !has2HoursBetween2Auctions(theAuction)
 				&& !hasAuctionPerNPperYear(theAuction)){
 			myUpcomingAuctions.add(theAuction);
@@ -173,7 +174,11 @@ public class DisplayCalendar {
 //		}
 //		return false;
 	}
-	
+
+	public void removeAuction(final Auction theAuction) {
+		myUpcomingAuctions.remove(theAuction);
+	}
+
 	public List<Auction> getUpcomingAuctions() {
 		return myUpcomingAuctions;
 	}
@@ -196,7 +201,7 @@ public class DisplayCalendar {
 
 	/**
 	 * TODO check the business rules
-	 * 
+	 *
 	 * @param theDate
 	 * @return
 	 */
@@ -265,7 +270,7 @@ public class DisplayCalendar {
 	// No more than one auction per year per Non-profit organization can be
 	// scheduled
 //	private boolean businessRule5(final Calendar theDate, final List<Auction> theAuctions) {
-//		
+//
 //		return false;
 //	}
 
@@ -342,7 +347,7 @@ public class DisplayCalendar {
 //		return temp;
 //
 //	}
-	
+
 	public String displayCalendar(final Calendar time) {
 		Calendar calShow = (Calendar) time.clone();
 		// aucMonth is already sorted.
@@ -386,11 +391,11 @@ public class DisplayCalendar {
 				result += "|\n";
 			}
 			result += "===========================================\n";
-				
+
 		}
 		return result;
 	}
-	
+
 	private List<Integer> viewAuctionsInMonth(final int month) {
 		List<Integer> result = new ArrayList<>();
 		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
