@@ -125,7 +125,7 @@ public class DisplayCalendar {
 		} else if (indexAuc == -2) return false; 
 		Auction oldAuction = myUpcomingAuctions.get(indexAuc);
 		// the old auction starts first.
-		if (theAuc.getStartHour() > oldAuction.getStartHour()) {
+		if (theAuc.getStartHour() > oldAuction.getStartHour()) {		// TODO use a minute instead of hour
 			if (theAuc.getStartHour() - oldAuction.getDateAuctionEnds().get(Calendar.HOUR_OF_DAY) > 2) {
 				return false;
 			} else return true;
