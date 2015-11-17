@@ -42,6 +42,8 @@ public class AuctionCentralMain {
 		return null;
 	}
 	
+	
+	
 	private void readUserFile(File userInput, List<Auction> auctionList) {
 		try {
 			Scanner scan = new Scanner(userInput);
@@ -116,7 +118,7 @@ public class AuctionCentralMain {
 		return result;
 	}
 	
-	public void promptLogin() {
+	private void promptLogin() {
 		Scanner scanner = new Scanner(System.in);
 		boolean isLogin = false;
 		String user;
@@ -133,14 +135,15 @@ public class AuctionCentralMain {
 		myUsers.get(user).run(scanner, myCalendar);
 		scanner.close();
 	}
+
 	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		File inputFile = new File("user_list.txt");
-		File auctionFile = new File("auction_list2.txt");
-		File itemFile = new File("item_list.txt");
+		File auctionFile = new File("current_auction_list.txt");
+		File itemFile = new File("current_item_list.txt");
 		AuctionCentralMain main = new AuctionCentralMain(inputFile, auctionFile, itemFile);
 		main.promptLogin();
 	}

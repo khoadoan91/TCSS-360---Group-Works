@@ -25,36 +25,38 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-	
-		User currentUser = null;
 		boolean flag = true;
-		while (flag) {
-			currentUser = login();
-			if (currentUser != null) {flag = false;}
-		}
-		if (currentUser.getUserType().equals("ACEmployee")) {
-			ACEmployeeMainMenu((ACEmployee)currentUser);
-		}
-		if (currentUser.getUserType().equals("NPEmployee")) {
-			NPEmployeeMainMenu((NPEmployee)currentUser);
-		}
-		if (currentUser.getUserType().equals("Bidder")) {
-			bidderMainMenu((Bidder)currentUser);
-		}
+		do {
+			User currentUser = null;
+			while (flag) {
+				currentUser = login();
+				if (currentUser != null) {flag = false;}
+			}
+			flag = true;
+			if (currentUser.getUserType().equals("ACEmployee")) {
+				flag = ACEmployeeMainMenu((ACEmployee)currentUser);
+			}
+			if (currentUser.getUserType().equals("NPEmployee")) {
+				flag = NPEmployeeMainMenu((NPEmployee)currentUser);
+			}
+			if (currentUser.getUserType().equals("Bidder")) {
+				flag = bidderMainMenu((Bidder)currentUser);
+			}
+		} while (flag);
 	}
-	
+
 	/**
 	 * @author nabilfadili
 	 * ACEmployee main menu of program. Called after login.
 	 */
-	public static void ACEmployeeMainMenu(ACEmployee currentUser) {
+	public static boolean ACEmployeeMainMenu(ACEmployee currentUser) {
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
 			System.out.println("\nWhat would you like to do?");
 			System.out.println("1. View all auctions\n"
 					+ "2. View specific auction\n"
 					+ "3. View the calendar\n"
-					+ "4. Logout");	
+					+ "4. Logout");
 			switch (scanner.nextInt()) {
 			case 1:
 				currentUser.viewAuctionList();
@@ -66,8 +68,7 @@ public class Main {
 				currentUser.viewCalendar();
 				break;
 			case 4:
-				scanner.close();
-				return;
+				return logout(currentUser);
 			}
 		}
 	}
@@ -75,7 +76,7 @@ public class Main {
 	 * @author nabilfadili
 	 * NPEmployee main menu of program. Called after login.
 	 */
-	public static void NPEmployeeMainMenu(NPEmployee currentUser) {
+	public static boolean NPEmployeeMainMenu(NPEmployee currentUser) {
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
 			System.out.println("\nWhat would you like to do?");
@@ -94,8 +95,7 @@ public class Main {
 				currentUser.removeAuction();
 				break;
 			case 4:
-				scanner.close();
-				return;
+				return logout(currentUser);
 			}
 		}
 	}
@@ -103,7 +103,7 @@ public class Main {
 	 * @author nabilfadili
 	 * Bidder main menu of program. Called after login.
 	 */
-	public static void bidderMainMenu(Bidder currentUser) {
+	public static boolean bidderMainMenu(Bidder currentUser) {
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
 			System.out.println("\nWhat would you like to do?");
@@ -111,26 +111,56 @@ public class Main {
 					+ "2. Make a bid\n"
 					+ "3. Remove a bid\n"
 					+ "4. Edit a bid\n"
-					+ "5. Logout");	
+					+ "5. Logout");
 			switch (scanner.nextInt()) {
 			case 1:
-				
+
 				break;
 			case 2:
-				
+
 				break;
 			case 3:
-				
+
 				break;
 			case 4:
 				break;
 			case 5:
-				scanner.close();
-				return;
+				return logout(currentUser);
 			}
 		}
 	}
-	
+
+	/**
+	 * @author nabilfadili
+	 * Writes changes to the auction list and item list txt files that were
+	 * made during the session. This includes added and removed bids.
+	 * @param endUser made the the changes and thus narrows down where the txt fields will be changed.
+	 */
+	public static boolean logout(User endUser) {
+		Scanner scanner = new Scanner(System.in);
+		if (endUser.getUserType().equals("ACEmployee")) {
+
+		}
+		if (endUser.getUserType().equals("NPEmployee")) {
+
+		}
+		if (endUser.getUserType().equals("Bidder")) {
+
+		}
+		do {
+			System.out.println("Login as another user?\n" + "1. Yes\n" + "2. No");
+			switch (scanner.nextInt()) {
+			case 1:
+				return true;
+			case 2:
+				return false;
+			default:
+				System.out.println("Invalid input.");
+				break;
+			}
+		} while(true);
+	}
+
 	/**
 	 * @author nabilfadili
 	 * Decides which user object to create and return to the main program
@@ -140,7 +170,7 @@ public class Main {
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Enter username:");
 		String loginInput = scanner.nextLine();
-		
+
 		File inputFile = new File("user_list.txt");
 		ArrayList<Item> items = readItemListFile();
 		ArrayList<Auction> auctions = readAuctionListFile(items);
@@ -150,11 +180,11 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			errorMessage(e);
 		}
-		
+
 		String username = null, userType = null, orgName = null;
 		while (scanner.hasNext()) {
 			username = scanner.next();
-			if (loginInput.equalsIgnoreCase(username)) {				
+			if (loginInput.equalsIgnoreCase(username)) {
 				System.out.println("Welcome " + username + "!");
 				userType = scanner.next();
 				if (userType.equals("NPEmployee")) {
@@ -175,7 +205,6 @@ public class Main {
 			return new ACEmployee(username, myCalendar);
 		}
 		if (userType.equals("NPEmployee")) {
-			// FIXME NPEmployee needs to have the third parameter to store theOrgName
 			return new NPEmployee(username, orgName, myCalendar);
 		}
 		if (userType.equals("Bidder")) {
@@ -183,7 +212,7 @@ public class Main {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @author nabilfadili
 	 * Reads/parses the auction txt file and creates an Auction object for each line.
@@ -204,27 +233,27 @@ public class Main {
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String line;
-			String[] tokens;			
-										   
+			String[] tokens;
+
 			while ((line = bufferedReader.readLine()) != null) {
 				tokens = line.split(", ");
 				//Set orgName
 				orgName = tokens[0];
-				
+
 				//Creating item list
 				itemsPerAuction = Integer.parseInt(tokens[1]);			      //quantity of items
-				auctionItems = new ArrayList<>(itemsPerAuction);  
+				auctionItems = new ArrayList<>(itemsPerAuction);
 				for (int i = 0; i < itemsPerAuction; ++i) {
 					auctionItems.add(allItems.get(itemListCounter + i));
 				}
 				itemListCounter += itemsPerAuction;                           //increment for the next auction's items
-				
+
 				//Creating calendar object
 				cal.setTime(sdf.parse(tokens[2]));
-				
+
 				//Set duration
 				timeDuration = tokens[3];
-				
+
 				//Create Auction item
 				auctionList.add(new Auction(orgName, auctionItems, cal, timeDuration));
 			}
@@ -241,9 +270,9 @@ public class Main {
 	 * Reads/parses the item txt file and creates an Item object for each line.
 	 * Item txt file must be in sync with the auction txt file for this to work.
 	 * @return a list of all Item objects for all auctions.
-	 */	
+	 */
 	public static ArrayList<Item> readItemListFile() {
-		ArrayList<Item> items = new ArrayList<>();				
+		ArrayList<Item> items = new ArrayList<>();
 		try {
 			File file = new File("item_list.txt");
 			FileReader fileReader = new FileReader(file);
@@ -252,7 +281,7 @@ public class Main {
 			String[] tokens;
 			while ((line = bufferedReader.readLine()) != null) {
 				tokens = line.split(", ");
-				items.add(new Item(tokens[0], Integer.parseInt(tokens[1]), 
+				items.add(new Item(tokens[0], Integer.parseInt(tokens[1]),
 						new BigDecimal(tokens[2]), tokens[3]));
 			}
 			bufferedReader.close();
@@ -263,7 +292,7 @@ public class Main {
 		}
 		return items;
 	}
-	
+
 	/**
 	 * @author nabilfadili
 	 * Used to pass various exceptions and generate the appropriate error message
@@ -272,7 +301,7 @@ public class Main {
 	 */
 	public static void errorMessage(Exception e) {
 		if (e == null) {
-			System.err.println("Error reading from file. User = null"); 
+			System.err.println("Error reading from file. User = null");
 		}
 		if (e.getClass().isInstance(new FileNotFoundException())) {
 			System.err.println("Error reading file. Does not exist.");
@@ -280,21 +309,5 @@ public class Main {
 		//TODO add exceptions here as they come up so that the user is notified
 		//     of the error.
 	}
-	
-	public static void testFileaccuracy(ArrayList<Auction> auctions) {
-		//Tests output of reading the files
-		for (int i = 0; i < auctions.size(); i++) {
-			System.out.println(auctions.get(i).getAuctionName() + "\n" +
-					auctions.get(i).getOrganizationNam() + "\n" +
-					auctions.get(i).getMonth() + "-" 
-					+ auctions.get(i).getDayOfMonth() + "-" 
-					+ auctions.get(i).getYear() + "\n" +
-					auctions.get(i).getStartHour() + ":" + auctions.get(i).getStartMin());
-			List<Item> theItems = auctions.get(i).getAllItems();
-			for (int j = 0; j < theItems.size(); j++) {
-				System.out.print(theItems.get(j).getTitle() + ", ");
-			}
-			System.out.println("\n");
-	    }
-	}
+
 }

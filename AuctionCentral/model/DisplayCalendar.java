@@ -14,20 +14,21 @@ import java.util.ArrayList;
 public class DisplayCalendar {
 
 	/**
-	 * 
+	 *
 	 */
 	public static final int ONE_YEAR = 365;
 	public static final int MAX_AUCTION = 25;
 	public static final int NINETY_DAY_FROM_NOW = 90;
+	public static final int ONE_HOUR = 60;
 //	public static final long ONE_DAY = 1000 * 60 * 60 * 24;
 //	public static final long ONE_HOUR = 1000 * 60 * 60;
 
-//	private List<Auction> myAuctions; 
+//	private List<Auction> myAuctions;
 	private List<Auction> myPastAuctions;
 	private List<Auction> myUpcomingAuctions;
 
 	public DisplayCalendar() {
-		
+
 	}
 
 	public DisplayCalendar(final List<Auction> theAuction) {
@@ -56,9 +57,9 @@ public class DisplayCalendar {
 		return myUpcomingAuctions.size() >= MAX_AUCTION;
 //		return checkAvailableAuctions() == MAX_AUCTION;
 	}
-	
+
 	/**
-	 * Second business rule: 
+	 * Second business rule:
 	 * An auction may not be scheduled more than 90 days from the current date.
 	 * False is good -> we can add the auction into the calendar.
 	 * @param theAuc the new Auction
@@ -72,7 +73,7 @@ public class DisplayCalendar {
 			return true;
 		return false;
 	}
-	
+
 	/**
 	 * Third business rule:
 	 * No more than 5 auctions may be scheduled for any rolling 7 day period.
@@ -80,27 +81,44 @@ public class DisplayCalendar {
 	 * @return
 	 */
 	public boolean hasMore5AuctionsIn7Days(final Auction theAuc) {
-		// TODO how to determine which 7 days are?
+		int expectedDay = theAuc.getDayOfYear();
+		List<Auction> neighborAuction = new LinkedList<>();
+		for (Auction auc : myUpcomingAuctions) {
+			if (auc.getDayOfYear() - expectedDay < 7
+					|| expectedDay - auc.getDayOfYear() < 7) {
+				neighborAuction.add(auc);
+			}
+		}
+		int count = 0;
+		Collections.sort(neighborAuction);
+		for (int i = expectedDay - 6; i <= expectedDay + 6; i++) {
+			for (int j = i; j <= i + 6; j++) {
+				for (Auction auc : neighborAuction) {
+					if (auc.getDayOfYear() == j) {
+						count++;
+					}
+				}
+			}
+			if (count >= 5) return true;
+			else count = 0;
+		}
 		return false;
 	}
 	
-	// TODO we are not allow to add in the past
-	
-	
 	/**
 	 * Fourth business rule: part a
-	 * No more than 2 auctions can be scheduled on the same day, and the start time of the second 
+	 * No more than 2 auctions can be scheduled on the same day, and the start time of the second
 	 * can be no earlier than 2 hours after the end time of the first.
 	 * @param theAuc the new Auction
-	 * @return -1 if there are 2 Auctions in same day, -2 if the new Auction is not in 
+	 * @return -1 if there are 2 Auctions in same day, -2 if the new Auction is not in
 	 * any other Auctions day.
 	 */
-	private int has2AuctionsInSameDay(final Auction theAuc) {
+	public int has2AuctionsInSameDay(final Auction theAuc) {
 		int count = 0, indexAuction = -2;
 		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
 			if (myUpcomingAuctions.get(i).getYear() == theAuc.getYear()
-					&& myUpcomingAuctions.get(i).getMonth() == theAuc.getMonth() 
-					&& myUpcomingAuctions.get(i).getDayOfMonth() == theAuc.getDayOfMonth()) {
+					&& myUpcomingAuctions.get(i).getDayOfYear() == theAuc.getDayOfYear()) {
+
 				count++;
 				indexAuction = i;
 			}
@@ -109,10 +127,10 @@ public class DisplayCalendar {
 		if (count == 2) return -1;
 		return indexAuction;
 	}
-	
+
 	/**
 	 * Fourth business rule: part b
-	 * No more than 2 auctions can be scheduled on the same day, and the start time of the second 
+	 * No more than 2 auctions can be scheduled on the same day, and the start time of the second
 	 * can be no earlier than 2 hours after the end time of the first.
 	 * False is good. We allow to add the new Auction.
 	 * @param theAuc
@@ -122,33 +140,36 @@ public class DisplayCalendar {
 		int indexAuc = has2AuctionsInSameDay(theAuc);
 		if (indexAuc == -1) { // there are 2 auctions at the same day.
 			return true;
+
 		} else if (indexAuc == -2) return false; 
 		Auction oldAuction = myUpcomingAuctions.get(indexAuc);
 		// the old auction starts first.
-		if (theAuc.getStartHour() > oldAuction.getStartHour()) {		// TODO use a minute instead of hour
-			if (theAuc.getStartHour() - oldAuction.getDateAuctionEnds().get(Calendar.HOUR_OF_DAY) > 2) {
+		if (theAuc.getStartHour() > oldAuction.getStartHour()) {		
+			if ((theAuc.getStartHour() * ONE_HOUR + theAuc.getStartMin()) - 
+				(oldAuction.getDateAuctionEnds().get(Calendar.HOUR_OF_DAY) * ONE_HOUR + oldAuction.getDateAuctionEnds().get(Calendar.MINUTE)) 
+				> ONE_HOUR * 2) {
 				return false;
 			} else return true;
 		} else { // the new auction start first.
-			if (oldAuction.getStartHour() - theAuc.getDateAuctionEnds().get(Calendar.HOUR_OF_DAY) > 2) {
+			if ((oldAuction.getStartHour() * ONE_HOUR + oldAuction.getStartMin()) - 
+				(theAuc.getDateAuctionEnds().get(Calendar.HOUR_OF_DAY) * ONE_HOUR + theAuc.getDateAuctionEnds().get(Calendar.MINUTE)) 
+				> ONE_HOUR * 2) {
 				return false;
 			} else return true;
 		}
 	}
-	
+
 	/**
-	 * Fifth business rule: No more than one auction per year per 
+	 * Fifth business rule: No more than one auction per year per
 	 * Non-profit organization can be scheduled.
 	 * True is good -> it means that the NPE has one auction per year.
 	 * @param theAuction
 	 * @return
 	 */
 	public boolean hasAuctionPerNPperYear(final Auction theAuction) {
-		Calendar aucTime = theAuction.getDateAuctionStarts();
 		for (int i = 0; i < myPastAuctions.size(); i++) {
 			if (myPastAuctions.get(i).getOrganizationNam().equals(theAuction.getOrganizationNam())) {
-				if (aucTime.get(Calendar.DAY_OF_YEAR) 	// the day of new one subtract the day of old one
-		- myPastAuctions.get(i).getDateAuctionStarts().get(Calendar.DAY_OF_YEAR) >= ONE_YEAR) {
+				if (theAuction.getDayOfYear() - myPastAuctions.get(i).getDayOfYear() >= ONE_YEAR) {
 					return true;
 				} else {
 					return false;
@@ -157,30 +178,39 @@ public class DisplayCalendar {
 		}
 		return true;
 	}
+	
+	/**
+	 * NPE is not allowed to add an auction to the pass. If the auction is in the past, return true.
+	 * False is good -> the new auction is not in the past.
+	 * @param theAuction
+	 * @return
+	 */
+	private boolean isInPast(final Auction theAuction) {
+		Calendar now = Calendar.getInstance();
+		if (theAuction.getDayOfYear() <= now.get(Calendar.DAY_OF_YEAR)) return true;
+		return false;
+	}
 
 	public boolean addAuction(final Auction theAuction) {
-		if (!hasExceededAuction() && !hasMoreThan90Days(theAuction) 
+		if (!hasExceededAuction() && !hasMoreThan90Days(theAuction)
 				&& !hasMore5AuctionsIn7Days(theAuction) && !has2HoursBetween2Auctions(theAuction)
-				&& hasAuctionPerNPperYear(theAuction)){
+				&& hasAuctionPerNPperYear(theAuction) && !isInPast(theAuction)){
 			myUpcomingAuctions.add(theAuction);
 			Collections.sort(myUpcomingAuctions);
 			return true;
 		}
 		return false;
-//		if (!hasExceededAuction() && checkAvailability(theAuction.getDateAuctionStarts())) {
-//			myAuctions.add(theAuction);
-//			Collections.sort(myAuctions);
-//			return true;
-//		}
-//		return false;
 	}
-	
+
 	public void removeAuction(final Auction theAuction) {
 		myUpcomingAuctions.remove(theAuction);
 	}
-	
+
 	public List<Auction> getUpcomingAuctions() {
 		return myUpcomingAuctions;
+	}
+	public List<Auction> getPastAuctions() {
+		return myPastAuctions;
 	}
 
 //	public List<Auction> getAllAuctions() {
@@ -197,8 +227,8 @@ public class DisplayCalendar {
 //	}
 
 	/**
-	 * TODO check the business rules
 	 * 
+	 *
 	 * @param theDate
 	 * @return
 	 */
@@ -267,7 +297,7 @@ public class DisplayCalendar {
 	// No more than one auction per year per Non-profit organization can be
 	// scheduled
 //	private boolean businessRule5(final Calendar theDate, final List<Auction> theAuctions) {
-//		
+//
 //		return false;
 //	}
 
@@ -298,7 +328,7 @@ public class DisplayCalendar {
 //		// int i = gc.get(DAY_OF_WEEK_IN_MONTH);//I think this finds day of week
 //		// System.err.print(i);
 //		int tempdom = 1;
-//		// TODO make this different for each month
+//		
 //		while (tempdom <= this.daysInMonth(this.get(MONTH))) {
 //			int count = 0;
 //			temp = temp + "|";
@@ -312,7 +342,7 @@ public class DisplayCalendar {
 //							/ ONE_DAY) == (this.getTime().getTime() - (ONE_DAY * (dom - tempdom))) / ONE_DAY)
 //						count++;
 //				}
-//				temp = temp + count;// TODO make this 0-1-2 depending how many
+//				temp = temp + count;// 
 //									// auction are in that day;
 //				count = 0;
 //				long theDate = this.getTime().getTime() - (ONE_DAY * (dom - tempdom));
@@ -344,7 +374,7 @@ public class DisplayCalendar {
 //		return temp;
 //
 //	}
-	
+
 	public String displayCalendar(final Calendar time) {
 		Calendar calShow = (Calendar) time.clone();
 		// aucMonth is already sorted.
@@ -388,16 +418,16 @@ public class DisplayCalendar {
 				result += "|\n";
 			}
 			result += "===========================================\n";
-				
+
 		}
 		return result;
 	}
-	
+
 	private List<Integer> viewAuctionsInMonth(final int month) {
 		List<Integer> result = new ArrayList<>();
 		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
 			if (myUpcomingAuctions.get(i).getMonth() == month) {
-				result.add(myUpcomingAuctions.get(i).getDayOfMonth());
+				result.add(myUpcomingAuctions.get(i).getDateAuctionStarts().get(Calendar.DAY_OF_MONTH));
 			}
 		}
 		return result;

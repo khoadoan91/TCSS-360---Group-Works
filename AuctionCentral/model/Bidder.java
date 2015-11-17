@@ -28,8 +28,8 @@ public class Bidder extends User { // TODO implement the User interface
 	 * @param theAddress
 	 * @param theCreditCard
 	 */
-	public Bidder(final String userName, DisplayCalendar myCalendar) {
-		super(userName, myCalendar);
+	public Bidder(final String userName, DisplayCalendar calendar) {
+		super(userName, calendar);
 		myBids = new ArrayList<Bid>();
 	}
 	
@@ -53,12 +53,13 @@ public class Bidder extends User { // TODO implement the User interface
 	 * 
 	 * @param theBid
 	 */
-	public void addBid(final Bid theBid) {
+	public void addBid(final Auction theAuction, final Bid theBid) {
 		if (theBid == null) {
 			throw new NullPointerException();
 		}
 
 		myBids.add(theBid);
+		theAuction.addBid(theBid);
 	}
 
 	/**
@@ -66,7 +67,7 @@ public class Bidder extends User { // TODO implement the User interface
 	 * 
 	 * @param theBid
 	 */
-	public void removeBid(final Bid theBid) {
+	public void removeBid(final Auction theAuction, final Bid theBid) {
 		if (theBid == null) {
 			throw new NullPointerException();
 		} else if (!myBids.contains(theBid)) {
@@ -74,17 +75,22 @@ public class Bidder extends User { // TODO implement the User interface
 		}
 
 		myBids.remove(theBid);
+		theAuction.removeBid(theBid);
+		
 	}
 
-	/*
-	 * public Bid editBid(final Bid theBid) { if (theBid == null) { throw new
-	 * NullPointerException(); } else if (!myBids.contains(theBid)) { throw new
-	 * IllegalArgumentException(); }
-	 * 
-	 * 
-	 * }
-	 */
 	public String getUserType() {
 		return userType;
+	}
+	
+	@Override
+	public String toString() {
+		return userType + ": " + super.getUsername();
+	}
+	
+	public boolean equals(Object o) {
+		Bidder other = (Bidder) o;
+		return userType.equals(other.getUserType()) 
+				&& super.getUsername().equals(other.getUsername());
 	}
 }
