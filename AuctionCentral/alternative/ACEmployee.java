@@ -40,7 +40,7 @@ public class ACEmployee implements User {
 		}
 		int pickAuc = scanner.nextInt();
 		for (int i = 1; i <= upcomingAuc.size(); i++) {
-			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1));
+			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1).displayAuction());
 		}
 	}
 

@@ -295,12 +295,14 @@ public class Auction implements Comparable<Auction> {
 	 * @return
 	 */
 
-	public boolean isAvailable() {
-		return isAvailable;
-	}
+//	public boolean isAvailable() {
+//		return isAvailable;
+//	}
 	
-	@Override
 	public String toString() {
+		return myOrgName + " " + myDate.getTime() + "\n";
+	}
+	public String displayAuction() {
 		String result = myOrgName + " " + myDate.getTime() + "\n";
 		for (int i = 0; i < myItems.size(); i++) {
 			result += "--> " + myItems.get(i) + "\n";

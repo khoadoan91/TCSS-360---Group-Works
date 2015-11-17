@@ -101,20 +101,26 @@ public class NPEmployee implements User {
 	}
 
 	public void editAuction(Scanner scanner) {
-		System.out.println("Edit your auction. Choose your options");
-		System.out.println("1) Change the auction day");
-		System.out.println("2) Change the auction time");
-		System.out.println("3) Change the auction time duration");
-		System.out.println("4) Change the list of your item");
-		switch (scanner.nextInt()) {
-			case 1: editAuctionDay(scanner); break;
-			case 2: editAuctionStartTime(scanner); break;
-			case 3: editAuctionDuration(scanner); break;
-			case 4: editItem(scanner); break;
+		if (myAuction != null) {
+			System.out.println("Edit your auction. Choose your options");
+			System.out.println("1) Change the auction day");
+			System.out.println("2) Change the auction time");
+			System.out.println("3) Change the auction time duration");
+			System.out.println("4) Change the list of your item");
+			switch (scanner.nextInt()) {
+				case 1: editAuctionDay(scanner); break;
+				case 2: editAuctionStartTime(scanner); break;
+				case 3: editAuctionDuration(scanner); break;
+				case 4: editItem(scanner); break;
+			}
+		}
+		else {
+			System.out.println("You do not have an auction");
 		}
 	}
 	
 	private void editItem(Scanner scanner) {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		List<Item> items = myAuction.getAllItems();
 		System.out.println("Here is all items");
 		for (int i = 0; i < items.size(); i++) {
@@ -133,7 +139,11 @@ public class NPEmployee implements User {
 				switch (scanner.nextInt()) {
 					case 1: 
 						System.out.print("New Title : ");
-						items.get(i - 1).setTitle(scanner.next()); break;
+					try {
+						items.get(i - 1).setTitle(reader.readLine());
+					} catch (IOException e) {
+						e.printStackTrace();
+					} break;
 					case 2: 
 						System.out.print("New Quantity : ");
 						items.get(i - 1).setQuantity(scanner.nextInt()); break;
@@ -142,7 +152,11 @@ public class NPEmployee implements User {
 						items.get(i - 1).setStartingPrice(new BigDecimal(scanner.next())); break;
 					case 4: 
 						System.out.print("New Description : ");
-						items.get(i - 1).setDescription(scanner.next()); break;
+					try {
+						items.get(i - 1).setDescription(reader.readLine());
+					} catch (IOException e) {
+						e.printStackTrace();
+					} break;
 					case 5:
 						System.out.println("Item was removed!");
 						myAuction.removeItem(items.remove(i - 1).getTitle()); break;
@@ -165,7 +179,7 @@ public class NPEmployee implements User {
 	private void editAuctionDay(Scanner scanner) {
 		System.out.println("Change day to \"YYYY MM DD\": ");
 		myAuction.setYear(scanner.nextInt());
-		myAuction.setMonth(scanner.nextInt());
+		myAuction.setMonth(scanner.nextInt() - 1);
 		myAuction.setDate(scanner.nextInt());
 	}
 
@@ -193,20 +207,25 @@ public class NPEmployee implements User {
 
 	@Override
 	public void run(Scanner scanner, DisplayCalendar cal) {
+		Calendar timeRequested = Calendar.getInstance();
 		boolean isQuit = false;
 		do {
-			System.out.println(cal);
+			System.out.println(cal.displayCalendar(timeRequested));
 			System.out.println("Please choose an option below.");
 			System.out.println("1.  Add a new auction");
 			System.out.println("2.  Edit my auction");
 			System.out.println("3.  Remove my auction");
 			System.out.println("4.  View my current auction");
+			System.out.println("5.  View next month.");
+			System.out.println("6.  View last month.");
 			System.out.print("------Done?? want to exit? type other number");
 			switch (scanner.nextInt()) {
 				case 1: addAuction(scanner, cal); break;
 				case 2: editAuction(scanner); break;
 				case 3: removeAuction(cal); break;
 				case 4: viewMyAuction(); break;
+				case 5: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) + 1); break;
+				case 6: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) - 1); break;
 				default: isQuit = true; break;
 			}
 		} while (!isQuit);

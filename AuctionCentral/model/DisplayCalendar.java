@@ -139,7 +139,7 @@ public class DisplayCalendar {
 	/**
 	 * Fifth business rule: No more than one auction per year per
 	 * Non-profit organization can be scheduled.
-	 * False is good -> it means that the NPE has one auction per year.
+	 * True is good -> it means that the NPE has one auction per year.
 	 * @param theAuction
 	 * @return
 	 */
@@ -161,7 +161,7 @@ public class DisplayCalendar {
 	public boolean addAuction(final Auction theAuction) {
 		if (!hasExceededAuction() && !hasMoreThan90Days(theAuction)
 				&& !hasMore5AuctionsIn7Days(theAuction) && !has2HoursBetween2Auctions(theAuction)
-				&& !hasAuctionPerNPperYear(theAuction)){
+				&& hasAuctionPerNPperYear(theAuction)){
 			myUpcomingAuctions.add(theAuction);
 			Collections.sort(myUpcomingAuctions);
 			return true;

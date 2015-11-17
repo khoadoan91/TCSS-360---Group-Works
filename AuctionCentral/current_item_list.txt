@@ -6,7 +6,7 @@ Sony PS4, 1, 299.99, Home entertainment system
 iMac, 1, 2999.99, 27-in display with beautiful screen
 Moto 360, 1, 199.99, Motorola Watch comes with different leathers
 Macbook Pro, 5, 1799.99, Macbook Pro 15-in 2015 comes with latest OS X
+Amazon, 1, 100000, A website!
 Nexus 6P, 2, 549.99, Made by Huawei
-iPad, 1, 359.99, 4th generation
 Coffee Cup, 10, 49.99, comes with heat insulation handle
 Microwave Oven, 1, 99.99, Limited version
