@@ -66,8 +66,8 @@ public class DisplayCalendar {
 	 */
 	public boolean hasMoreThan90Days(final Auction theAuc) {
 		Calendar ninetyFromNow = Calendar.getInstance();
-		ninetyFromNow.set(Calendar.DAY_OF_MONTH, 
-				ninetyFromNow.get(Calendar.DAY_OF_MONTH) + NINETY_DAY_FROM_NOW);
+		ninetyFromNow.set(Calendar.DAY_OF_YEAR, 
+				ninetyFromNow.get(Calendar.DAY_OF_YEAR) + NINETY_DAY_FROM_NOW);
 		if (theAuc.getDateAuctionStarts().compareTo(ninetyFromNow) > 0)
 			return true;
 		return false;
@@ -83,6 +83,9 @@ public class DisplayCalendar {
 		// TODO how to determine which 7 days are?
 		return false;
 	}
+	
+	// TODO we are not allow to add in the past
+	
 	
 	/**
 	 * Fourth business rule: part a

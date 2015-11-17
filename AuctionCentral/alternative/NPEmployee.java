@@ -161,7 +161,7 @@ public class NPEmployee implements User {
 	private void editAuctionDay(Scanner scanner) {
 		System.out.println("Change day to \"YYYY MM DD\": ");
 		myAuction.setYear(scanner.nextInt());
-		myAuction.setMonth(scanner.nextInt());
+		myAuction.setMonth(scanner.nextInt() - 1);
 		myAuction.setDate(scanner.nextInt());
 	}
 
@@ -189,20 +189,26 @@ public class NPEmployee implements User {
 
 	@Override
 	public void run(Scanner scanner, DisplayCalendar cal) {
+		Calendar timeRequested = Calendar.getInstance();
 		boolean isQuit = false;
 		do {
-			System.out.println(cal);
+			System.out.println(cal.displayCalendar(timeRequested));
 			System.out.println("Please choose an option below.");
 			System.out.println("1.  Add a new auction");
 			System.out.println("2.  Edit my auction");
 			System.out.println("3.  Remove my auction");
 			System.out.println("4.  View my current auction");
+			System.out.println("5.  Next month");
+			System.out.println("6.  Previous month");
+			//TODO View next and prev month
 			System.out.print("------Done?? want to exit? type other number ");
 			switch (scanner.nextInt()) {
 				case 1: addAuction(scanner, cal); break;
 				case 2: editAuction(scanner); break;
 				case 3: removeAuction(cal); break;
 				case 4: viewMyAuction(); break;
+				case 5: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) + 1); break;
+				case 6: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) - 1); break;
 				default: isQuit = true; break;
 			}
 		} while (!isQuit);

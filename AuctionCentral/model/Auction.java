@@ -298,6 +298,10 @@ public class Auction implements Comparable<Auction> {
 	
 	@Override
 	public String toString() {
+		return myOrgName + " " + myDate.getTime() + "\n";
+	}
+	
+	public String displayAuction() {
 		String result = myOrgName + " " + myDate.getTime() + "\n";
 		for (int i = 0; i < myItems.size(); i++) {
 			result += "--> " + myItems.get(i) + "\n";

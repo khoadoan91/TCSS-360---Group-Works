@@ -65,6 +65,7 @@ public class ACEmployee implements User {
 	public void run(Scanner scanner, DisplayCalendar cal) {
 		boolean isQuit = false;
 		do {
+			// TODO view next month, view past auction
 			System.out.println("Please choose an option below.");
 			System.out.println("1.  View a calendar");
 			System.out.println("2.  View upcoming auction");
