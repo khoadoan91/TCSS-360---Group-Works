@@ -1,5 +1,4 @@
-
-package alternative;
+package current;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,10 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Calendar;
-
-import model.Auction;
-import model.DisplayCalendar;
-import model.Item;
 
 /**
  * @author nabilfadili

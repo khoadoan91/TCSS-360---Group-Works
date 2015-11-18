@@ -1,15 +1,12 @@
-package alternative;
+package current;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
-import model.DisplayCalendar;
-import model.Auction;
-
 /**
  * @author nabilfadili
- *
+ * @author KyleD
  */
 public class ACEmployee implements User {
 	
@@ -53,10 +50,6 @@ public class ACEmployee implements User {
 	 * 
 	 * @param auctionID
 	 */
-//	public void selectAuction(Scanner scanner) {
-//		// TODO view details of an auction object, including list of items
-//	
-//	}
 
 //	public String getUserType() {
 //		return userType;

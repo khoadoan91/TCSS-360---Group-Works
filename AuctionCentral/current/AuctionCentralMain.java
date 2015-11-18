@@ -1,4 +1,4 @@
-package alternative;
+package current;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,10 +13,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
-
-import model.Auction;
-import model.DisplayCalendar;
-import model.Item;
 
 /**
  * @author KyleD
@@ -41,8 +37,6 @@ public class AuctionCentralMain {
 		}
 		return null;
 	}
-	
-	
 	
 	private void readUserFile(File userInput, List<Auction> auctionList) {
 		try {
@@ -138,6 +132,7 @@ public class AuctionCentralMain {
 
 	
 	/**
+	 * Starts program
 	 * @param args
 	 */
 	public static void main(String[] args) {

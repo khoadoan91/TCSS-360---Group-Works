@@ -1,5 +1,5 @@
 
-package model;
+package old;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +13,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
+
+import current.Auction;
+import current.DisplayCalendar;
+import current.Item;
 
 /**
  * @author nabilfadili

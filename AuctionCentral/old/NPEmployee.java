@@ -1,5 +1,5 @@
 
-package model;
+package old;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Calendar;
+
+import current.Auction;
+import current.DisplayCalendar;
+import current.Item;
 
 /**
  * @author nabilfadili

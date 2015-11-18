@@ -1,4 +1,5 @@
-package model;
+package current;
+
 
 /**
  * A class which represents an item bid in an auction.

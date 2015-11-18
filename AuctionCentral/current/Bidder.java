@@ -1,12 +1,8 @@
-package alternative;
+package current;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import model.Auction;
-import model.Bid;
-import model.DisplayCalendar;
 
 /**
  * Represents a user which can bid on items in auctions.

@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import model.Auction;
-import model.Item;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import current.Auction;
+import current.Item;
 
 /**
  * A Test for an Auction class.
@@ -42,7 +42,7 @@ public class AuctionTest {
 	}
 
 	/**
-	 * Test method for {@link model.Auction#addItem(model.Item)}.
+	 * Test method for {@link current.Auction#addItem(current.Item)}.
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testAddItemWithNull() {
@@ -60,7 +60,7 @@ public class AuctionTest {
 	}
 
 	/**
-	 * Test method for {@link model.Auction#removeItem(model.Item)}.
+	 * Test method for {@link current.Auction#removeItem(current.Item)}.
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testRemoveItemWithNull() {

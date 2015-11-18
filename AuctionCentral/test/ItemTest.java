@@ -7,10 +7,10 @@ import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
-import model.Item;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import current.Item;
 
 /**
  * @author KyleD
@@ -31,7 +31,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link model.Item#getTitle()}.
+	 * Test method for {@link current.Item#getTitle()}.
 	 */
 	@Test
 	public void testGetTitle() {
@@ -40,7 +40,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link model.Item#getQuantity()}.
+	 * Test method for {@link current.Item#getQuantity()}.
 	 */
 	@Test
 	public void testGetQuantity() {
@@ -49,7 +49,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link model.Item#getDescription()}.
+	 * Test method for {@link current.Item#getDescription()}.
 	 */
 	@Test
 	public void testGetDescription() {
@@ -58,7 +58,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link model.Item#setTitle(java.lang.String)}.
+	 * Test method for {@link current.Item#setTitle(java.lang.String)}.
 	 */
 	@Test
 	public void testSetTitle() {
@@ -67,7 +67,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link model.Item#setQuantity(int)}.
+	 * Test method for {@link current.Item#setQuantity(int)}.
 	 */
 	@Test
 	public void testSetQuantity() {
@@ -76,7 +76,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link model.Item#setDescription(java.lang.String)}.
+	 * Test method for {@link current.Item#setDescription(java.lang.String)}.
 	 */
 	@Test
 	public void testSetDescription() {
