@@ -84,14 +84,14 @@ public class DisplayCalendar {
 		int expectedDay = theAuc.getDayOfYear();
 		List<Auction> neighborAuction = new LinkedList<>();
 		for (Auction auc : myUpcomingAuctions) {
-			if (auc.getDayOfYear() - expectedDay < 7
-					|| expectedDay - auc.getDayOfYear() < 7) {
+			if ((auc.getDayOfYear() - expectedDay < 7 && auc.getDayOfYear() - expectedDay >= 0)
+				|| (expectedDay - auc.getDayOfYear() < 7 && expectedDay - auc.getDayOfYear() >=0)) {
 				neighborAuction.add(auc);
 			}
 		}
 		int count = 0;
 		Collections.sort(neighborAuction);
-		for (int i = expectedDay - 6; i <= expectedDay + 6; i++) {
+		for (int i = expectedDay - 6; i <= expectedDay; i++) {
 			for (int j = i; j <= i + 6; j++) {
 				for (Auction auc : neighborAuction) {
 					if (auc.getDayOfYear() == j) {
@@ -192,14 +192,18 @@ public class DisplayCalendar {
 	}
 
 	public boolean addAuction(final Auction theAuction) {
-		if (!hasExceededAuction() && !hasMoreThan90Days(theAuction)
-				&& !hasMore5AuctionsIn7Days(theAuction) && !has2HoursBetween2Auctions(theAuction)
-				&& hasAuctionPerNPperYear(theAuction) && !isInPast(theAuction)){
+		if (checkBusinessRules(theAuction)){
 			myUpcomingAuctions.add(theAuction);
 			Collections.sort(myUpcomingAuctions);
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean checkBusinessRules(final Auction theAuction) {
+		return !hasExceededAuction() && !hasMoreThan90Days(theAuction)
+				&& !hasMore5AuctionsIn7Days(theAuction) && !has2HoursBetween2Auctions(theAuction)
+				&& hasAuctionPerNPperYear(theAuction) && !isInPast(theAuction);
 	}
 
 	public void removeAuction(final Auction theAuction) {
@@ -391,7 +395,7 @@ public class DisplayCalendar {
 		} else {
 			i = 1;
 		}
-		while (i < calShow.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+		while (i < calShow.getActualMaximum(Calendar.DAY_OF_MONTH) + 1) {
 			for (int j = 0; j < 7; j++) {
 				result += "|  ";
 				if (i > 0 && calShow.getActualMaximum(Calendar.DAY_OF_MONTH) >= i) {

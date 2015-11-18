@@ -1,5 +1,6 @@
 package alternative;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,7 +33,7 @@ public class ACEmployee implements User {
 	 * 
 	 * @return
 	 */
-	public void viewUpcomingAuction(Scanner scanner, DisplayCalendar cal) {
+	private void viewUpcomingAuction(Scanner scanner, DisplayCalendar cal) {
 		System.out.println("Please pick one auction for detail. ");
 		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
 		for (int i = 0; i < upcomingAuc.size(); i++) {
@@ -60,18 +61,32 @@ public class ACEmployee implements User {
 //	public String getUserType() {
 //		return userType;
 //	}
+	private void viewCalendar(Scanner scanner, DisplayCalendar cal) {
+		boolean isBack = false;
+		Calendar timeRequested = Calendar.getInstance();
+		do {
+			System.out.println(cal.displayCalendar(timeRequested));
+			System.out.println("1.  View next month.");
+			System.out.println("2.  View last month.");
+			System.out.print("------Done!! want to go back? type any number ");
+			switch (scanner.nextInt()) {
+				case 1: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) + 1); break;
+				case 2: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) - 1); break;
+				default: isBack = true; break;
+			}
+		} while (!isBack);
+	}
 
 	@Override
 	public void run(Scanner scanner, DisplayCalendar cal) {
 		boolean isQuit = false;
 		do {
-			// TODO view next month, view past auction
 			System.out.println("Please choose an option below.");
 			System.out.println("1.  View a calendar");
 			System.out.println("2.  View upcoming auction");
 			System.out.print("------Done!! want to exit? type any number ");
 			switch (scanner.nextInt()) {
-				case 1: System.out.println(cal); break;
+				case 1: viewCalendar(scanner, cal); break;
 				case 2: viewUpcomingAuction(scanner, cal); break;
 				default: isQuit = true; break;
 			}

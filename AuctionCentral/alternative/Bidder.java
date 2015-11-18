@@ -30,7 +30,7 @@ public class Bidder implements User {
 	private List<Bid> myBids;
 	
 	public Bidder(String theAddr, String theCredit) {
-		this(theAddr, theCredit, new ArrayList<>());
+		this(theAddr, theCredit, new ArrayList<Bid>());
 	}
 	
 	public Bidder(String theAddr, String theCredit, List<Bid> theBids) {
@@ -108,6 +108,8 @@ public class Bidder implements User {
 		for (int i = 1; i <= upcomingAuc.size(); i++) {
 			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1).displayAuction());
 		}
+//		int pickItem = scanner.next();
+//		for (int i = 1; i <= )
 	}
 	
 
