@@ -116,6 +116,7 @@ public class Auction implements Comparable<Auction> {
 	 * @param theDate tim the auction starts 
 	 *            
     */
+   @SuppressWarnings("unchecked")
    public static Auction makeTestAuction(final Calendar theDate){
       char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
       StringBuilder sb = new StringBuilder();         //any better way to make a random string??
@@ -124,7 +125,10 @@ public class Auction implements Comparable<Auction> {
          char c = chars[random.nextInt(chars.length)];
       sb.append(c);
       }
-      return new Auction(sb.toString(), null, theDate,"01-01");
+      List aList = new LinkedList<Item>();
+      aList.add(Item.makeRItem());
+      aList.add(Item.makeRItem());
+      return new Auction(sb.toString(),aList , theDate,"01:01");
    }
    
    public void addBid(final Bid theBid) {

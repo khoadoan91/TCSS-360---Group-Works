@@ -27,7 +27,8 @@ public class DisplayCalendar {
 	private List<Auction> myUpcomingAuctions;
 
 	public DisplayCalendar() {
-
+		this(new LinkedList<Auction>());
+		
 	}
 
 	public DisplayCalendar(final List<Auction> theAuction) {
@@ -175,13 +176,19 @@ public class DisplayCalendar {
 	}
 
 	public boolean addAuction(final Auction theAuction) {
+//		System.out.println("1");
+		if(myUpcomingAuctions.isEmpty())
+			myUpcomingAuctions.add(theAuction);
+		myUpcomingAuctions.add(theAuction);
 		if (!hasExceededAuction() && !hasMoreThan90Days(theAuction)
 				&& !hasMore5AuctionsIn7Days(theAuction) && !has2HoursBetween2Auctions(theAuction)
 				&& hasAuctionPerNPperYear(theAuction)){
 			myUpcomingAuctions.add(theAuction);
 			Collections.sort(myUpcomingAuctions);
+			myUpcomingAuctions.add(theAuction);
 			return true;
 		}
+		myUpcomingAuctions.add(theAuction);
 		return false;
 //		if (!hasExceededAuction() && checkAvailability(theAuction.getDateAuctionStarts())) {
 //			myAuctions.add(theAuction);
