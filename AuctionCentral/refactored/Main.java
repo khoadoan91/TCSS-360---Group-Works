@@ -20,11 +20,15 @@ public class Main {
 		File userFile = new File("user_list.txt");
 		File auctionFile = new File("current_auction_list.txt");
 		File itemFile = new File("current_item_list.txt");
-		FileHandler fileLoader = new FileHandler();	
 		
+		FileHandler fileLoader = new FileHandler();		
 		myCalendar = new DisplayCalendar(fileLoader.readAuctionFile(auctionFile, itemFile));
 		myUsers = fileLoader.readUserFile(userFile);
 		
+		LoginUI ui = new LoginUI(myUsers, myCalendar);
+		User theUser = ui.promptLogin();
+		
+
 
 
 	}
