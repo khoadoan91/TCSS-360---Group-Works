@@ -6,13 +6,22 @@ import java.util.Scanner;
 import current.DisplayCalendar;
 import current.User;
 
-public class LoginUI {
+public class UserUI {
+	
 	private Map<String, User> myUsers;
 	
-	public LoginUI(Map<String, User> myUsers, DisplayCalendar myCalendar) {
+	/**
+	 * Takes all loaded users for login verification
+	 * @param myUsers list of all users
+	 */
+	public UserUI(Map<String, User> myUsers) {
 		this.myUsers = myUsers;
 	}
 	
+	/**
+	 * Prompts user to enter username for verification
+	 * @return the designated User type
+	 */
 	public User promptLogin() {
 		Scanner scanner = new Scanner(System.in);
 		boolean isLogin = false;
@@ -28,8 +37,6 @@ public class LoginUI {
 			}
 		} while (!isLogin);
 		return myUsers.get(user);
-		//myUsers.get(user).run(scanner, myCalendar);			//WATCH THIS!
-		//scanner.close();
 	}
 
 }

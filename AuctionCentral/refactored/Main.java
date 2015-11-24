@@ -21,7 +21,7 @@ public class Main {
 		myCalendar = new DisplayCalendar(fileLoader.readAuctionFile(auctionFile, itemFile));
 		myUsers = fileLoader.readUserFile(userFile);
 		
-		LoginUI ui = new LoginUI(myUsers, myCalendar);
+		UserUI ui = new UserUI(myUsers);
 		User theUser = ui.promptLogin();
 		
 		Scanner scanner = new Scanner(System.in);
