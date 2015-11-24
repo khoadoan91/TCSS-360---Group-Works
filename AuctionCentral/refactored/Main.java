@@ -9,6 +9,7 @@ import current.User;
 
 public class Main {
 	
+	final private static Scanner scanner = new Scanner(System.in);
 	private static Map<String, User> myUsers;
 	private static DisplayCalendar myCalendar; 
 	
@@ -21,14 +22,20 @@ public class Main {
 		myCalendar = new DisplayCalendar(fileLoader.readAuctionFile(auctionFile, itemFile));
 		myUsers = fileLoader.readUserFile(userFile);
 		
-		UserUI ui = new UserUI(myUsers);
-		User theUser = ui.promptLogin();
+		MainUI ui = new MainUI(myUsers);
+		ui.promptLogin(scanner);
+		ui.run(scanner, myCalendar);
 		
-		Scanner scanner = new Scanner(System.in);
-		theUser.run(scanner, myCalendar);
-
-
-
+		
+		
+		
+		
+		
+		
+		
+		
+//		Scanner scanner = new Scanner(System.in);
+//		theUser.run(scanner, myCalendar);
 	}
 
 }
