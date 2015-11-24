@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import current.User;
+import old.User;
 
 /**
  * @author nabilfadili

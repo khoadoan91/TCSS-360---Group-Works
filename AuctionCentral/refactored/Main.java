@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Map;
 import java.util.Scanner;
 
-import current.User;
+import old.User;
 
 public class Main {
 	

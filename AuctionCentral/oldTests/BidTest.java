@@ -1,4 +1,4 @@
-package test;
+package oldTests;
 
 import static org.junit.Assert.*;
 
@@ -6,14 +6,13 @@ import java.awt.Image;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import old.Bid;
 import old.Bidder;
 import refactored.DisplayCalendar;
 import refactored.Item;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import current.Bid;
 
 /**
  * JUnit tests for the Bid class.

@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import current.ACEmployee;
-import current.Bidder;
-import current.NPEmployee;
-import current.User;
+import old.ACEmployee;
+import old.Bidder;
+import old.NPEmployee;
+import old.User;
 
 public class FileHandler {
 	private Map<String, User> myUsers;

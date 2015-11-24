@@ -2,8 +2,8 @@ package old;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-import current.Bid;
 import refactored.Auction;
 import refactored.DisplayCalendar;
 
@@ -13,18 +13,30 @@ import refactored.DisplayCalendar;
  * @author Nina Chepovska
  * @version Nov 6, 2015
  */
-public class Bidder extends User { // TODO implement the User interface
+public class Bidder implements User { 
 
-	final private String userType = "Bidder";
+//	final private String userType = "Bidder";
 
 	/** The billing address of the bidder. */
+	@SuppressWarnings("unused")
 	private String myAddress;
 
 	/** The credit card number of the bidder. */
+	@SuppressWarnings("unused")
 	private String myCreditCard;
 
 	/** The bids this bidder has made. */
 	private List<Bid> myBids;
+	
+	public Bidder(String theAddr, String theCredit) {
+		this(theAddr, theCredit, new ArrayList<>());
+	}
+	
+	public Bidder(String theAddr, String theCredit, List<Bid> theBids) {
+		myAddress = theAddr;
+		myCreditCard = theCredit;
+		myBids = theBids;
+	}
 
 	/**
 	 * Constructs a new bidder object.
@@ -32,16 +44,9 @@ public class Bidder extends User { // TODO implement the User interface
 	 * @param theAddress
 	 * @param theCreditCard
 	 */
-	public Bidder(final String userName, DisplayCalendar calendar) {
-		super(userName, calendar);
-		myBids = new ArrayList<Bid>();
-	}
-	
-	@Deprecated
-	public Bidder(final String userName) {
-		super(userName);
-		myBids = new ArrayList<Bid>();
-	}
+//	public Bidder(DisplayCalendar myCalendar) {
+//		myBids = new ArrayList<Bid>();
+//	}
 
 	/**
 	 * Gets all the bids the bidder has made.
@@ -57,13 +62,12 @@ public class Bidder extends User { // TODO implement the User interface
 	 * 
 	 * @param theBid
 	 */
-	public void addBid(final Auction theAuction, final Bid theBid) {
+	public void addBid(final Bid theBid) {
 		if (theBid == null) {
 			throw new NullPointerException();
 		}
 
 		myBids.add(theBid);
-		theAuction.addBid(theBid);
 	}
 
 	/**
@@ -71,7 +75,7 @@ public class Bidder extends User { // TODO implement the User interface
 	 * 
 	 * @param theBid
 	 */
-	public void removeBid(final Auction theAuction, final Bid theBid) {
+	public void removeBid(final Bid theBid) {
 		if (theBid == null) {
 			throw new NullPointerException();
 		} else if (!myBids.contains(theBid)) {
@@ -79,22 +83,45 @@ public class Bidder extends User { // TODO implement the User interface
 		}
 
 		myBids.remove(theBid);
-		theAuction.removeBid(theBid);
-		
 	}
 
-	public String getUserType() {
-		return userType;
+	/*
+	 * public Bid editBid(final Bid theBid) { if (theBid == null) { throw new
+	 * NullPointerException(); } else if (!myBids.contains(theBid)) { throw new
+	 * IllegalArgumentException(); }
+	 * 
+	 * 
+	 * }
+	 */
+	
+	public void viewUpcomingAuction(Scanner scanner, DisplayCalendar cal) {
+		System.out.println("Please pick one auction for detail. ");
+		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
+		for (int i = 0; i < upcomingAuc.size(); i++) {
+			System.out.println((i + 1) + ") " + upcomingAuc.get(i));
+		}
+		int pickAuc = scanner.nextInt();
+		for (int i = 1; i <= upcomingAuc.size(); i++) {
+			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1).displayAuction());
+		}
 	}
 	
+
 	@Override
-	public String toString() {
-		return userType + ": " + super.getUsername();
-	}
-	
-	public boolean equals(Object o) {
-		Bidder other = (Bidder) o;
-		return userType.equals(other.getUserType()) 
-				&& super.getUsername().equals(other.getUsername());
+	public void run(Scanner scanner, DisplayCalendar cal) {
+		boolean isQuit = false;
+		do {
+			System.out.println(cal);
+			System.out.println("Please choose an option below.");
+			System.out.println("1.  Choose an available auction");
+			System.out.println("2.  Change a bid on an item");
+			System.out.print("------Done!! want to exit? type any number ");
+			switch (scanner.nextInt()) {
+				case 1: viewUpcomingAuction(scanner, cal); break;
+				case 2: break;
+				default: isQuit = true; break;
+			}
+		} while (!isQuit);
+		
 	}
 }

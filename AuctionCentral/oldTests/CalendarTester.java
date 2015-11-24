@@ -1,4 +1,4 @@
-package test;
+package oldTests;
 
 
 import org.junit.Assert;

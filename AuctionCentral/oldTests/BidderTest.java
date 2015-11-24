@@ -1,4 +1,4 @@
-package test;
+package oldTests;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import old.Bid;
 import old.Bidder;
 import refactored.Auction;
 import refactored.DisplayCalendar;
@@ -15,8 +16,6 @@ import refactored.Item;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import current.Bid;
 
 /**
  * JUnit tests for the Bidder class.
