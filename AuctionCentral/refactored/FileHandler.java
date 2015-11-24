@@ -17,7 +17,6 @@ import java.util.Scanner;
 import current.ACEmployee;
 import current.Auction;
 import current.Bidder;
-import current.DisplayCalendar;
 import current.Item;
 import current.NPEmployee;
 import current.User;
@@ -25,9 +24,6 @@ import current.User;
 public class FileHandler {
 	private Map<String, User> myUsers;
 	private List<Auction> auctionList;
-	
-	public FileHandler() {
-	}
 	
 	public Map<String, User> readUserFile(File userInput) {
 		myUsers = new HashMap<>();
@@ -55,7 +51,6 @@ public class FileHandler {
 		return myUsers;
 	}
 	public List<Auction> readAuctionFile(File auctionFile, File itemFile) {
-		//auctionList = new LinkedList<>();
 		List<Item> allItems = readItemFile(itemFile);
 		auctionList = new LinkedList<>();
 		try {
