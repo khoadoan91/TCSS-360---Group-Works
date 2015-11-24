@@ -25,17 +25,14 @@ import current.User;
 public class FileHandler {
 	private Map<String, User> myUsers;
 	private List<Auction> auctionList;
-	private DisplayCalendar myCalendar;
 	
-	public FileHandler(File userFile, File auctionFile, File itemFile) {
-		myUsers = new HashMap<>();
-		auctionList = readAuctionFile(auctionFile, readItemFile(itemFile));
-		myCalendar = new DisplayCalendar(auctionList);
-		readUserFile(myUsers, userFile, auctionList);
+	public FileHandler() {
 	}
 	
-	private void readUserFile(Map<String, User> myUsers, File userInput, List<Auction> auctionList) {
+	public Map<String, User> readUserFile(File userInput) {
+		myUsers = new HashMap<>();
 		try {
+			myUsers = new HashMap<>();
 			Scanner scan = new Scanner(userInput);
 			while (scan.hasNext()) { 
 				String userName = scan.next();
@@ -55,11 +52,14 @@ public class FileHandler {
 		} catch (FileNotFoundException e) {
 			System.err.println(e);
 		}
+		return myUsers;
 	}
-	private List<Auction> readAuctionFile(File auctionInput, List<Item> allItems) {
-		List<Auction> result = new LinkedList<>();
+	public List<Auction> readAuctionFile(File auctionFile, File itemFile) {
+		//auctionList = new LinkedList<>();
+		List<Item> allItems = readItemFile(itemFile);
+		auctionList = new LinkedList<>();
 		try {
-			BufferedReader in = new BufferedReader(new FileReader(auctionInput));
+			BufferedReader in = new BufferedReader(new FileReader(auctionFile));
 			String line;
 			int itemCount = 0;
 			List<Item> itemsPerAuc = new LinkedList<>();
@@ -69,7 +69,7 @@ public class FileHandler {
                  for (int i = 0; i < itemNumber; i++) {
                 	 itemsPerAuc.add(allItems.get(itemCount++)); 
                  }
-                 result.add(new Auction(aucInfo[0], itemsPerAuc, aucInfo[2], aucInfo[3]));
+                 auctionList.add(new Auction(aucInfo[0], itemsPerAuc, aucInfo[2], aucInfo[3]));
                  itemsPerAuc.clear();
             }
 			in.close();
@@ -83,9 +83,9 @@ public class FileHandler {
 			e.printStackTrace();
 			System.err.println("Error parse the month of the auction.");
 		}
-		return result;
+		return auctionList;
 	}
-	private List<Item> readItemFile(File itemInput) {
+	List<Item> readItemFile(File itemInput) {
 		List<Item> result = new ArrayList<>();
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(itemInput));

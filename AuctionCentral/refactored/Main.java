@@ -11,8 +11,8 @@ import current.DisplayCalendar;
 import current.User;
 
 public class Main {
-	private Map<String, User> myUsers;
-	private DisplayCalendar myCalendar; 
+	private static Map<String, User> myUsers;
+	private static DisplayCalendar myCalendar; 
 	
 	
 
@@ -20,8 +20,10 @@ public class Main {
 		File userFile = new File("user_list.txt");
 		File auctionFile = new File("current_auction_list.txt");
 		File itemFile = new File("current_item_list.txt");
-		FileHandler fileLoader = new FileHandler(userFile, auctionFile, itemFile);
+		FileHandler fileLoader = new FileHandler();	
 		
+		myCalendar = new DisplayCalendar(fileLoader.readAuctionFile(auctionFile, itemFile));
+		myUsers = fileLoader.readUserFile(userFile);
 		
 
 
