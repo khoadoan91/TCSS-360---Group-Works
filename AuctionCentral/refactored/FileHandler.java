@@ -25,11 +25,16 @@ public class FileHandler {
 	private Map<String, User> myUsers;
 	private List<Auction> auctionList;
 	
-	public Map<String, User> readUserFile(File userInput) {
+	/**
+	 * Takes in a file of users and returns a map object of each username to User type.
+	 * @param userFile file representing user objects (currently txt)
+	 * @return Map<userName, userType>
+	 */
+	public Map<String, User> readUserFile(File userFile) {
 		myUsers = new HashMap<>();
 		try {
 			myUsers = new HashMap<>();
-			Scanner scan = new Scanner(userInput);
+			Scanner scan = new Scanner(userFile);
 			while (scan.hasNext()) { 
 				String userName = scan.next();
 				String userType = scan.next();
@@ -50,6 +55,13 @@ public class FileHandler {
 		}
 		return myUsers;
 	}
+	/**
+	 * Takes in a file of all auction info and a file of all item info. The two files
+	 * must be in sync for this to work.
+	 * @param auctionFile File representing all auction objects (currently txt)
+	 * @param itemFile File representing all item objects (currently txt)
+	 * @return list of all auctions with item within
+	 */
 	public List<Auction> readAuctionFile(File auctionFile, File itemFile) {
 		List<Item> allItems = readItemFile(itemFile);
 		auctionList = new LinkedList<>();
@@ -80,7 +92,12 @@ public class FileHandler {
 		}
 		return auctionList;
 	}
-	List<Item> readItemFile(File itemInput) {
+	/**
+	 * Helper method for reading from auction file. Maintains sync of items to auctions.
+	 * @param itemInput File of item objects (currently txt)
+	 * @return list of all items for every auction
+	 */
+	private List<Item> readItemFile(File itemInput) {
 		List<Item> result = new ArrayList<>();
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(itemInput));
@@ -100,6 +117,13 @@ public class FileHandler {
 		}
 		return result;
 	}	
+	
+	/**
+	 * Insures the user's orgName matches the orgName listed for the auction
+	 * @param auctionList list of all auctions
+	 * @param orgName user's orgName
+	 * @return the auction if it matches
+	 */
 	private Auction matchAuctionAndNPE(List<Auction> auctionList, String orgName) {
 		for (int i = 0; i < auctionList.size(); i++) {
 			if (auctionList.get(i).getOrganizationNam().equals(orgName)) {
