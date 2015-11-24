@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import refactored.Auction;
+import refactored.DisplayCalendar;
+
 /**
  * Represents a user which can bid on items in auctions.
  * 

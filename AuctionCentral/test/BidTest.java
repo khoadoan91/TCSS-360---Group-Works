@@ -7,13 +7,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import old.Bidder;
+import refactored.DisplayCalendar;
+import refactored.Item;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import current.Bid;
-import current.DisplayCalendar;
-import current.Item;
 
 /**
  * JUnit tests for the Bid class.

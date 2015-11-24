@@ -1,6 +1,6 @@
 package old;
 
-import current.DisplayCalendar;
+import refactored.DisplayCalendar;
 
 /**
  * @author nabilfadili

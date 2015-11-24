@@ -9,14 +9,14 @@ import java.util.Calendar;
 import java.util.List;
 
 import old.Bidder;
+import refactored.Auction;
+import refactored.DisplayCalendar;
+import refactored.Item;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import current.Auction;
 import current.Bid;
-import current.DisplayCalendar;
-import current.Item;
 
 /**
  * JUnit tests for the Bidder class.

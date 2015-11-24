@@ -25,7 +25,7 @@
  *  This note will not matter ONLY WHEN IT IS CONSTRUCTED.
  */
 
-package current;
+package refactored;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +34,8 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
+import current.Bid;
 
 /**
  * @author KyleD

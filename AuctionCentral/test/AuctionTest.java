@@ -13,8 +13,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import current.Auction;
-import current.Item;
+import refactored.Auction;
+import refactored.Item;
 
 /**
  * A Test for an Auction class.
@@ -42,7 +42,7 @@ public class AuctionTest {
 	}
 
 	/**
-	 * Test method for {@link current.Auction#addItem(current.Item)}.
+	 * Test method for {@link refactored.Auction#addItem(refactored.Item)}.
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testAddItemWithNull() {
@@ -60,7 +60,7 @@ public class AuctionTest {
 	}
 
 	/**
-	 * Test method for {@link current.Auction#removeItem(current.Item)}.
+	 * Test method for {@link refactored.Auction#removeItem(refactored.Item)}.
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testRemoveItemWithNull() {

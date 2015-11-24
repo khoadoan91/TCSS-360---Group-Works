@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Map;
 import java.util.Scanner;
 
-import current.DisplayCalendar;
 import current.User;
 
 public class Main {

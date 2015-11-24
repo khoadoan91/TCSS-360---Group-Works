@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import current.Auction;
-import current.DisplayCalendar;
 import current.User;
 
 /**

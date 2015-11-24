@@ -2,8 +2,6 @@ package refactored;
 
 import java.util.Scanner;
 
-import current.DisplayCalendar;
-
 public class BidderUI implements UserUI {
 
 	@Override

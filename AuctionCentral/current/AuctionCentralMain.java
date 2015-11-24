@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
+import refactored.Auction;
+import refactored.DisplayCalendar;
+import refactored.Item;
+
 /**
  * @author KyleD
  *

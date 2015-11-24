@@ -15,9 +15,9 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import refactored.Auction;
 import refactored.FileHandler;
-import current.Auction;
-import current.Item;
+import refactored.Item;
 import refactored.User;
 
 /**

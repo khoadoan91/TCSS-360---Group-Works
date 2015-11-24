@@ -1,5 +1,6 @@
 package current;
 
+import refactored.Item;
 
 /**
  * A class which represents an item bid in an auction.

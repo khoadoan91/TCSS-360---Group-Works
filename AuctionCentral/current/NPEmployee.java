@@ -11,6 +11,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import refactored.Auction;
+import refactored.DisplayCalendar;
+import refactored.Item;
+
 import java.util.Calendar;
 
 /**

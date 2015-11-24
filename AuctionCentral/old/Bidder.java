@@ -3,9 +3,9 @@ package old;
 import java.util.ArrayList;
 import java.util.List;
 
-import current.Auction;
 import current.Bid;
-import current.DisplayCalendar;
+import refactored.Auction;
+import refactored.DisplayCalendar;
 
 /**
  * Represents a user which can bid on items in auctions.
