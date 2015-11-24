@@ -4,7 +4,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 import current.ACEmployee;
+import current.Bidder;
 import current.DisplayCalendar;
+import current.NPEmployee;
 import current.User;
 
 public class MainUI {
@@ -45,7 +47,14 @@ public class MainUI {
 			ui = new ACEmployeeUI();
 			ui.promptMainMenu(scanner, theCalendar);
 		}
-		
+		if (currentUser instanceof NPEmployee) {
+			ui = new NPEmployeeUI();
+			ui.promptMainMenu(scanner, theCalendar);		//Probably need to pass the user object
+		}
+		if (currentUser instanceof Bidder) {
+			ui = new BidderUI();
+			ui.promptMainMenu(scanner, theCalendar);
+		}		
 	}
 
 }

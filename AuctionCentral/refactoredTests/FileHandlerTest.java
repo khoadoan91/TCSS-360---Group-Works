@@ -18,7 +18,7 @@ import org.junit.Test;
 import refactored.FileHandler;
 import current.Auction;
 import current.Item;
-import current.User;
+import refactored.User;
 
 /**
  * @author nabilfadili

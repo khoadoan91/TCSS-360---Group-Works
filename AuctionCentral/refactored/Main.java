@@ -26,16 +26,6 @@ public class Main {
 		ui.promptLogin(scanner);
 		ui.run(scanner, myCalendar);
 		
-		
-		
-		
-		
-		
-		
-		
-		
-//		Scanner scanner = new Scanner(System.in);
-//		theUser.run(scanner, myCalendar);
 	}
 
 }
