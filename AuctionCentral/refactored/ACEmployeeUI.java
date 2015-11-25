@@ -39,11 +39,9 @@ public class ACEmployeeUI implements UserUI {
 	public void promptMainMenu(Scanner scanner, DisplayCalendar theCalendar) {
 		boolean isQuit = false;
 		do {
-			// TODO view next month, view past auction
 			System.out.println("Please choose an option below or type any other number to exit.");
 			System.out.println("1.  View the calendar");
 			System.out.println("2.  View upcoming auction");
-			//System.out.print("#.  Exit");
 			switch (scanner.nextInt()) {
 				case 1: viewCalendar(scanner, theCalendar); break;
 				case 2: viewUpcomingAuction(scanner, theCalendar); break;
@@ -52,6 +50,12 @@ public class ACEmployeeUI implements UserUI {
 		} while (!isQuit);	
 	}
 	
+	/**
+	 * Displays calendar of auctions for current month. User is able to go forward and backward 
+	 * an unlimited number of months.
+	 * @param scanner for menu choices
+	 * @param theCalendar holds Auction objects
+	 */
 	private void viewCalendar(Scanner scanner, DisplayCalendar theCalendar) {
 		Calendar timeRequested = Calendar.getInstance();
 		boolean isQuit = false;
