@@ -13,30 +13,21 @@ public class NPEmployee extends User {
 	
 	private String myOrgName;
 	private Auction myAuction;
-	private NPEmployeeUI ui;
 	
 	public NPEmployee(final String orgName, final Auction theAuc) {
 		myOrgName = orgName;
 		myAuction = theAuc;
-		ui = new NPEmployeeUI();
 	}
+	
 	public String getMyOrgName() {
 		return myOrgName;
 	}
 	
-	public void addAuction(Scanner scanner, DisplayCalendar theCalendar) {
-		if (myAuction != null) {
-			System.out.println("You already have an auction scheduled.");
-		} else {
-			myAuction = ui.addAuction(scanner, theCalendar, myOrgName);
-			boolean isSuccess = theCalendar.addAuction(myAuction);
-			if (!isSuccess) {
-				System.out.println("Error! We are not allowed to add your auction.");
-				myAuction = null;
-			} else {
-				System.out.println("You sucessfully add your auction!");
-			}
-		}	
+	public Auction getMyAuction() {
+		return myAuction;
+	}
+	public void addAuction(Auction theAuction) {
+		myAuction = theAuction;
 	}
 	
 	public void editAuction(Scanner scanner) {
@@ -65,21 +56,4 @@ public class NPEmployee extends User {
 			System.out.println(myAuction);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// I dont think we need this method!!!
-		public void setAuction(final Auction theAuction) {
-			myAuction = theAuction;
-		}
-
 }

@@ -44,15 +44,15 @@ public class MainUI {
 		UserUI ui;
 		if (currentUser instanceof ACEmployee) {
 			ui = new ACEmployeeUI();
-			ui.promptMainMenu(scanner, theCalendar);
+			ui.promptMainMenu(scanner, theCalendar, currentUser);
 		}
 		if (currentUser instanceof NPEmployee) {
 			ui = new NPEmployeeUI();
-			ui.promptMainMenu(scanner, theCalendar);		//Probably need to pass the user object
+			ui.promptMainMenu(scanner, theCalendar, currentUser);		//Probably need to pass the user object
 		}
 		if (currentUser instanceof Bidder) {
 			ui = new BidderUI();
-			ui.promptMainMenu(scanner, theCalendar);
+			ui.promptMainMenu(scanner, theCalendar, currentUser);
 		}		
 	}
 

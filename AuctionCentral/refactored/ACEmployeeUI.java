@@ -36,7 +36,7 @@ public class ACEmployeeUI implements UserUI {
 	 * Runs main menu and prompts for an ACEmployee.
 	 */
 	@Override
-	public void promptMainMenu(Scanner scanner, DisplayCalendar theCalendar) {
+	public void promptMainMenu(Scanner scanner, DisplayCalendar theCalendar, User currentUser) {
 		boolean isQuit = false;
 		do {
 			System.out.println("Please choose an option below or type any other number to exit.");
