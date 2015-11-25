@@ -2,8 +2,6 @@ package refactored;
 
 import java.util.Scanner;
 
-import old.User;
-
 public class BidderUI implements UserUI {
 
 	@Override

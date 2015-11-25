@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.Map;
 import java.util.Scanner;
 
-import old.User;
-
 public class Main {
 	
 	final private static Scanner scanner = new Scanner(System.in);

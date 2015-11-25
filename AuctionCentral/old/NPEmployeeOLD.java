@@ -22,13 +22,13 @@ import java.util.Calendar;
  * @author nabilfadili
  * @author KyleD
  */
-public class NPEmployee implements User {
+public class NPEmployeeOLD implements UserOLD {
 
 
 	private String myOrgName;
 	private Auction myAuction;
 	
-	public NPEmployee(final String orgName, final Auction theAuc) {
+	public NPEmployeeOLD(final String orgName, final Auction theAuc) {
 		myOrgName = orgName;
 		myAuction = theAuc;
 	}

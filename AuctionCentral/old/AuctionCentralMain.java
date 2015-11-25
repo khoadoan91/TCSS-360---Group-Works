@@ -23,7 +23,7 @@ import refactored.Item;
  *
  */
 public class AuctionCentralMain {
-	private Map<String, User> myUsers;
+	private Map<String, UserOLD> myUsers;
 	private DisplayCalendar myCalendar; 
 	
 	public AuctionCentralMain(File userInput, File auctionInput, File itemInput) {
@@ -51,9 +51,9 @@ public class AuctionCentralMain {
 				if (userType.equals("NPEmployee")) {
 					String orgName = scan.next();
 					Auction auc = matchAuctionAndNPE(auctionList, orgName);
-					myUsers.put(userName, new NPEmployee(orgName, auc));
+					myUsers.put(userName, new NPEmployeeOLD(orgName, auc));
 				} else if (userType.equals("ACEmployee")) {
-					myUsers.put(userName, new ACEmployee());
+					myUsers.put(userName, new ACEmployeeOLD());
 				} else {
 					String[] bidderInfo = scan.nextLine().split(", ");
 					myUsers.put(userName, new Bidder(bidderInfo[0], bidderInfo[1]));

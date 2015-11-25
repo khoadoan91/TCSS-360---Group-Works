@@ -5,8 +5,6 @@ package refactored;
 
 import java.util.Scanner;
 
-import old.User;
-
 /**
  * @author nabilfadili
  *

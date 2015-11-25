@@ -9,8 +9,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
-import old.User;
-
 public class NPEmployeeUI implements UserUI {
 
 	@Override

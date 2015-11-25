@@ -13,7 +13,7 @@ import refactored.DisplayCalendar;
  * @author Nina Chepovska
  * @version Nov 6, 2015
  */
-public class Bidder implements User { 
+public class Bidder implements UserOLD { 
 
 //	final private String userType = "Bidder";
 

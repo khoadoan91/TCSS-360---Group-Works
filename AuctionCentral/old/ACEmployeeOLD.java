@@ -10,7 +10,7 @@ import refactored.DisplayCalendar;
  * @author nabilfadili
  *
  */
-public class ACEmployee implements User {
+public class ACEmployeeOLD implements UserOLD {
 	
 	/**
 	 * Accesses calendar singleton and prints upcoming auctions.
