@@ -3,6 +3,9 @@ package refactored;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Random;
+
+import model.Item;
 
 /**
  * @author KyleD
@@ -50,7 +53,25 @@ public class Item implements Comparable<Item> {
 		myStartingPrice = price;
 		myDesc = theDesc;
 	}
-
+	/**
+	 * Makes a random item.
+	 * used for testing
+	 */
+	static public Item makeRItem(){
+		char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
+	      StringBuilder sb = new StringBuilder();         //any better way to make a random string??
+	      Random random = new Random();
+	      for (int i = 0; i < 10; i++) {
+	         char c = chars[random.nextInt(chars.length)];
+	      sb.append(c);
+	      }
+	      StringBuilder sb2 = new StringBuilder();         //any better way to make a random string??
+	      for (int i = 0; i < 10; i++) {
+	         char c = chars[random.nextInt(chars.length)];
+	      sb2.append(c);
+	      }
+		return new Item(sb.toString(), 3, new BigDecimal(3),sb2.toString());
+	}
 	/**
 	 * Returns the title.
 	 * 
