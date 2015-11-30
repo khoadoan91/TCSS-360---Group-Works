@@ -46,16 +46,18 @@ public class BidTest {
 		myBid.setBidAmount(10.0);
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void setBidAmountOnStartingPriceTest() {
 		myItem.setStartingPrice(new BigDecimal(20.0));
 		myBid.setBidAmount(20.0);
+		assertEquals(20.0, myBid.getBidAmount(), 0.0001);
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void setBidAmountOnGreaterThanStartingPriceTest() {
 		myItem.setStartingPrice(new BigDecimal(20.0));
 		myBid.setBidAmount(30.0);
+		assertEquals(30.0, myBid.getBidAmount(), 0.0001);
 	}
 }
 
