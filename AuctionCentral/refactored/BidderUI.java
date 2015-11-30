@@ -1,6 +1,7 @@
 package refactored;
 
 import java.util.Scanner;
+import java.util.List;
 
 public class BidderUI implements UserUI {
 	
@@ -47,7 +48,7 @@ public class BidderUI implements UserUI {
 			listItems(chosenAuc);
 			
 			int pickItem = scanner.nextInt();
-			Item chosenItem = chooseItem(chosenAuc);
+			Item chosenItem = chooseItem(pickItem, chosenAuc);
 			
 			nextAction(scanner, chosenAuc, chosenItem);
 		}
@@ -81,7 +82,7 @@ public class BidderUI implements UserUI {
 		}
 	}
 	
-	private Item chooseItem(Auction chosenAuc) {
+	private Item chooseItem(int pickItem, Auction chosenAuc) {
 		Item chosenItem = null;
 		for (int i = 0; i < chosenAuc.getAllItems().size(); i++) {
 			if (i == pickItem) {
@@ -107,11 +108,12 @@ public class BidderUI implements UserUI {
 		if (hasBid) {
 			if (existingBid != null) {
 				System.out.println("You have made a bid on this item.");
-				System.out.println("You bid $" + exstingBid.getBidAmount() + " on the item.");
+				System.out.println("You bid $" + existingBid.getBidAmount() + " on the item.");
 				System.out.println("Enter the $ amount you want to change the bid to.");
 				double newAmount = scanner.nextDouble();
 				existingBid.setBidAmount(newAmount);
-				auction.viewBids().get(existingBid).setBidAmount(newAmount);
+				int i = auction.viewBids().indexOf(existingBid);
+				auction.viewBids().get(i).setBidAmount(newAmount);
 			}
 		} else {
 			System.out.println("You have not made a bid on this item.");
