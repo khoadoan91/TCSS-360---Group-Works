@@ -94,6 +94,7 @@ public class Bidder implements User {
 //		return userType;
 //	}
 	
+	
 	public void viewUpcomingAuction(Scanner scanner, DisplayCalendar cal) {
 		System.out.println("Please pick one auction for detail. ");
 		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
@@ -104,10 +105,45 @@ public class Bidder implements User {
 		for (int i = 1; i <= upcomingAuc.size(); i++) {
 			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1).displayAuction());
 		}
-//		int pickItem = scanner.next();
-//		for (int i = 1; i <= )
 	}
 	
+	public void makeBid(Scanner scanner, DisplayCalendar cal) {
+		System.out.println("You are about to make a bid!");
+		System.out.println("Choose an auction. ");
+		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
+		for (int i = 0; i < upcomingAuc.size(); i++) {
+			System.out.println((i + 1) + ") " + upcomingAuc.get(i));
+		}
+		int pickAuc = scanner.nextInt();
+		Auction chosenAuc = null;
+		for (int i = 1; i <= upcomingAuc.size(); i++) {
+			if (i == pickAuc) { 
+				chosenAuc = upcomingAuc.get(i - 1);
+				System.out.println(chosenAuc.getAuctionName());
+			}
+		}
+		if (chosenAuc != null) {
+			System.out.println("Choose an item. ");
+			for (int i = 0; i < chosenAuc.getAllItems().size(); i++) {
+				System.out.println((i + 1) + ") " + chosenAuc.getAllItems().get(i));
+			}
+			int pickItem = scanner.nextInt();
+			Item chosenItem = null;
+			for (int i = 0; i < chosenAuc.getAllItems().size(); i++) {
+				if (i == pickItem - 1) {
+					chosenItem = chosenAuc.getAllItems().get(i);
+					System.out.println(chosenAuc.getAllItems().get(i).getTitle());
+				}
+			}
+			
+			for (Bid bid : this.viewBids()) {
+				System.out.println("How about here?");
+				if (bid.getItem().equals(chosenItem)) {
+					System.out.println("You have made a bid on this item.");
+				}
+			}
+		}
+	}
 
 	@Override
 	public void run(Scanner scanner, DisplayCalendar cal) {
@@ -116,11 +152,11 @@ public class Bidder implements User {
 			System.out.println(cal);
 			System.out.println("Please choose an option below.");
 			System.out.println("1.  Choose an available auction");
-			System.out.println("2.  Change a bid on an item");
+			System.out.println("2.  Create or change a bid on an item");
 			System.out.print("------Done!! want to exit? type any number ");
 			switch (scanner.nextInt()) {
 				case 1: viewUpcomingAuction(scanner, cal); break;
-				case 2: break;
+				case 2: makeBid(scanner, cal); break;
 				default: isQuit = true; break;
 			}
 		} while (!isQuit);
