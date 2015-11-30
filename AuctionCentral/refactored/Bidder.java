@@ -87,6 +87,7 @@ public class Bidder extends User {
 	 * }
 	 */
 	
+	/*
 	public void viewUpcomingAuction(Scanner scanner, DisplayCalendar cal) {
 		System.out.println("Please pick one auction for detail. ");
 		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
@@ -98,5 +99,5 @@ public class Bidder extends User {
 			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1).displayAuction());
 		}
 	}
-
+   */
 }
