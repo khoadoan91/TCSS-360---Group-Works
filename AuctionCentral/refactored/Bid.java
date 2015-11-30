@@ -21,8 +21,10 @@ public class Bid {
 			throw new NullPointerException();
 		} else if (theBidAmount <= 0.0) {
 			throw new IllegalArgumentException();
+		} else if (theBidAmount < theItem.getStartingPrice()) {
+			throw new IllegalArgumentException();
 		}
-
+		
 		myItem = theItem;
 		myBidAmount = theBidAmount;
 		myBidder = theBidder;
@@ -62,6 +64,8 @@ public class Bid {
 	 */
 	public void setBidAmount(final double theBidAmount) {
 		if (theBidAmount <= 0.0) {
+			throw new IllegalArgumentException();
+		} else if (theBidAmount < myItem.getStartingPrice()) {
 			throw new IllegalArgumentException();
 		}
 

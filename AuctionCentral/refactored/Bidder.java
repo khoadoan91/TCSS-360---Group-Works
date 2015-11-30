@@ -49,7 +49,7 @@ public class Bidder extends User {
 		if (theBid == null) {
 			throw new NullPointerException();
 		}
-
+		
 		myBids.add(theBid);
 	}
 
