@@ -138,6 +138,10 @@ public class Auction implements Comparable<Auction> {
 		myBids.remove(theBid);
 	}
    
+   public List<Bid> viewBids() {
+	   return myBids;
+   }
+   
    
 	/**
 	 * Adds an item to an Auction if the item is not in the Auction.

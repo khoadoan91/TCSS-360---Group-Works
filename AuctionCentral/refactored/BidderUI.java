@@ -18,7 +18,7 @@ public class BidderUI implements UserUI {
 			System.out.print("------Done!! want to exit? type any number ");
 			switch (scanner.nextInt()) {
 				case 1: viewUpcomingAuction(scanner, theCalendar); break;
-				case 2: makeBid(scanner, theCalendar); break;
+				case 2: makeOrChangeBid(scanner, theCalendar); break;
 				default: isQuit = true; break;
 			}
 		} while (!isQuit);
@@ -36,12 +36,12 @@ public class BidderUI implements UserUI {
 		}
 	}
 	
-	private void makeBid(Scanner scanner, DisplayCalendar cal) {
-		System.out.println("You are about to make a bid!");
+	private void makeOrChangeBid(Scanner scanner, DisplayCalendar cal) {
+		System.out.println("You are about to make or change a bid!");
 		listAuctions(cal);
 		
 		int pickAuc = scanner.nextInt();
-		Auction chosenAuc = chooseAuction(pickAuc);
+		Auction chosenAuc = chooseAuction(pickAuc, cal);
 		
 		if (chosenAuc != null) {
 			listItems(chosenAuc);
@@ -61,8 +61,9 @@ public class BidderUI implements UserUI {
 		}
 	}
 	
-	private Auction chooseAuction(int pickAuc) {
+	private Auction chooseAuction(int pickAuc, DisplayCalendar cal) {
 		Auction chosenAuc = null;
+		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
 		for (int i = 1; i <= upcomingAuc.size(); i++) {
 			if (i == pickAuc) { 
 				chosenAuc = upcomingAuc.get(i - 1);
@@ -83,9 +84,9 @@ public class BidderUI implements UserUI {
 	private Item chooseItem(Auction chosenAuc) {
 		Item chosenItem = null;
 		for (int i = 0; i < chosenAuc.getAllItems().size(); i++) {
-			if (i == pickItem - 1) {
-				chosenItem = chosenAuc.getAllItems().get(i);
-				System.out.println(chosenAuc.getAllItems().get(i).getTitle());
+			if (i == pickItem) {
+				chosenItem = chosenAuc.getAllItems().get(i - 1);
+				System.out.println(chosenAuc.getAllItems().get(i - 1).getTitle());
 			}
 		}
 		
@@ -96,9 +97,10 @@ public class BidderUI implements UserUI {
 		boolean hasBid = false;
 		Bid existingBid = null;
 		for (Bid bid : myBidder.viewBids()) {
-			if (bid.getItem().equals(chosenItem)) {
+			if (bid.getItem().equals(item)) {
 				hasBid = true;
 				existingBid = bid;
+				break;
 			}
 		}
 		
@@ -109,7 +111,7 @@ public class BidderUI implements UserUI {
 				System.out.println("Enter the $ amount you want to change the bid to.");
 				double newAmount = scanner.nextDouble();
 				existingBid.setBidAmount(newAmount);
-				//auction.viewBids().get(existingBid).setBidAmount(newAmount);
+				auction.viewBids().get(existingBid).setBidAmount(newAmount);
 			}
 		} else {
 			System.out.println("You have not made a bid on this item.");
