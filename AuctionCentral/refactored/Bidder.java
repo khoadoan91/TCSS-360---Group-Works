@@ -11,7 +11,7 @@ public class Bidder extends User {
 	//	final private String userType = "Bidder";
 
 	/** The billing address of the bidder. */
-	@SuppressWarnings("unused")
+	//@SuppressWarnings("unused")
 	private String myAddress;
 
 	/** The credit card number of the bidder. */
@@ -30,16 +30,6 @@ public class Bidder extends User {
 		myCreditCard = theCredit;
 		myBids = theBids;
 	}
-
-	/**
-	 * Constructs a new bidder object.
-	 * 
-	 * @param theAddress
-	 * @param theCreditCard
-	 */
-//	public Bidder(DisplayCalendar myCalendar) {
-//		myBids = new ArrayList<Bid>();
-//	}
 
 	/**
 	 * Gets all the bids the bidder has made.
@@ -78,26 +68,8 @@ public class Bidder extends User {
 		myBids.remove(theBid);
 	}
 
-	/*
-	 * public Bid editBid(final Bid theBid) { if (theBid == null) { throw new
-	 * NullPointerException(); } else if (!myBids.contains(theBid)) { throw new
-	 * IllegalArgumentException(); }
-	 * 
-	 * 
-	 * }
-	 */
-	
-	/*
-	public void viewUpcomingAuction(Scanner scanner, DisplayCalendar cal) {
-		System.out.println("Please pick one auction for detail. ");
-		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
-		for (int i = 0; i < upcomingAuc.size(); i++) {
-			System.out.println((i + 1) + ") " + upcomingAuc.get(i));
-		}
-		int pickAuc = scanner.nextInt();
-		for (int i = 1; i <= upcomingAuc.size(); i++) {
-			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1).displayAuction());
-		}
-	}
-   */
+	@Override
+    public String toString() {
+    	return "Bidder: " + myAddress;
+    }
 }
