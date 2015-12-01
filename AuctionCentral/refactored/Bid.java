@@ -1,14 +1,7 @@
-package current;
+package refactored;
 
 
-/**
- * A class which represents an item bid in an auction.
- * 
- * @author Nina Chepovska
- * @version Nov 6, 2015
- */
 public class Bid {
-
 	/** The item that was bid on. */
 	private Item myItem;
 
@@ -28,8 +21,10 @@ public class Bid {
 			throw new NullPointerException();
 		} else if (theBidAmount <= 0.0) {
 			throw new IllegalArgumentException();
+		} else if (theBidAmount < theItem.getStartingPrice().doubleValue()) {
+			throw new IllegalArgumentException();
 		}
-
+		
 		myItem = theItem;
 		myBidAmount = theBidAmount;
 		myBidder = theBidder;
@@ -69,6 +64,8 @@ public class Bid {
 	 */
 	public void setBidAmount(final double theBidAmount) {
 		if (theBidAmount <= 0.0) {
+			throw new IllegalArgumentException();
+		} else if (theBidAmount < myItem.getStartingPrice().doubleValue()) {
 			throw new IllegalArgumentException();
 		}
 

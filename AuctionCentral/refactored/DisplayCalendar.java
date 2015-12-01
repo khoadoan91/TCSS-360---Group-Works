@@ -1,4 +1,4 @@
-package current;
+package refactored;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -27,10 +27,6 @@ public class DisplayCalendar {
 	private List<Auction> myPastAuctions;
 	private List<Auction> myUpcomingAuctions;
 
-	public DisplayCalendar() {
-
-	}
-
 	public DisplayCalendar(final List<Auction> theAuction) {
 		myPastAuctions = new LinkedList<>();
 		myUpcomingAuctions = new LinkedList<>(theAuction);
@@ -45,13 +41,14 @@ public class DisplayCalendar {
 		Collections.sort(myPastAuctions);
 //		myAuctions.addAll(theAuction);
 //		Collections.sort(myAuctions);
+		assert myUpcomingAuctions != null;
 	}
 
 	/**
 	 * First business rule:
 	 * No more than 25 auctions may be scheduled into the future.
 	 * False is good -> we can add more auctions.
-	 * @return
+	 * @return true iff calendar already has exceeded Auction;
 	 */
 	public boolean hasExceededAuction() {
 		return myUpcomingAuctions.size() >= MAX_AUCTION;
@@ -65,7 +62,7 @@ public class DisplayCalendar {
 	 * @param theAuc the new Auction
 	 * @return
 	 */
-	public boolean hasMoreThan90Days(final Auction theAuc) {
+	public boolean hasAuctionOver90Days(final Auction theAuc) {
 		Calendar ninetyFromNow = Calendar.getInstance();
 		ninetyFromNow.set(Calendar.DAY_OF_YEAR, 
 				ninetyFromNow.get(Calendar.DAY_OF_YEAR) + NINETY_DAY_FROM_NOW);
@@ -84,14 +81,14 @@ public class DisplayCalendar {
 		int expectedDay = theAuc.getDayOfYear();
 		List<Auction> neighborAuction = new LinkedList<>();
 		for (Auction auc : myUpcomingAuctions) {
-			if ((auc.getDayOfYear() - expectedDay < 7 && auc.getDayOfYear() - expectedDay >= 0)
-				|| (expectedDay - auc.getDayOfYear() < 7 && expectedDay - auc.getDayOfYear() >=0)) {
+			if (auc.getDayOfYear() - expectedDay < 7
+					|| expectedDay - auc.getDayOfYear() < 7) {
 				neighborAuction.add(auc);
 			}
 		}
 		int count = 0;
 		Collections.sort(neighborAuction);
-		for (int i = expectedDay - 6; i <= expectedDay; i++) {
+		for (int i = expectedDay - 6; i <= expectedDay + 6; i++) {
 			for (int j = i; j <= i + 6; j++) {
 				for (Auction auc : neighborAuction) {
 					if (auc.getDayOfYear() == j) {
@@ -168,7 +165,7 @@ public class DisplayCalendar {
 	 */
 	public boolean hasAuctionPerNPperYear(final Auction theAuction) {
 		for (int i = 0; i < myPastAuctions.size(); i++) {
-			if (myPastAuctions.get(i).getOrganizationNam().equals(theAuction.getOrganizationNam())) {
+			if (myPastAuctions.get(i).getOrganizationName().equals(theAuction.getOrganizationName())) {
 				if (theAuction.getDayOfYear() - myPastAuctions.get(i).getDayOfYear() >= ONE_YEAR) {
 					return true;
 				} else {
@@ -191,23 +188,27 @@ public class DisplayCalendar {
 		return false;
 	}
 
-	public boolean addAuction(final Auction theAuction) {
-		if (checkBusinessRules(theAuction)){
+	public int addAuction(final Auction theAuction) {
+		int bsrule = checkBusinessRules(theAuction);
+		if (bsrule == 0){
 			myUpcomingAuctions.add(theAuction);
 			Collections.sort(myUpcomingAuctions);
-			return true;
 		}
-		return false;
-	}
-	
-	public boolean checkBusinessRules(final Auction theAuction) {
-		return !hasExceededAuction() && !hasMoreThan90Days(theAuction)
-				&& !hasMore5AuctionsIn7Days(theAuction) && !has2HoursBetween2Auctions(theAuction)
-				&& hasAuctionPerNPperYear(theAuction) && !isInPast(theAuction);
+		return bsrule;
 	}
 
 	public void removeAuction(final Auction theAuction) {
 		myUpcomingAuctions.remove(theAuction);
+	}
+	
+	public int checkBusinessRules(final Auction theAuction) {
+		if (hasExceededAuction()) return 1;
+		if (hasAuctionOver90Days(theAuction)) return 2;
+		if (hasMore5AuctionsIn7Days(theAuction)) return 3;
+		if (has2HoursBetween2Auctions(theAuction)) return 4;
+		if (!hasAuctionPerNPperYear(theAuction)) return 5;
+		if (isInPast(theAuction)) return 2;
+		return 0;
 	}
 
 	public List<Auction> getUpcomingAuctions() {
@@ -217,167 +218,17 @@ public class DisplayCalendar {
 		return myPastAuctions;
 	}
 
-//	public List<Auction> getAllAuctions() {
-//		return myAuctions;
-//	}
-
-//	public List<Auction> getAvailableAuctions() {
-//		List<Auction> temp = new ArrayList<>();
-//		for (Auction myAuction : myAuctions) {
-//			if (myAuction.isAvailable())
-//				temp.add(myAuction);
-//		}
-//		return temp;
-//	}
-
 	/**
 	 * 
 	 *
 	 * @param theDate
 	 * @return
 	 */
-//	public boolean checkAvailability(final Calendar theDate) {
-//		List<Auction> theAuctions = getAvailableAuctions();
-//		if (hasExceededAuction())
-//			return false;
-//		if (businessRule2(theDate, theAuctions))
-//			return false;
-//		if (businessRule3(theDate, theAuctions))
-//			return false;
-//		if (businessRule4(theDate, theAuctions))
-//			return false;
-//		if (businessRule5(theDate, theAuctions))
-//			return false;
-//		return true;
-//	}
 
-	// An auction may not be scheduled more than 90 days from the current date
-//	private boolean businessRule2(final Calendar theDate, final List<Auction> theAuctions) {
-//		if (theDate.getTimeInMillis() > (Calendar.getInstance().getTimeInMillis() + (ONE_DAY * 90))) {
-//			return true;
-//		}
-//		return false;
-//	}
-
-	// FIXME (Kyle) does it only check the first 7 days from now?? How's about the next 7 days?
-	// No more than 5 auctions may be scheduled for any rolling 7 day period.
-//	private boolean businessRule3(final Calendar theDate, final List<Auction> theAuctions) {
-//		int count = 0;
-//		for (Auction myAuction : theAuctions) {
-//			if (myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() - ONE_DAY * 7
-//					|| myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() + ONE_DAY * 7) {
-//				count++;
-//			}
-//		}
-//		if (count >= 5) {
-//			return true;
-//		}
-//		return false;
-//	}
-
-	// No more than 2 auctions can be scheduled on the same day, and the start
-	// time of the second can be
-	// no earlier than 2 hours after the end time of the first.
-//	private boolean businessRule4(final Calendar theDate, final List<Auction> theAuctions) {
-//		int count = 0;
-//		for (Auction myAuction : theAuctions) {
-//			if (myAuction.getDateAuctionStarts().getTimeInMillis() >= theDate.getTimeInMillis() - ONE_HOUR * 2
-//					|| myAuction.getDateAuctionStarts().getTime().getTime() >= theDate.getTimeInMillis()
-//							+ ONE_HOUR * 2) {
-//				return true;
-//			}
-//		}
-//		for (Auction myAuction : theAuctions) {
-//			if (myAuction.getDateAuctionStarts().getTimeInMillis() / ONE_DAY == theDate.getTimeInMillis() / ONE_DAY) {
-//				count++;
-//			}
-//		}
-//		if (count >= 2) {
-//			return true;
-//		}
-//		return false;
-//	}
-
-	// No more than one auction per year per Non-profit organization can be
-	// scheduled
-//	private boolean businessRule5(final Calendar theDate, final List<Auction> theAuctions) {
-//
-//		return false;
-//	}
-
-//	private int checkAvailableAuctions() {
-//		int i = 0;
-//		for (Auction myAuction : myAuctions) {
-//			if (myAuction.isAvailable())
-//				i++;
-//		}
-//		return i;
-//	}
-
-	// used for simple tests
 	@Override
 	public String toString() {
 		return displayCalendar(Calendar.getInstance());
 	}
-//		String temp = "A = Ready For Bids          F = Full\n";
-//		// temp = temp + "_____________________________________\n";
-//		// temp = temp + "************************************\n";
-//
-//		temp = temp + "|SUN |MON |TUE |WED |THUR|FRI |SAT |\n";
-//		int dow = this.get(DAY_OF_WEEK);
-//		int dom = this.get(DAY_OF_MONTH);
-//		int i = (dow - dom) % 7 + 1;// this should find the first day of the
-//									// week of the current month but I might be
-//									// wrong
-//		// int i = gc.get(DAY_OF_WEEK_IN_MONTH);//I think this finds day of week
-//		// System.err.print(i);
-//		int tempdom = 1;
-//		
-//		while (tempdom <= this.daysInMonth(this.get(MONTH))) {
-//			int count = 0;
-//			temp = temp + "|";
-//			for (int o = 1; o < i; o++) {
-//				temp = temp + "////|";
-//			}
-//			for (; i <= 7; i++) {
-//				// Im assuming this for loop the if statement isnt working
-//				for (Auction myAuction : this.myAuctions) {
-//					if ((myAuction.getDateAuctionStarts().getTime().getTime()
-//							/ ONE_DAY) == (this.getTime().getTime() - (ONE_DAY * (dom - tempdom))) / ONE_DAY)
-//						count++;
-//				}
-//				temp = temp + count;// 
-//									// auction are in that day;
-//				count = 0;
-//				long theDate = this.getTime().getTime() - (ONE_DAY * (dom - tempdom));
-//				// if (this.checkAvailability(new Date(theDate))
-//				// || this.checkAvailability(new Date(theDate + (4 * ONE_HOUR +
-//				// 1)))){
-//				// temp = temp + "A";
-//				// }
-//				// else
-//				temp = temp + " ";
-//				if (tempdom < 10)
-//					temp = temp + " ";
-//				temp = temp + tempdom;
-//				temp = temp + "|";
-//				tempdom++;
-//				if (tempdom > 31) {
-//					i++;
-//					break;
-//				}
-//			}
-//			for (; i <= 7; i++) {
-//				temp = temp + "////|";
-//			}
-//			temp = temp + "\n";
-//			i = 1;
-//		}
-//		// temp = temp + "_____________________________________\n";
-//		// temp = temp + "************************************\n";
-//		return temp;
-//
-//	}
 
 	public String displayCalendar(final Calendar time) {
 		Calendar calShow = (Calendar) time.clone();
@@ -395,7 +246,7 @@ public class DisplayCalendar {
 		} else {
 			i = 1;
 		}
-		while (i < calShow.getActualMaximum(Calendar.DAY_OF_MONTH) + 1) {
+		while (i < calShow.getActualMaximum(Calendar.DAY_OF_MONTH)) {
 			for (int j = 0; j < 7; j++) {
 				result += "|  ";
 				if (i > 0 && calShow.getActualMaximum(Calendar.DAY_OF_MONTH) >= i) {
@@ -437,31 +288,4 @@ public class DisplayCalendar {
 		return result;
 	}
 
-//	private int daysInMonth(int month) {
-//		switch (month) {
-//		case 2:
-//			return checkLeap();
-//		case 4:
-//		case 6:
-//		case 9:
-//		case 11:
-//			return 30;
-//		case 1:
-//		case 3:
-//		case 5:
-//		case 7:
-//		case 8:
-//		case 10:
-//		case 12:
-//			return 31;
-//		default:
-//			return -1;
-//		}
-//	}
-
-//	private int checkLeap() {
-//		if (this.isLeapYear(get(YEAR)))
-//			return 29;
-//		return 28;
-//	}
 }

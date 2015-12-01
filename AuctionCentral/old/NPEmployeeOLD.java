@@ -1,4 +1,5 @@
-package current;
+
+package old;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -10,31 +11,24 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import refactored.Auction;
+import refactored.DisplayCalendar;
+import refactored.Item;
+
 import java.util.Calendar;
 
 /**
  * @author nabilfadili
  * @author KyleD
  */
-public class NPEmployee implements User {
+public class NPEmployeeOLD implements UserOLD {
 
-//	final private String userType = "NPEmployee";
 
 	private String myOrgName;
 	private Auction myAuction;
-//	private DisplayCalendar myCalendar;  
 	
-//	// add myAuction from the calendar singleton
-//	public NPEmployee(String username, DisplayCalendar myCalendar) {
-//		super(username, myCalendar);
-//	}
-//	
-//	@Deprecated
-//	public NPEmployee(String username) {
-//		this(username, "", new DisplayCalendar());
-//	}
-	
-	public NPEmployee(final String orgName, final Auction theAuc) {
+	public NPEmployeeOLD(final String orgName, final Auction theAuc) {
 		myOrgName = orgName;
 		myAuction = theAuc;
 	}
@@ -88,18 +82,27 @@ public class NPEmployee implements User {
 				itemList.add(new Item(itemTitl, itemQt, startPrice, itemDesc));
 			}
 			myAuction = new Auction(myOrgName, itemList, tempCal, timeDur);
-			boolean isSucess = cal.addAuction(myAuction);
-			if (!isSucess) {
-				myAuction = null;
-				System.out.println("Oops!! We are not allowed to add your auction!");
-				myAuction = null;
-			} else System.out.println("You sucessfully add your auction!");
+			int bsrule = cal.addAuction(myAuction);
+			switch (bsrule) {
+				case 0: System.out.println("You sucessfully added your auction!"); break;
+				case 1: System.out.println("Sorry! We reach the maximum 25 auctions."); break;
+				case 2: System.out.println("Your auction may not be scheduled more than"
+								+ " 90 days from the current date."); break;
+				case 3: System.out.println("No more than 5 auctions may be scheduled for "
+									+ "any rolling 7 day period."); break;
+				case 4: System.out.println("No more than 2 auctions can be scheduled on "
+								+ "the same day, and the start time of the second can be "
+								+ "no earlier than 2 hours after the end time of the first"); break;
+				case 5: System.out.println("No more than one auction per year per "
+								+ "Non-profit organization can be scheduled."); break;
+			}
+			if (bsrule != 0) myAuction = null;    // remove the violation BS auction.
 		} else {
 			System.out.println("You've already had an auction");
 		}
 	}
 
-	public void editAuction(Scanner scanner, DisplayCalendar cal) {
+	public void editAuction(Scanner scanner) {
 		if (myAuction != null) {
 			System.out.println("Edit your auction. Choose your options");
 			System.out.println("1) Change the auction day");
@@ -107,7 +110,7 @@ public class NPEmployee implements User {
 			System.out.println("3) Change the auction time duration");
 			System.out.println("4) Change the list of your item");
 			switch (scanner.nextInt()) {
-				case 1: editAuctionDay(scanner, cal); break;
+				case 1: editAuctionDay(scanner); break;
 				case 2: editAuctionStartTime(scanner); break;
 				case 3: editAuctionDuration(scanner); break;
 				case 4: editItem(scanner); break;
@@ -175,34 +178,11 @@ public class NPEmployee implements User {
 		myAuction.setStartingTime(scanner.next());
 	}
 
-	/**
-	 * This method will check if the new auction day is allowed to edit.
-	 * If not, prompt back to the user and set back the time.
-	 * @param scanner
-	 * @param cal for checking business rule
-	 */
-	private void editAuctionDay(Scanner scanner, DisplayCalendar cal) {
+	private void editAuctionDay(Scanner scanner) {
 		System.out.println("Change day to \"YYYY MM DD\": ");
-		int year = scanner.nextInt();
-		int month = scanner.nextInt() - 1;  // fix the calendar month index starts at 0
-		int date = scanner.nextInt();
-		// backup the current time in case the new date violate business rules.
-		int tempYear = myAuction.getYear(); 
-		int tempMonth = myAuction.getMonth();
-		int tempDate = myAuction.getDateAuctionStarts().get(Calendar.DAY_OF_MONTH);
-		cal.removeAuction(myAuction);
-		myAuction.setYear(year);
-		myAuction.setMonth(month);
-		myAuction.setDate(date);
-		if (!cal.addAuction(myAuction)) {
-			myAuction.setYear(tempYear);
-			myAuction.setMonth(tempMonth);
-			myAuction.setDate(tempDate);
-			cal.addAuction(myAuction);
-			System.out.println("You're not allowed to change to the new date");
-		} else {
-			System.out.println("You're successfully change the date");
-		}
+		myAuction.setYear(scanner.nextInt());
+		myAuction.setMonth(scanner.nextInt() - 1);
+		myAuction.setDate(scanner.nextInt());
 	}
 
 	public void removeAuction(final DisplayCalendar cal) {
@@ -218,16 +198,6 @@ public class NPEmployee implements User {
 		}
 	}
 
-//	public String getUserType() {
-//		return userType;
-//	}
-
-//	public static void main(String[] args) {
-//		NPEmployee testUser = new NPEmployee("Goodwill", new DisplayCalendar());
-//		testUser.run(new Scanner(System.in));
-//	}
-
-	
 	@Override
 	public void run(Scanner scanner, DisplayCalendar cal) {
 		Calendar timeRequested = Calendar.getInstance();
@@ -244,7 +214,7 @@ public class NPEmployee implements User {
 			System.out.print("------Done?? want to exit? type other number ");
 			switch (scanner.nextInt()) {
 				case 1: addAuction(scanner, cal); break;
-				case 2: editAuction(scanner, cal); break;
+				case 2: editAuction(scanner); break;
 				case 3: removeAuction(cal); break;
 				case 4: viewMyAuction(); break;
 				case 5: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) + 1); break;

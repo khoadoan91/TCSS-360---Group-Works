@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test;
+package oldTests;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import org.junit.Before;
 import org.junit.Test;
 
-import current.Item;
+import refactored.Item;
 
 /**
  * @author KyleD
@@ -31,7 +31,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link current.Item#getTitle()}.
+	 * Test method for {@link refactored.Item#getTitle()}.
 	 */
 	@Test
 	public void testGetTitle() {
@@ -40,7 +40,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link current.Item#getQuantity()}.
+	 * Test method for {@link refactored.Item#getQuantity()}.
 	 */
 	@Test
 	public void testGetQuantity() {
@@ -49,7 +49,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link current.Item#getDescription()}.
+	 * Test method for {@link refactored.Item#getDescription()}.
 	 */
 	@Test
 	public void testGetDescription() {
@@ -58,7 +58,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link current.Item#setTitle(java.lang.String)}.
+	 * Test method for {@link refactored.Item#setTitle(java.lang.String)}.
 	 */
 	@Test
 	public void testSetTitle() {
@@ -67,7 +67,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link current.Item#setQuantity(int)}.
+	 * Test method for {@link refactored.Item#setQuantity(int)}.
 	 */
 	@Test
 	public void testSetQuantity() {
@@ -76,7 +76,7 @@ public class ItemTest {
 	}
 
 	/**
-	 * Test method for {@link current.Item#setDescription(java.lang.String)}.
+	 * Test method for {@link refactored.Item#setDescription(java.lang.String)}.
 	 */
 	@Test
 	public void testSetDescription() {

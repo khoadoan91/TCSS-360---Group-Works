@@ -1,4 +1,4 @@
-package test;
+package oldTests;
 
 
 import org.junit.Assert;
@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import current.Auction;
-import current.DisplayCalendar;
+import refactored.Auction;
+import refactored.DisplayCalendar;
 
 import java.util.Calendar;
 

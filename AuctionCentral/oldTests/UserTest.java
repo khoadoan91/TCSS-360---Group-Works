@@ -1,11 +1,12 @@
 
-package test;
+package oldTests;
 
 import static org.junit.Assert.*;
-import old.User;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import old.UserOLD;
 
 /**
  * @author nabilfadili
@@ -22,20 +23,20 @@ public class UserTest {
 	}
 
 	/**
-	 * Test method for {@link old.User#getUsername()}.
+	 * Test method for {@link old.UserOLD#getUsername()}.
 	 */
 	@Test
 	public void testGetUsername() {
-		User testUser = new User("FirstName LastName");
+		UserOLD testUser = new UserOLD("FirstName LastName");
 		assertEquals("FirstName LastName", testUser.getUsername());
 	}
 
 	/**
-	 * Test method for {@link old.User#getUserType()}.
+	 * Test method for {@link old.UserOLD#getUserType()}.
 	 */
 	@Test
 	public void testGetUserType() {
-		User testUser = new User("FirstName LastName");
+		UserOLD testUser = new UserOLD("FirstName LastName");
 		assertEquals("User unspecified", testUser.getUserType());
 	}
 

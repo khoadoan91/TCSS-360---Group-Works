@@ -1,4 +1,4 @@
-package current;
+package refactored;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;

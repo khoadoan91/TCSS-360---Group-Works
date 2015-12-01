@@ -1,4 +1,4 @@
-package current;
+package old;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,12 +14,16 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
+import refactored.Auction;
+import refactored.DisplayCalendar;
+import refactored.Item;
+
 /**
  * @author KyleD
  *
  */
 public class AuctionCentralMain {
-	private Map<String, User> myUsers;
+	private Map<String, UserOLD> myUsers;
 	private DisplayCalendar myCalendar; 
 	
 	public AuctionCentralMain(File userInput, File auctionInput, File itemInput) {
@@ -31,7 +35,7 @@ public class AuctionCentralMain {
 	
 	private Auction matchAuctionAndNPE(List<Auction> auctionList, String orgName) {
 		for (int i = 0; i < auctionList.size(); i++) {
-			if (auctionList.get(i).getOrganizationNam().equals(orgName)) {
+			if (auctionList.get(i).getOrganizationName().equals(orgName)) {
 				return auctionList.remove(i);
 			}
 		}
@@ -47,9 +51,9 @@ public class AuctionCentralMain {
 				if (userType.equals("NPEmployee")) {
 					String orgName = scan.next();
 					Auction auc = matchAuctionAndNPE(auctionList, orgName);
-					myUsers.put(userName, new NPEmployee(orgName, auc));
+					myUsers.put(userName, new NPEmployeeOLD(orgName, auc));
 				} else if (userType.equals("ACEmployee")) {
-					myUsers.put(userName, new ACEmployee());
+					myUsers.put(userName, new ACEmployeeOLD());
 				} else {
 					String[] bidderInfo = scan.nextLine().split(", ");
 					myUsers.put(userName, new Bidder(bidderInfo[0], bidderInfo[1]));

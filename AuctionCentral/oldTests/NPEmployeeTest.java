@@ -1,13 +1,14 @@
 /**
  * 
  */
-package test;
+package oldTests;
 
 import static org.junit.Assert.*;
-import old.NPEmployee;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import old.NPEmployeeOLD;
 
 /**
  * @author nabilfadili
@@ -23,16 +24,16 @@ public class NPEmployeeTest {
 	}
 
 	/**
-	 * Test method for {@link old.NPEmployee#getUserType()}.
+	 * Test method for {@link old.NPEmployeeOLD#getUserType()}.
 	 */
 	@Test
 	public void testGetUserType() {
-		NPEmployee testUser = new NPEmployee("FirstName LastName");
+		NPEmployeeOLD testUser = new NPEmployeeOLD("FirstName LastName");
 		assertEquals("NPEmployee", testUser.getUserType());
 	}
 
 	/**
-	 * Test method for {@link old.NPEmployee#NPEmployee(java.lang.String)}.
+	 * Test method for {@link old.NPEmployeeOLD#NPEmployee(java.lang.String)}.
 	 */
 	@Test
 	public void testNPEmployee() {
@@ -40,7 +41,7 @@ public class NPEmployeeTest {
 	}
 
 	/**
-	 * Test method for {@link old.NPEmployee#addAuction()}.
+	 * Test method for {@link old.NPEmployeeOLD#addAuction()}.
 	 */
 	@Test
 	public void testAddAuction() {
@@ -48,7 +49,7 @@ public class NPEmployeeTest {
 	}
 
 	/**
-	 * Test method for {@link old.NPEmployee#editAuction()}.
+	 * Test method for {@link old.NPEmployeeOLD#editAuction()}.
 	 */
 	@Test
 	public void testEditAuction() {
@@ -56,7 +57,7 @@ public class NPEmployeeTest {
 	}
 
 	/**
-	 * Test method for {@link old.NPEmployee#removeAuction()}.
+	 * Test method for {@link old.NPEmployeeOLD#removeAuction()}.
 	 */
 	@Test
 	public void testRemoveAuction() {
