@@ -28,14 +28,23 @@ public class NPEmployeeUI implements UserUI {
 			switch (scanner.nextInt()) {
 				case 1: addAuction(scanner, theCalendar, (NPEmployee)currentUser); break;
 				case 2: editAuction(scanner, theCalendar, (NPEmployee)currentUser); break;
-				//case 3: removeAuction(cal); break;
-				//case 4: viewMyAuction(); break;
+				case 3: removeAuction(theCalendar, (NPEmployee)currentUser); break;
+				case 4: viewUserAuction((NPEmployee)currentUser); break;
 				case 5: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) - 1); break;
 				case 6: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) + 1); break;
 				case 7 :isQuit = true; break;
 				default: System.out.println("Invalid choice"); break;
 			}
 		} while (!isQuit);
+	}
+	
+	private void removeAuction(DisplayCalendar theCalendar, NPEmployee currentUser) {
+		theCalendar.removeAuction(currentUser.getMyAuction());
+		currentUser.removeAuction();
+	}
+	
+	public void viewUserAuction(NPEmployee currentUser) {
+		System.out.println(currentUser.viewAuction());
 	}
 	
 	private void editAuction(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
