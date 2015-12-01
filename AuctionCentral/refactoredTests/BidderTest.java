@@ -31,7 +31,7 @@ public class BidderTest {
 	public void setup() {
 		myBidder = new Bidder("123 Main St.", "123456789");
 		myItem = new Item("Golf Clubs", 6, new BigDecimal("1000.00"), "Six golf clubs");
-		myBid = new Bid(myItem, 225.0, myBidder.toString());
+		myBid = new Bid(myItem, 2000.0, myBidder.toString());
 	}
 
 	@Test(expected=NullPointerException.class)
