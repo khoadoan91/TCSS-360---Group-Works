@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class NPEmployeeUI implements UserUI {
 
 	@Override
-	public void promptMainMenu(Scanner scanner, DisplayCalendar theCalendar, User currentUser) {
+	public void promptMainMenu(Scanner scanner, CalendarUI theCalendar, User currentUser) {
 		Calendar timeRequested = Calendar.getInstance();
 		boolean isQuit = false;
 		do {
@@ -38,8 +38,8 @@ public class NPEmployeeUI implements UserUI {
 		} while (!isQuit);
 	}
 	
-	private void removeAuction(DisplayCalendar theCalendar, NPEmployee currentUser) {
-		theCalendar.removeAuction(currentUser.getMyAuction());
+	private void removeAuction(CalendarUI theCalendar, NPEmployee currentUser) {
+		theCalendar.getDispCalendar().removeAuction(currentUser.getMyAuction());
 		currentUser.removeAuction();
 	}
 	
@@ -47,7 +47,7 @@ public class NPEmployeeUI implements UserUI {
 		System.out.println(currentUser.viewAuction());
 	}
 	
-	private void editAuction(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+	private void editAuction(Scanner scanner, CalendarUI theCalendar, NPEmployee currentUser) {
 		if (currentUser.getMyAuction() != null) {
 			System.out.println("What would you like to edit?");
 			System.out.println("0) Go Back");
@@ -61,6 +61,7 @@ public class NPEmployeeUI implements UserUI {
 				case 2: editAuctionStartTime(scanner, theCalendar, (NPEmployee)currentUser); break;
 				case 3: editAuctionDuration(scanner, theCalendar, (NPEmployee)currentUser); break;
 				case 4: editItem(scanner, theCalendar, (NPEmployee)currentUser); break;
+				default: System.out.println("Invalid choice"); break;
 			}
 		}
 		else {
@@ -68,19 +69,19 @@ public class NPEmployeeUI implements UserUI {
 		}
 	}
 	
-	private void editAuctionDuration(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+	private void editAuctionDuration(Scanner scanner, CalendarUI theCalendar, NPEmployee currentUser) {
 		System.out.println("Change the time auction duration \"HH:MM\" ");
 		currentUser.getMyAuction().setTimeDuration(scanner.next());
 		// FIXME check 4th business rule
 	}
 
-	private void editAuctionStartTime(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+	private void editAuctionStartTime(Scanner scanner, CalendarUI theCalendar, NPEmployee currentUser) {
 		System.out.println("Change the time auction starts \"HH:MM\" ");
 		currentUser.getMyAuction().setStartingTime(scanner.next());
 		// FIXME check 4th business rule.
 	}
 
-	private void editAuctionDay(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+	private void editAuctionDay(Scanner scanner, CalendarUI theCalendar, NPEmployee currentUser) {
 		System.out.println("Change day to \"YYYY MM DD\": ");
 		// FIXME check 2nd, 3rd and 4th business rules.
 		currentUser.getMyAuction().setYear(scanner.nextInt());
@@ -88,7 +89,7 @@ public class NPEmployeeUI implements UserUI {
 		currentUser.getMyAuction().setDate(scanner.nextInt());
 	}
 	
-	private void editItem(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+	private void editItem(Scanner scanner, CalendarUI theCalendar, NPEmployee currentUser) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		List<Item> items = currentUser.getMyAuction().getAllItems();
 		System.out.println("Here is all items");
@@ -138,12 +139,12 @@ public class NPEmployeeUI implements UserUI {
 		}
 	}
 	
-	private void addAuction(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+	private void addAuction(Scanner scanner, CalendarUI theCalendar, NPEmployee currentUser) {
 		if (currentUser.getMyAuction() != null) {
 			System.out.println("You already have an auction scheduled.");
 		} else {
 			currentUser.addAuction(enterAuctionInfo(scanner, currentUser.getMyOrgName()));
-			int bsrule = theCalendar.addAuction(currentUser.getMyAuction());
+			int bsrule = theCalendar.getDispCalendar().addAuction(currentUser.getMyAuction());
 			switch (bsrule) {
 				case 0: System.out.println("You sucessfully added your auction!"); break;
 				case 1: System.out.println("Sorry! We reach the maximum 25 auctions."); break;

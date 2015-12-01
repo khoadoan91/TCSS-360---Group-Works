@@ -10,6 +10,5 @@ import java.util.Scanner;
  *
  */
 public interface UserUI {
-	public void promptMainMenu(Scanner scanner, DisplayCalendar theCalendar, User currentUser);
-
+	public void promptMainMenu(Scanner scanner, CalendarUI theCalendar, User currentUser);
 }

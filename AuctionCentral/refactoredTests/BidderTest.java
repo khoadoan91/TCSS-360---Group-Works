@@ -1,4 +1,4 @@
-package test;
+package refactoredTests;
 
 import static org.junit.Assert.*;
 
@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import dev.Bidder;
+import refactored.Bidder;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import dev.Auction;
-import dev.Bid;
-import dev.DisplayCalendar;
-import dev.Item;
+import refactored.Auction;
+import refactored.Bid;
+import refactored.DisplayCalendar;
+import refactored.Item;
 
 import org.junit.Test;
 

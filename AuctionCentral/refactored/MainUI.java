@@ -36,7 +36,7 @@ public class MainUI {
 		currentUser = allUsers.get(user);
 	}
 
-	public void run(Scanner scanner, DisplayCalendar theCalendar) {
+	public void run(Scanner scanner, CalendarUI theCalendar) {
 		UserUI ui;
 		if (currentUser instanceof ACEmployee) {
 			ui = new ACEmployeeUI();

@@ -17,9 +17,9 @@ public class ACEmployeeUI implements UserUI {
 	 * Accesses calendar singleton and prints upcoming auctions.
 	 * 
 	 */
-	private void viewUpcomingAuction(Scanner scanner, DisplayCalendar cal) {
+	private void viewUpcomingAuction(Scanner scanner, CalendarUI cal) {
 		System.out.println("Please pick one auction for detail. ");
-		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
+		List<Auction> upcomingAuc = cal.getDispCalendar().getUpcomingAuctions();
 		for (int i = 0; i < upcomingAuc.size(); i++) {
 			System.out.println((i + 1) + ") " + upcomingAuc.get(i));
 		}
@@ -35,12 +35,13 @@ public class ACEmployeeUI implements UserUI {
 	 * Runs main menu and prompts for an ACEmployee.
 	 */
 	@Override
-	public void promptMainMenu(Scanner scanner, DisplayCalendar theCalendar, User currentUser) {
+	public void promptMainMenu(Scanner scanner, CalendarUI theCalendar, User currentUser) {
 		boolean isQuit = false;
 		do {
 			System.out.println("Please choose an option below or type any other number to exit.");
 			System.out.println("1.  View the calendar");
 			System.out.println("2.  View upcoming auction");
+			System.out.println("other number.  Exit");
 			switch (scanner.nextInt()) {
 				case 1: viewCalendar(scanner, theCalendar); break;
 				case 2: viewUpcomingAuction(scanner, theCalendar); break;
@@ -55,7 +56,7 @@ public class ACEmployeeUI implements UserUI {
 	 * @param scanner for menu choices
 	 * @param theCalendar holds Auction objects
 	 */
-	private void viewCalendar(Scanner scanner, DisplayCalendar theCalendar) {
+	private void viewCalendar(Scanner scanner, CalendarUI theCalendar) {
 		Calendar timeRequested = Calendar.getInstance();
 		boolean isQuit = false;
 		do {
