@@ -44,7 +44,7 @@ public class MainUI {
 		}
 		if (currentUser instanceof NPEmployee) {
 			ui = new NPEmployeeUI();
-			ui.promptMainMenu(scanner, theCalendar, currentUser);		//Probably need to pass the user object
+			ui.promptMainMenu(scanner, theCalendar, currentUser);		
 		}
 		if (currentUser instanceof Bidder) {
 			ui = new BidderUI();

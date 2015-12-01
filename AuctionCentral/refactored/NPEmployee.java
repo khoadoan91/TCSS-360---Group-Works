@@ -30,21 +30,6 @@ public class NPEmployee extends User {
 		myAuction = theAuction;
 	}
 	
-	public void editAuction(Scanner scanner) {
-		
-	}
-	private void editItem(Scanner scanner) {
-		
-	}
-	private void editAuctionDuration(Scanner scanner) {
-		
-	}
-	private void editAuctionStartTime(Scanner scanner) {
-		
-	}
-	private void editAuctionDay(Scanner scanner) {
-		
-	}
 	public void removeAuction() {
 		myAuction = null;
 	}
