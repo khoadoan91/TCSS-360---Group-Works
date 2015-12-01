@@ -27,7 +27,7 @@ public class NPEmployeeUI implements UserUI {
 			System.out.println("7.  Exit");
 			switch (scanner.nextInt()) {
 				case 1: addAuction(scanner, theCalendar, (NPEmployee)currentUser); break;
-				//case 2: editAuction(scanner); break;
+				case 2: editAuction(scanner, theCalendar, (NPEmployee)currentUser); break;
 				//case 3: removeAuction(cal); break;
 				//case 4: viewMyAuction(); break;
 				case 5: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) - 1); break;
@@ -37,7 +37,91 @@ public class NPEmployeeUI implements UserUI {
 			}
 		} while (!isQuit);
 	}
-	public void addAuction(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+	
+	private void editAuction(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+		if (currentUser.getMyAuction() != null) {
+			System.out.println("What would you like to edit?");
+			System.out.println("1) Change the auction day");
+			System.out.println("2) Change the auction time");
+			System.out.println("3) Change the auction time duration");
+			System.out.println("4) Change the list of your item");
+			switch (scanner.nextInt()) {
+				case 1: editAuctionDay(scanner, theCalendar, (NPEmployee)currentUser); break;
+				case 2: editAuctionStartTime(scanner, theCalendar, (NPEmployee)currentUser); break;
+				case 3: editAuctionDuration(scanner, theCalendar, (NPEmployee)currentUser); break;
+				case 4: editItem(scanner, theCalendar, (NPEmployee)currentUser); break;
+			}
+		}
+		else {
+			System.out.println("You do not have an auction");
+		}
+	}
+	
+	private void editAuctionDuration(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+		System.out.println("Change the time auction duration \"HH:MM\" ");
+		currentUser.getMyAuction().setTimeDuration(scanner.next());
+	}
+
+	private void editAuctionStartTime(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+		System.out.println("Change the time auction starts \"HH:MM\" ");
+		currentUser.getMyAuction().setStartingTime(scanner.next());
+	}
+
+	private void editAuctionDay(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+		System.out.println("Change day to \"YYYY MM DD\": ");
+		currentUser.getMyAuction().setYear(scanner.nextInt());
+		currentUser.getMyAuction().setMonth(scanner.nextInt() - 1);
+		currentUser.getMyAuction().setDate(scanner.nextInt());
+	}
+	
+	private void editItem(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		List<Item> items = currentUser.getMyAuction().getAllItems();
+		System.out.println("Here is all items");
+		for (int i = 0; i < items.size(); i++) {
+			System.out.println((i + 1) + ") " + items.get(i));
+		}
+		System.out.println("Choose an item to edit");
+		int pickItem = scanner.nextInt();
+		for (int i = 1; i <= items.size(); i++) {
+			if (i == pickItem) {
+				System.out.println("Choose your edit.");
+				System.out.println("1. Edit Title");
+				System.out.println("2. Edit Quantity");
+				System.out.println("3. Edit Starting Price");
+				System.out.println("4. Edit Description");
+				System.out.println("5. Remove an item");
+				switch (scanner.nextInt()) {
+					case 1: 
+						System.out.print("New Title : ");
+					try {
+						items.get(i - 1).setTitle(reader.readLine());
+					} catch (IOException e) {
+						e.printStackTrace();
+					} break;
+					case 2: 
+						System.out.print("New Quantity : ");
+						items.get(i - 1).setQuantity(scanner.nextInt()); break;
+					case 3:
+						System.out.print("New Starting Price: ");
+						items.get(i - 1).setStartingPrice(new BigDecimal(scanner.next())); break;
+					case 4: 
+						System.out.print("New Description : ");
+					try {
+						items.get(i - 1).setDescription(reader.readLine());
+					} catch (IOException e) {
+						e.printStackTrace();
+					} break;
+					case 5:
+						System.out.println("Item was removed!");
+						currentUser.getMyAuction().removeItem(items.remove(i - 1).getTitle()); break;
+					default: break;
+				}
+			}
+		}
+	}
+	
+	private void addAuction(Scanner scanner, DisplayCalendar theCalendar, NPEmployee currentUser) {
 		if (currentUser.getMyAuction() != null) {
 			System.out.println("You already have an auction scheduled.");
 		} else {
