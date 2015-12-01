@@ -114,8 +114,8 @@ public class Auction implements Comparable<Auction> {
    /**
     * makes a test object with random org name.
     * lasts 1 hour and 1 minute
-	 * @param theDate tim the auction starts 
-	 *            
+	* @param theDate tim the auction starts 
+	*            
     */
    public static Auction makeTestAuction(final Calendar theDate){
       char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
@@ -149,12 +149,18 @@ public class Auction implements Comparable<Auction> {
 	 * @param theItem
 	 */
 	public boolean addItem(final Item theItem) {
-		if (theItem == null) {
-			throw new NullPointerException();
-		}
 		if (!myItems.contains(theItem))
 			return myItems.add(theItem);
 		return false;
+	}
+	
+	public boolean removeItem(final Item theItem) {
+		if (myItems.contains(theItem)) {
+			myItems.remove(theItem);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -162,21 +168,21 @@ public class Auction implements Comparable<Auction> {
 	 *
 	 * @param theItemTitle
 	 */
-	public boolean removeItem(final String theItemTitle) {
-		if (theItemTitle == null) {
-			throw new NullPointerException();
-		}
-		if (theItemTitle.length() == 0) {
-			throw new IllegalArgumentException();
-		}
-		for (int i = 0; i < myItems.size(); i++) {
-			if (myItems.get(i).getTitle().equals(theItemTitle)) {
-				myItems.remove(i);
-				return true;
-			}
-		}
-		return false;
-	}
+//	public boolean removeItem(final String theItemTitle) {
+//		if (theItemTitle == null) {
+//			throw new NullPointerException();
+//		}
+//		if (theItemTitle.length() == 0) {
+//			throw new IllegalArgumentException();
+//		}
+//		for (int i = 0; i < myItems.size(); i++) {
+//			if (myItems.get(i).getTitle().equals(theItemTitle)) {
+//				myItems.remove(i);
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 	/**
 	 * Returns a date and hour.
@@ -202,7 +208,7 @@ public class Auction implements Comparable<Auction> {
 	 *
 	 * @return
 	 */
-	public String getOrganizationNam() {
+	public String getOrganizationName() {
 		return myOrgName;
 	}
 
@@ -298,12 +304,12 @@ public class Auction implements Comparable<Auction> {
 	 *
 	 * @param theDate
 	 */
-	public void setAuctionDay(final Calendar theDate) {
-		if (theDate == null) {
-			throw new NullPointerException();
-		}
-		myDate = (Calendar) theDate.clone();
-	}
+//	public void setAuctionDay(final Calendar theDate) {
+//		if (theDate == null) {
+//			throw new NullPointerException();
+//		}
+//		myDate = (Calendar) theDate.clone();
+//	}
 
 	public void setDate(final int date) {
 		myDate.set(Calendar.DAY_OF_MONTH, date);
@@ -342,8 +348,9 @@ public class Auction implements Comparable<Auction> {
 	
 	public String displayAuction() {
 		String result = myOrgName + " " + myDate.getTime() + "\n";
+		char c = 'a';
 		for (int i = 0; i < myItems.size(); i++) {
-			result += "--> " + myItems.get(i) + "\n";
+			result += c++ + ") " + myItems.get(i) + "\n";
 		}
 		return result;
 	}

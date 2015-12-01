@@ -120,7 +120,7 @@ public class FileHandler {
 	 */
 	private Auction matchAuctionAndNPE(List<Auction> auctionList, String orgName) {
 		for (int i = 0; i < auctionList.size(); i++) {
-			if (auctionList.get(i).getOrganizationNam().equals(orgName)) {
+			if (auctionList.get(i).getOrganizationName().equals(orgName)) {
 				return auctionList.remove(i);
 			}
 		}

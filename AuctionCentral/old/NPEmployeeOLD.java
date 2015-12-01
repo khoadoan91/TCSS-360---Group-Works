@@ -82,12 +82,21 @@ public class NPEmployeeOLD implements UserOLD {
 				itemList.add(new Item(itemTitl, itemQt, startPrice, itemDesc));
 			}
 			myAuction = new Auction(myOrgName, itemList, tempCal, timeDur);
-			boolean isSucess = cal.addAuction(myAuction);
-			if (!isSucess) {
-				myAuction = null;
-				System.out.println("Oops!! We are not allowed to add your auction!");
-				myAuction = null;
-			} else System.out.println("You sucessfully add your auction!");
+			int bsrule = cal.addAuction(myAuction);
+			switch (bsrule) {
+				case 0: System.out.println("You sucessfully added your auction!"); break;
+				case 1: System.out.println("Sorry! We reach the maximum 25 auctions."); break;
+				case 2: System.out.println("Your auction may not be scheduled more than"
+								+ " 90 days from the current date."); break;
+				case 3: System.out.println("No more than 5 auctions may be scheduled for "
+									+ "any rolling 7 day period."); break;
+				case 4: System.out.println("No more than 2 auctions can be scheduled on "
+								+ "the same day, and the start time of the second can be "
+								+ "no earlier than 2 hours after the end time of the first"); break;
+				case 5: System.out.println("No more than one auction per year per "
+								+ "Non-profit organization can be scheduled."); break;
+			}
+			if (bsrule != 0) myAuction = null;    // remove the violation BS auction.
 		} else {
 			System.out.println("You've already had an auction");
 		}

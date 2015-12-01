@@ -5,7 +5,6 @@ package refactored;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -24,7 +23,9 @@ public class ACEmployeeUI implements UserUI {
 		for (int i = 0; i < upcomingAuc.size(); i++) {
 			System.out.println((i + 1) + ") " + upcomingAuc.get(i));
 		}
+		System.out.println("\n Hit 0 to go back to main menu");
 		int pickAuc = scanner.nextInt();
+		if (pickAuc == 0) return;
 		for (int i = 1; i <= upcomingAuc.size(); i++) {
 			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1).displayAuction());
 		}
@@ -59,14 +60,14 @@ public class ACEmployeeUI implements UserUI {
 		boolean isQuit = false;
 		do {
 			System.out.println(theCalendar.displayCalendar(timeRequested));
-			System.out.println("1.  Previous month\n" +
-							   "2.  Next month\n" +
-							   "3.  Back to main menu");
+			System.out.println("0.  Back to main menu\n" + 
+							   "1.  Previous month\n" +
+							   "2.  Next month");
 			switch (scanner.nextInt()) {
-			case 1: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) - 1); break;
-			case 2: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) + 1); break;
-			case 3: isQuit = true; break;
-			default: System.out.println("Invalid input"); break;
+				case 0: isQuit = true; break;
+				case 1: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) - 1); break;
+				case 2: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) + 1); break;
+				default: System.out.println("Invalid input"); break;
 			}
 		} while(!isQuit);	
 	}

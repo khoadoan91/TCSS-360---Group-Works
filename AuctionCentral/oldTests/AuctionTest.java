@@ -62,11 +62,6 @@ public class AuctionTest {
 	/**
 	 * Test method for {@link refactored.Auction#removeItem(refactored.Item)}.
 	 */
-	@Test(expected = NullPointerException.class)
-	public void testRemoveItemWithNull() {
-		myAuction.removeItem(null);
-	}
-	
 	@Test(expected = IllegalArgumentException.class)
 	public void testRemoveItemWithEmptyString() {
 		myAuction.removeItem("");
