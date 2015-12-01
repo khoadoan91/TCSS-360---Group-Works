@@ -45,15 +45,14 @@ public class NPEmployee extends User {
 	private void editAuctionDay(Scanner scanner) {
 		
 	}
-	public void removeAuction(final DisplayCalendar cal) {
-		cal.removeAuction(myAuction);
+	public void removeAuction() {
 		myAuction = null;
 	}
-	public void viewMyAuction() {
+	public String viewAuction() {
 		if (myAuction == null) {
-			System.out.println("Oops, you don't have any auction.");
+			return "You do not have an auction scheduled.";
 		} else {
-			System.out.println(myAuction);
+			return myAuction.toString();
 		}
 	}
 }
