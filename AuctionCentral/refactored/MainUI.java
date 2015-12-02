@@ -3,7 +3,11 @@ package refactored;
 import java.util.Map;
 import java.util.Scanner;
 
-
+/**
+ * Main driver class for console interaction.
+ * @author nabilfadili
+ *
+ */
 public class MainUI {
 	
 	private Map<String, User> allUsers;

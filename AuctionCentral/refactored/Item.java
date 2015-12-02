@@ -5,7 +5,6 @@ import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Random;
 
-import model.Item;
 
 /**
  * @author KyleD

@@ -1,8 +1,6 @@
-package model;
-
+package refactoredTests;
 
 import org.junit.Assert;
-
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -12,8 +10,9 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Auction;
-
+import refactored.Auction;
+import refactored.DisplayCalendar;
+import refactored.Item;
 
 public class CalendarTester {
 

@@ -35,9 +35,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import model.Auction;
-import model.Item;
-
 
 /**
  * @author KyleD

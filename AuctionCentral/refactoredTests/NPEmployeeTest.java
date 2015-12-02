@@ -14,6 +14,11 @@ import refactored.Auction;
 import refactored.Item;
 import refactored.NPEmployee;
 
+/**
+ * Tests data integrity for NPEmployee objects.
+ * @author nabilfadili
+ *
+ */
 public class NPEmployeeTest {
 	
 	public NPEmployee employeeWithAuction;
@@ -29,10 +34,18 @@ public class NPEmployeeTest {
 		employeeWithoutAuction = new NPEmployee("DEF", null);
 	}
 
+	/**
+	 * Tests integrity of User hierarchy.
+	 */
 	@Test
 	public void testNPEmployee() {
 		assertTrue(employeeWithAuction instanceof NPEmployee);
 	}
+	
+	/**
+	 * An NPEmployee should have at most one auction at a time and null otherwise.
+	 * @throws ParseException
+	 */
 	@Test
 	public void testAddAuctionToEmployeeWithoutAuction() throws ParseException {
 		assertEquals(null, employeeWithoutAuction.getMyAuction());
@@ -42,16 +55,28 @@ public class NPEmployeeTest {
 		employeeWithoutAuction.addAuction(testAuction);
 		assertEquals(testAuction, employeeWithoutAuction.getMyAuction());
 	}
+	
+	/**
+	 * An NPEmployee should have at most one auction at a time and null otherwise.
+	 */
 	@Test
 	public void testRemoveAuction() {
 		assertEquals(testAuction, employeeWithAuction.getMyAuction());
 		employeeWithAuction.removeAuction();
 		assertEquals(null, employeeWithAuction.getMyAuction());
 	}
+	
+	/**
+	 * viewAuction() should return an error message if the employee doesn't have an auction scheduled.
+	 */
 	@Test
 	public void testViewAuctionWithNoAuctionScheduled() {
 		assertEquals("You do not have an auction scheduled.", employeeWithoutAuction.viewAuction());
 	}
+	
+	/**
+	 * viewAuction() should return a toString representation of the employee's auction if available.
+	 */
 	@Test
 	public void testViewAuctionWithAuctionScheduled() {
 		assertEquals(employeeWithAuction.getMyAuction().toString(), employeeWithAuction.viewAuction());

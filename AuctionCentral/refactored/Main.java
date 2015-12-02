@@ -4,6 +4,13 @@ import java.io.File;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Main program start. Scanner singleton is initialized and passed around the program's
+ * UI classes as it is needed.
+ * Files are read and passed here.
+ * @author nabilfadili
+ *
+ */
 public class Main {
 	
 	final private static Scanner scanner = new Scanner(System.in);
@@ -21,8 +28,7 @@ public class Main {
 		
 		MainUI ui = new MainUI(myUsers);
 		ui.promptLogin(scanner);
-		ui.run(scanner, myCalendar);
-		
+		ui.run(scanner, myCalendar);	
 	}
 
 }

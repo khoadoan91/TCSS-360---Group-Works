@@ -1,14 +1,11 @@
 package refactored;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Scanner;
-
+/**
+ * Class representing a non-profit employee. Holds information on their one and only current
+ * auction as well as their one and only organization name.
+ * @author nabilfadili
+ *
+ */
 public class NPEmployee extends User {
 	
 	private String myOrgName;

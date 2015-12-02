@@ -14,7 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-
+/**
+ * Class handles file i/o for both text files and serial files.
+ * @author nabilfadili
+ *
+ */
 public class FileHandler {
 	private Map<String, User> myUsers;
 	private List<Auction> auctionList;
