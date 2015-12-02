@@ -35,6 +35,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import model.Auction;
+import model.Item;
+
 
 /**
  * @author KyleD
@@ -117,16 +120,26 @@ public class Auction implements Comparable<Auction> {
 	 * @param theDate tim the auction starts 
 	 *            
     */
-   public static Auction makeTestAuction(final Calendar theDate){
-      char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
-      StringBuilder sb = new StringBuilder();         //any better way to make a random string??
-      Random random = new Random();
-      for (int i = 0; i < 10; i++) {
-         char c = chars[random.nextInt(chars.length)];
-      sb.append(c);
-      }
-      return new Auction(sb.toString(), null, theDate,"01-01");
-   }
+	   /**
+	    * makes a test object with random org name.
+	    * lasts 1 hour and 1 minute
+		 * @param theDate tim the auction starts 
+		 *            
+	    */
+	@SuppressWarnings("unchecked")
+	public static Auction makeTestAuction(final Calendar theDate){
+		char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
+		StringBuilder sb = new StringBuilder();         //any better way to make a random string??
+		Random random = new Random();
+		for (int i = 0; i < 10; i++) {
+			char c = chars[random.nextInt(chars.length)];
+			sb.append(c);
+		}
+		List aList = new LinkedList<Item>();
+	    aList.add(Item.makeRItem());
+	    aList.add(Item.makeRItem());
+	    return new Auction(sb.toString(),aList , theDate,"01:01");
+	}
    
    public void addBid(final Bid theBid) {
 		myBids.add(theBid);
