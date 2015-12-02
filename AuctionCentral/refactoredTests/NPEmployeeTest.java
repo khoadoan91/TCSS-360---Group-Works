@@ -1,13 +1,18 @@
-package refactored;
+package refactoredTests;
 
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import refactored.Auction;
+import refactored.Item;
+import refactored.NPEmployee;
 
 public class NPEmployeeTest {
 	
@@ -21,7 +26,6 @@ public class NPEmployeeTest {
 		theItems.add(new Item("book", 1, new BigDecimal(100), "A book"));
 		testAuction = new Auction("ABC-DEC-20-2015", theItems, "10:00", "11:00");
 		employeeWithAuction = new NPEmployee("ABC", testAuction);
-	
 		employeeWithoutAuction = new NPEmployee("DEF", null);
 	}
 
@@ -29,14 +33,14 @@ public class NPEmployeeTest {
 	public void testNPEmployee() {
 		assertTrue(employeeWithAuction instanceof NPEmployee);
 	}
-
 	@Test
-	public void testAddAuctionToEmployeeWithAuction() {
-		//fail
-	}
-	@Test
-	public void testAddAuctionToEmployeeWithoutAuction() {
-		//fail
+	public void testAddAuctionToEmployeeWithoutAuction() throws ParseException {
+		assertEquals(null, employeeWithoutAuction.getMyAuction());
+		List<Item> testItems = new ArrayList<Item>();
+		testItems.add(new Item("tv", 1, new BigDecimal(10000), "Big tv"));
+		Auction testAuction = new Auction("DEF-JAN-25-2016", testItems, "12:00", "13:00");
+		employeeWithoutAuction.addAuction(testAuction);
+		assertEquals(testAuction, employeeWithoutAuction.getMyAuction());
 	}
 	@Test
 	public void testRemoveAuction() {
