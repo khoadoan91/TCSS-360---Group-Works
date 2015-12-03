@@ -40,13 +40,6 @@ public class BidderTest {
 	}
 	
 	@Test
-	public void addBidOnDuplicateTest() {
-		myBidder.addBid(myBid);
-		Bid bid = new Bid(myItem, 3000.0, myBidder.toString());
-		myBidder.addBid(bid);
-		assertFalse(myBidder.viewBids().contains(bid));
-	}
-	 @Test
 	public void addBidOnGoodBidTest() {
 		myBidder.addBid(myBid);
 		assertTrue(myBidder.viewBids().contains(myBid));
@@ -57,11 +50,10 @@ public class BidderTest {
 		myBidder.removeBid(null);
 	}
 	
-	@Test
-	public void removeBideOnNotContainedTest() {
+	@Test(expected=IllegalArgumentException.class)
+	public void removeBidOnNotContainedTest() {
 		Bid bid = new Bid(new Item("TV", 1, new BigDecimal(20.0), "A nice TV."), 50.0, myBidder.toString());
 		myBidder.removeBid(bid);
-		assertFalse(myBidder.viewBids().contains(myBid));
 	}
 	
 	@Test
