@@ -31,30 +31,30 @@ public class BidTest {
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public void setBidAmountOnNegativeTest() {
+	public void testSetBidAmountOnNegative() {
 		myBid.setBidAmount(-100.0);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void setBidAmountOnZeroTest() {
+	public void testSetBidAmountOnZero() {
 		myBid.setBidAmount(0.0);
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public void setBidAmountOnLessThanStartingPriceTest() {
+	public void testSetBidAmountOnLessThanStartingPrice() {
 		myItem.setStartingPrice(new BigDecimal(20.0));
 		myBid.setBidAmount(10.0);
 	}
 	
 	@Test
-	public void setBidAmountOnStartingPriceTest() {
+	public void testSetBidAmountOnStartingPrice() {
 		myItem.setStartingPrice(new BigDecimal(20.0));
 		myBid.setBidAmount(20.0);
 		assertEquals(20.0, myBid.getBidAmount(), 0.0001);
 	}
 	
 	@Test
-	public void setBidAmountOnGreaterThanStartingPriceTest() {
+	public void testSetBidAmountOnGreaterThanStartingPrice() {
 		myItem.setStartingPrice(new BigDecimal(20.0));
 		myBid.setBidAmount(30.0);
 		assertEquals(30.0, myBid.getBidAmount(), 0.0001);

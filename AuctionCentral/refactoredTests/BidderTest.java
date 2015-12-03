@@ -35,29 +35,29 @@ public class BidderTest {
 	}
 
 	@Test(expected=NullPointerException.class)
-	public void addBidOnNullTest() {
+	public void testAddBidOnNull() {
 		myBidder.addBid(null);
 	}
 	
 	@Test
-	public void addBidOnGoodBidTest() {
+	public void testAddBidOnGoodBid() {
 		myBidder.addBid(myBid);
 		assertTrue(myBidder.viewBids().contains(myBid));
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void removeBidOnNulTest() {
+	public void testRemoveBidOnNull() {
 		myBidder.removeBid(null);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void removeBidOnNotContainedTest() {
+	public void testRemoveBidOnNotContained() {
 		Bid bid = new Bid(new Item("TV", 1, new BigDecimal(20.0), "A nice TV."), 50.0, myBidder.toString());
 		myBidder.removeBid(bid);
 	}
 	
 	@Test
-	public void removeBidOnGoodBidTest() {
+	public void testRemoveBidOnGoodBid() {
 		myBidder.addBid(myBid);
 		myBidder.removeBid(myBid);
 		assertFalse(myBidder.viewBids().contains(myBid));
