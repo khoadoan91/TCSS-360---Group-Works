@@ -39,10 +39,12 @@ public class ACEmployeeUI implements UserUI {
 			System.out.println("Please choose an option below or type any other number to exit.");
 			System.out.println("1.  View the calendar");
 			System.out.println("2.  View upcoming auction");
+			System.out.println("3.  Exit");
 			switch (scanner.nextInt()) {
 				case 1: viewCalendar(scanner, theCalendar); break;
 				case 2: viewUpcomingAuction(scanner, theCalendar); break;
-				default: isQuit = true; break;
+				case 3: isQuit = true; break;
+				default: System.out.println("Invalid input."); 
 			}
 		} while (!isQuit);	
 	}

@@ -22,13 +22,15 @@ public class Main {
 		File auctionFile = new File("current_auction_list.txt");
 		File itemFile = new File("current_item_list.txt");
 		
-		FileHandler fileLoader = new FileHandler();		
-		myCalendar = new DisplayCalendar(fileLoader.readAuctionFile(auctionFile, itemFile));
-		myUsers = fileLoader.readUserFile(userFile);
+		FileHandler myFileHandler = new FileHandler();		
+		myCalendar = new DisplayCalendar(myFileHandler.readAuctionFile(auctionFile, itemFile));
+		myUsers = myFileHandler.readUserFile(userFile);
 		
 		MainUI ui = new MainUI(myUsers);
 		ui.promptLogin(scanner);
-		ui.run(scanner, myCalendar);	
+		myUsers = ui.run(scanner, myCalendar);				//returns whatever happened to the user objects during run()
+		
+		myFileHandler.serializeUserFile(myUsers);
 	}
 
 }

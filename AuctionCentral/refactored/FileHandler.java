@@ -3,15 +3,19 @@ package refactored;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 /**
@@ -20,8 +24,29 @@ import java.util.Scanner;
  *
  */
 public class FileHandler {
-	private Map<String, User> myUsers;
+	//private Map<String, User> myUsers;
 	private List<Auction> auctionList;
+	
+	/**
+	 * Writes existing users to a .ser file.
+	 * @author nabilfadili
+	 */
+	public void serializeUserFile(Map<String, User> myUpdatedUsers) {
+		FileOutputStream fileOut;
+		ObjectOutputStream outputStream;
+		Iterator<Entry<String, User>> userList = myUpdatedUsers.entrySet().iterator();
+		try {
+			fileOut = new FileOutputStream("user_list_final.ser");
+			outputStream = new ObjectOutputStream(fileOut);
+			while (userList.hasNext()) {
+				System.out.println(userList.next());
+				//outputStream.writeObject(userList.next());	
+			}
+		} catch (IOException e) {
+			System.out.println("Something went wrong with the serialization");
+			e.printStackTrace();
+		}	
+	}
 	
 	/**
 	 * Takes in a file of users and returns a map object of each username to User type.
@@ -29,7 +54,7 @@ public class FileHandler {
 	 * @return Map<userName, userType>
 	 */
 	public Map<String, User> readUserFile(File userFile) {
-		myUsers = new HashMap<>();
+		Map<String, User> myUsers = new HashMap<>();
 		try {
 			myUsers = new HashMap<>();
 			Scanner scan = new Scanner(userFile);

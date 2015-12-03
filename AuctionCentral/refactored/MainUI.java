@@ -1,5 +1,6 @@
 package refactored;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -40,7 +41,7 @@ public class MainUI {
 		currentUser = allUsers.get(user);
 	}
 
-	public void run(Scanner scanner, DisplayCalendar theCalendar) {
+	public Map<String, User> run(Scanner scanner, DisplayCalendar theCalendar) {
 		UserUI ui;
 		if (currentUser instanceof ACEmployee) {
 			ui = new ACEmployeeUI();
@@ -53,7 +54,8 @@ public class MainUI {
 		if (currentUser instanceof Bidder) {
 			ui = new BidderUI();
 			ui.promptMainMenu(scanner, theCalendar, currentUser);
-		}		
+		}	
+		return allUsers;
 	}
 
 }

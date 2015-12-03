@@ -38,44 +38,5 @@ public class FileHandlerTest {
 		fh = new FileHandler();
 	}
 
-	/**
-	 * Test method for {@link refactored.FileHandler#readUserFile(java.io.File)}.
-	 */
-	@Test
-	public void testReadUserFile() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link refactored.FileHandler#readAuctionFile(java.io.File, java.io.File)}.
-	 */
-	@Test
-	public void testReadAuctionFile() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link refactored.FileHandler#readItemFile(java.io.File)}.
-	 */
-	@Test
-	public void testReadItemFile() {
-		fail("Not yet implemented");
-	}
-	
-	/**
-	 * Asserts an NPEmployee works for an authorized non-profit organization.
-	 * @throws ParseException 
-	 */
-	@Test
-	public void testMatchAuctionAndNPE() throws ParseException {
-		//auctionList.add(new Auction("MACY", testItemList, "10", "1"));
-		//auctionList.add(new Auction("TARGET", new ArrayList<Item>(), "10", "1"));
-		//auctionList.add(new Auction("WALMART", new ArrayList<Item>(), "10", "1"));
-
-//		FileHandler fh = new FileHandler();
-//		//Auction testAuction = fh.matchAuctionAndNPE(testAuctionList, "MACY");
-//		assertEquals(testAuction.getOrganizationNam(), "MACY");
-//		
-	}
 
 }
