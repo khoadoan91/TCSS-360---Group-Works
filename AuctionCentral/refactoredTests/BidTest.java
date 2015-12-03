@@ -25,7 +25,7 @@ public class BidTest {
 
 	@Before
 	public void setup() {
-		myItem = new Item("Golf Clubs", 6, new BigDecimal("1000.00"), "Six golf clubs");
+		myItem = new Item("Golf Clubs", 6, new BigDecimal("100.00"), "Six golf clubs");
 		myBidder = new Bidder("123 Main St.", "123456789"); 
 		myBid = new Bid(myItem, 225.0, myBidder.toString());
 	}
