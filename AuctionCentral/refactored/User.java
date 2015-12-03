@@ -5,6 +5,6 @@ package refactored;
  * @author nabilfadili
  *
  */
-public class User {
+public class User implements java.io.Serializable {
 
 }

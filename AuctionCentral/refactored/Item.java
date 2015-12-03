@@ -10,7 +10,7 @@ import java.util.Random;
  * @author KyleD
  *
  */
-public class Item implements Comparable<Item> {
+public class Item implements Comparable<Item>, java.io.Serializable {
 
 	/** The ID that is initialized by ItemID. */
 	private final long myID;

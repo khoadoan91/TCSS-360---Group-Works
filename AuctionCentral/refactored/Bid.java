@@ -1,7 +1,7 @@
 package refactored;
 
 
-public class Bid {
+public class Bid implements java.io.Serializable {
 	/** The item that was bid on. */
 	private Item myItem;
 

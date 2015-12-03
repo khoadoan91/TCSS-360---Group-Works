@@ -38,9 +38,16 @@ public class FileHandler {
 		try {
 			fileOut = new FileOutputStream("user_list_final.ser");
 			outputStream = new ObjectOutputStream(fileOut);
+			Entry<String, User> tempEntry;
+			User tempUser;
+			String userName;
 			while (userList.hasNext()) {
-				System.out.println(userList.next());
-				//outputStream.writeObject(userList.next());	
+				//System.out.println(userList.next());
+				tempEntry = userList.next();
+				userName = tempEntry.getKey();
+				tempUser = tempEntry.getValue();
+				outputStream.writeObject(userName);					//first writes the username String object
+				outputStream.writeObject(tempUser);	                //then writes the User object
 			}
 		} catch (IOException e) {
 			System.out.println("Something went wrong with the serialization");

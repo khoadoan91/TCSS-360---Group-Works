@@ -39,7 +39,7 @@ import java.util.Random;
 /**
  * @author KyleD
  */
-public class Auction implements Comparable<Auction> {
+public class Auction implements Comparable<Auction>, java.io.Serializable {
 
 	/** The ID of an Auction that is combination of orgName and time. */
 	private String myAucName;
