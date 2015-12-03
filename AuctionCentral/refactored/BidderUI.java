@@ -3,8 +3,14 @@ package refactored;
 import java.util.Scanner;
 import java.util.List;
 
+/**
+ * A class that takes care of all the console I/O for a bidder. 
+ * 
+ * @author chepovska_nina
+ */
 public class BidderUI implements UserUI {
 	
+	/** The bidder in this console I/O session. */
 	private Bidder myBidder;
 
 	@Override
