@@ -49,6 +49,12 @@ public class Main {
 		myFileHandler.serializeAllUsers(myUsers);			//saves those changes to the .ser file
 	}
 	
+	/**
+	 * Retrieves the Auction objects of each User from the list of users.
+	 * Lets Main add the auctions to the calendar
+	 * @param theUsers all users read from .ser file
+	 * @return a list of all auctions held by all users
+	 */
 	private static ArrayList<Auction> retrieveAuctions(Map<String, User> theUsers) {
 		ArrayList<Auction> allAuctions = new ArrayList<Auction>();
 		Iterator<Entry<String, User>> it = theUsers.entrySet().iterator();
@@ -61,11 +67,9 @@ public class Main {
 				}
 			}
 			if (tempUser instanceof Bidder) {
-				//Do what ya gotta do 
+				//TODO Figure out Bidder/Bid changes
+				//System.out.println("Bidder! " + ((Bidder)tempUser).viewBids());
 			}
-		}
-		for (Auction a: allAuctions) {
-			System.out.println(a.toString());
 		}
 		return allAuctions;
 	}

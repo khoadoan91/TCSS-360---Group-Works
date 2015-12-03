@@ -23,19 +23,25 @@ import java.util.Scanner;
 /**
  * Class handles file i/o for both text files and serial files.
  * @author nabilfadili
- *
  */
 public class FileHandler {
-	//private Map<String, User> myUsers;
+	
+	/** Used with text file Auction and Item reading only **/
 	private List<Auction> auctionList;
 	
-	
+	/**
+	 * Reads .ser file and returns a Map of usernames and User objects to
+	 * the main program.
+	 * @param inFile .ser file of User objects
+	 * @return Map<String, User>
+	 */
 	@SuppressWarnings("unchecked")
 	public Map<String, User> deserializeAllUsers(FileInputStream inFile) {
 		HashMap<String, User> theUsers = null;
 		try {
 			ObjectInputStream inputStream = new ObjectInputStream(inFile);
 			theUsers = (HashMap<String, User>)inputStream.readObject();
+			inputStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -44,6 +50,11 @@ public class FileHandler {
 		return theUsers;	
 	}
 	
+	/**
+	 * Saves all User objects in a .ser file for the next program start. User objects hold
+	 * Auctions, which hold Items, which hold Bids.
+	 * @param myUpdatedUsers all User's and their associated objects
+	 */
 	public void serializeAllUsers(Map<String, User> myUpdatedUsers) {
 		FileOutputStream fileOut;
 		ObjectOutputStream outputStream;
@@ -57,62 +68,10 @@ public class FileHandler {
 			e.printStackTrace();
 		}
 	}
-//	/**
-//	 * Reads existing user from designated .ser file. All abjects held by a
-//	 * User object are read as well.
-//	 * @author nabilfadilli
-//	 */
-//	public Map<String, User> deserializeUserFile(FileInputStream inFile) {
-//		Map<String, User> theUsers = new HashMap<String, User>();
-//		try {
-//			ObjectInputStream inputStream = new ObjectInputStream(inFile);
-//			while (inputStream.available() > 0) {
-//				theUsers.put((String)inputStream.readObject(), (User)inputStream.readObject());
-//			}	
-//			inputStream.close();
-//			inFile.close();
-//		} 
-//		catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		return theUsers;
-//	}
-//	/**
-//	 * Writes existing users to a .ser file.
-//	 * @author nabilfadili
-//	 */
-//	public void serializeUserFile(Map<String, User> myUpdatedUsers) {
-//		FileOutputStream fileOut;
-//		ObjectOutputStream outputStream;
-//		Iterator<Entry<String, User>> userList = myUpdatedUsers.entrySet().iterator();
-//		try {
-//			fileOut = new FileOutputStream("user_list_final.ser");
-//			outputStream = new ObjectOutputStream(fileOut);
-//			Entry<String, User> tempEntry;
-//			User tempUser;
-//			String userName;
-//			while (userList.hasNext()) {
-//				//System.out.println(userList.next());
-//				tempEntry = userList.next();
-//				userName = tempEntry.getKey();
-//				System.out.print(userName + " = ");
-//				tempUser = tempEntry.getValue();
-//				System.out.println(tempUser);
-//				outputStream.writeObject(userName);					//first writes the username String object
-//				outputStream.writeObject(tempUser);	                //then writes the User object
-//			}
-//		} catch (IOException e) {
-//			System.out.println("Something went wrong with the serialization");
-//			e.printStackTrace();
-//		}	
-//	}
 	
 	/**
 	 * Takes in a file of users and returns a map object of each username to User type.
-	 * @param userFile file representing user objects (currently txt)
+	 * @param userFile text file representing user objects 
 	 * @return Map<userName, userType>
 	 */
 	public Map<String, User> readUserFile(File userFile) {
