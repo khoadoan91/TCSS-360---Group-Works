@@ -68,8 +68,8 @@ public class Bidder extends User {
 		myBids.remove(theBid);
 	}
 
-	@Override
-    public String toString() {
-    	return "Bidder: " + myAddress;
-    }
+//	@Override
+//    public String toString() {
+//    	return "Bidder: " + myAddress;
+//    }
 }

@@ -2,10 +2,12 @@ package refactored;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -27,6 +29,56 @@ public class FileHandler {
 	//private Map<String, User> myUsers;
 	private List<Auction> auctionList;
 	
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, User> deserializeAllUsers(FileInputStream inFile) {
+		HashMap<String, User> theUsers = null;
+		try {
+			ObjectInputStream inputStream = new ObjectInputStream(inFile);
+			theUsers = (HashMap<String, User>)inputStream.readObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return theUsers;	
+	}
+	public void serializeAllUsers(Map<String, User> myUpdatedUsers) {
+		FileOutputStream fileOut;
+		ObjectOutputStream outputStream;
+		try {
+			fileOut = new FileOutputStream("user_list_final.ser");
+			outputStream = new ObjectOutputStream(fileOut);
+			outputStream.writeObject(myUpdatedUsers);
+			outputStream.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * Reads existing user from designated .ser file. All abjects held by a
+	 * User object are read as well.
+	 * @author nabilfadilli
+	 */
+	public Map<String, User> deserializeUserFile(FileInputStream inFile) {
+		Map<String, User> theUsers = new HashMap<String, User>();
+		try {
+			ObjectInputStream inputStream = new ObjectInputStream(inFile);
+			while (inputStream.available() > 0) {
+				theUsers.put((String)inputStream.readObject(), (User)inputStream.readObject());
+			}	
+			inputStream.close();
+			inFile.close();
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return theUsers;
+	}
 	/**
 	 * Writes existing users to a .ser file.
 	 * @author nabilfadili
@@ -45,7 +97,9 @@ public class FileHandler {
 				//System.out.println(userList.next());
 				tempEntry = userList.next();
 				userName = tempEntry.getKey();
+				System.out.print(userName + " = ");
 				tempUser = tempEntry.getValue();
+				System.out.println(tempUser);
 				outputStream.writeObject(userName);					//first writes the username String object
 				outputStream.writeObject(tempUser);	                //then writes the User object
 			}
