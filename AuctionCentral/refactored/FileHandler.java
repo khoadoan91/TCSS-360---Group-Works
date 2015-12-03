@@ -43,6 +43,7 @@ public class FileHandler {
 		}
 		return theUsers;	
 	}
+	
 	public void serializeAllUsers(Map<String, User> myUpdatedUsers) {
 		FileOutputStream fileOut;
 		ObjectOutputStream outputStream;
@@ -56,58 +57,58 @@ public class FileHandler {
 			e.printStackTrace();
 		}
 	}
-	/**
-	 * Reads existing user from designated .ser file. All abjects held by a
-	 * User object are read as well.
-	 * @author nabilfadilli
-	 */
-	public Map<String, User> deserializeUserFile(FileInputStream inFile) {
-		Map<String, User> theUsers = new HashMap<String, User>();
-		try {
-			ObjectInputStream inputStream = new ObjectInputStream(inFile);
-			while (inputStream.available() > 0) {
-				theUsers.put((String)inputStream.readObject(), (User)inputStream.readObject());
-			}	
-			inputStream.close();
-			inFile.close();
-		} 
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return theUsers;
-	}
-	/**
-	 * Writes existing users to a .ser file.
-	 * @author nabilfadili
-	 */
-	public void serializeUserFile(Map<String, User> myUpdatedUsers) {
-		FileOutputStream fileOut;
-		ObjectOutputStream outputStream;
-		Iterator<Entry<String, User>> userList = myUpdatedUsers.entrySet().iterator();
-		try {
-			fileOut = new FileOutputStream("user_list_final.ser");
-			outputStream = new ObjectOutputStream(fileOut);
-			Entry<String, User> tempEntry;
-			User tempUser;
-			String userName;
-			while (userList.hasNext()) {
-				//System.out.println(userList.next());
-				tempEntry = userList.next();
-				userName = tempEntry.getKey();
-				System.out.print(userName + " = ");
-				tempUser = tempEntry.getValue();
-				System.out.println(tempUser);
-				outputStream.writeObject(userName);					//first writes the username String object
-				outputStream.writeObject(tempUser);	                //then writes the User object
-			}
-		} catch (IOException e) {
-			System.out.println("Something went wrong with the serialization");
-			e.printStackTrace();
-		}	
-	}
+//	/**
+//	 * Reads existing user from designated .ser file. All abjects held by a
+//	 * User object are read as well.
+//	 * @author nabilfadilli
+//	 */
+//	public Map<String, User> deserializeUserFile(FileInputStream inFile) {
+//		Map<String, User> theUsers = new HashMap<String, User>();
+//		try {
+//			ObjectInputStream inputStream = new ObjectInputStream(inFile);
+//			while (inputStream.available() > 0) {
+//				theUsers.put((String)inputStream.readObject(), (User)inputStream.readObject());
+//			}	
+//			inputStream.close();
+//			inFile.close();
+//		} 
+//		catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		return theUsers;
+//	}
+//	/**
+//	 * Writes existing users to a .ser file.
+//	 * @author nabilfadili
+//	 */
+//	public void serializeUserFile(Map<String, User> myUpdatedUsers) {
+//		FileOutputStream fileOut;
+//		ObjectOutputStream outputStream;
+//		Iterator<Entry<String, User>> userList = myUpdatedUsers.entrySet().iterator();
+//		try {
+//			fileOut = new FileOutputStream("user_list_final.ser");
+//			outputStream = new ObjectOutputStream(fileOut);
+//			Entry<String, User> tempEntry;
+//			User tempUser;
+//			String userName;
+//			while (userList.hasNext()) {
+//				//System.out.println(userList.next());
+//				tempEntry = userList.next();
+//				userName = tempEntry.getKey();
+//				System.out.print(userName + " = ");
+//				tempUser = tempEntry.getValue();
+//				System.out.println(tempUser);
+//				outputStream.writeObject(userName);					//first writes the username String object
+//				outputStream.writeObject(tempUser);	                //then writes the User object
+//			}
+//		} catch (IOException e) {
+//			System.out.println("Something went wrong with the serialization");
+//			e.printStackTrace();
+//		}	
+//	}
 	
 	/**
 	 * Takes in a file of users and returns a map object of each username to User type.
