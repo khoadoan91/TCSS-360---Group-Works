@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import refactored.Auction;
 import refactored.Item;
-import refactored.Bid;
 
 public class AuctionTest {
 	
@@ -242,16 +241,16 @@ public class AuctionTest {
 		assertEquals(myAuction.getDayOfYear(), myAuctionStartDate.get(Calendar.DAY_OF_YEAR));
 	}
 
-	@Test
-	public void testDisplayItemsInAuction() {
-		assertEquals("GoodWill Fri Dec 25 08:30:00 PST 2015\na) iPad\nQuantity: 1\n"
-				+ "Starting Price: $300.00\nDescription: 4th generation\nb) Macbook\n"
-				+ "Quantity: 1\nStarting Price: $1,000.00\nDescription: Used\n", 
-				myAuction.displayItemsInAuction());
-	}
+//	@Test
+//	public void testDisplayItemsInAuction() {
+//		assertEquals("GoodWill Fri Dec 25 08:30:00 PST 2015\na) iPad\nQuantity: 1\n"
+//				+ "Starting Price: $300.00\nDescription: 4th generation\nb) Macbook\n"
+//				+ "Quantity: 1\nStarting Price: $1,000.00\nDescription: Used\n", 
+//				myAuction.displayItemsInAuction());
+//	}
 
 	@Test
-	public void testToStringTextFile() {
+	public void testToString() {
 		assertEquals("GoodWill-Dec-25-2015, 2, 8:30, 2:10", myAuction.toString());
 	}
 

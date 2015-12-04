@@ -24,11 +24,11 @@ public class NPEmployee extends User {
 	public void removeAuction() {
 		myAuction = null;
 	}
-	public String viewAuction() {
-		if (myAuction == null) {
-			return "You do not have an auction scheduled.";
-		} else {
-			return myAuction.displayItemsInAuction();
-		}
-	}
+//	public String viewAuction() {
+//		if (myAuction == null) {
+//			return "You do not have an auction scheduled.";
+//		} else {
+//			return myAuction.displayItemsInAuction();
+//		}
+//	}
 }

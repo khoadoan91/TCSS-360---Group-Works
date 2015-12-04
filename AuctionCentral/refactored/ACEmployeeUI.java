@@ -27,8 +27,19 @@ public class ACEmployeeUI implements UserUI {
 		int pickAuc = scanner.nextInt();
 		if (pickAuc == 0) return;
 		for (int i = 1; i <= upcomingAuc.size(); i++) {
-			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1).displayItemsInAuction());
+			if (i == pickAuc) System.out.println(displayItemsInAuction(upcomingAuc.get(i - 1)));
 		}
+	}
+	
+	String displayItemsInAuction(final Auction theAuction) {
+		String result = theAuction.getOrganizationName() + " " 
+					+ theAuction.getDateAuctionStarts().getTime() + "\n";
+		char c = 'a';
+		List<Item> list = theAuction.getAllItems();
+		for (int i = 0; i < list.size(); i++) {
+			result += c++ + ") " + list.get(i) + "\n";
+		}
+		return result;		
 	}
 
 	/**
@@ -40,7 +51,7 @@ public class ACEmployeeUI implements UserUI {
 		do {
 			System.out.println("Please choose an option below or type any other number to exit.");
 			System.out.println("1.  View the calendar");
-			System.out.println("2.  View upcoming auction");
+			System.out.println("2.  View all upcoming auctions (in the next 3 months)");
 			System.out.println("other number.  Exit");
 			switch (scanner.nextInt()) {
 				case 1: viewCalendar(scanner, theCalendar); break;

@@ -9,6 +9,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
+import refactored.DisplayCalendar.Exceed5AuctionsIn7Days;
+import refactored.DisplayCalendar.Exceed90Days;
+import refactored.DisplayCalendar.ExceedAuctionLimit;
+import refactored.DisplayCalendar.ExceedAuctionLimitPerDay;
+import refactored.DisplayCalendar.ExceedOneAuctionPerYear;
+
 public class NPEmployeeUI implements UserUI {
 
 	@Override
@@ -29,7 +35,7 @@ public class NPEmployeeUI implements UserUI {
 				case 1: addAuction(scanner, theCalendar, (NPEmployee)currentUser); break;
 				case 2: editAuction(scanner, theCalendar, (NPEmployee)currentUser); break;
 				case 3: removeAuction(theCalendar, (NPEmployee)currentUser); break;
-				case 4: viewUserAuction((NPEmployee)currentUser); break;
+				case 4: viewUserAuction(((NPEmployee)currentUser).getMyAuction()); break;
 				case 5: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) - 1); break;
 				case 6: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) + 1); break;
 				case 7 :isQuit = true; break;
@@ -43,8 +49,19 @@ public class NPEmployeeUI implements UserUI {
 		currentUser.removeAuction();
 	}
 	
-	public void viewUserAuction(NPEmployee currentUser) {
-		System.out.println(currentUser.viewAuction());
+	void viewUserAuction(final Auction theAuction) {
+		if (theAuction != null) {
+			String result = theAuction.getOrganizationName() + " " 
+						+ theAuction.getDateAuctionStarts().getTime() + "\n";
+			char c = 'a';
+			List<Item> list = theAuction.getAllItems();
+			for (int i = 0; i < list.size(); i++) {
+				result += c++ + ") " + list.get(i) + "\n";
+			}
+			System.out.println(result);	
+		} else {
+			System.out.println("You do not have an auction scheduled.");
+		}
 	}
 	
 	private void editAuction(Scanner scanner, CalendarUI theCalendar, NPEmployee currentUser) {
@@ -180,21 +197,13 @@ public class NPEmployeeUI implements UserUI {
 			System.out.println("You already have an auction scheduled.");
 		} else {
 			currentUser.addAuction(enterAuctionInfo(scanner, currentUser));
-			int bsrule = theCalendar.getDispCalendar().addAuction(currentUser.getMyAuction());
-			switch (bsrule) {
-				case 0: System.out.println("You sucessfully added your auction!"); break;
-				case 1: System.out.println("Sorry! We reach the maximum 25 auctions."); break;
-				case 2: System.out.println("Your auction may not be scheduled more than"
-								+ " 90 days from the current date."); break;
-				case 3: System.out.println("No more than 5 auctions may be scheduled for "
-								+ "any rolling 7 day period."); break;
-				case 4: System.out.println("No more than 2 auctions can be scheduled on "
-								+ "the same day, and the start time of the second can be "
-								+ "no earlier than 2 hours after the end time of the first"); break;
-				case 5: System.out.println("No more than one auction per year per "
-								+ "Non-profit organization can be scheduled."); break;
+			try {
+				theCalendar.getDispCalendar().addAuction(currentUser.getMyAuction());
+			} catch (ExceedAuctionLimit | Exceed90Days | Exceed5AuctionsIn7Days | 
+					ExceedAuctionLimitPerDay | ExceedOneAuctionPerYear e) {
+				System.out.println(e.getMessage());
+				currentUser.removeAuction();    // remove the violation BS auction.
 			}
-			if (bsrule != 0) currentUser.removeAuction();    // remove the violation BS auction.
 		}
 	}
 	

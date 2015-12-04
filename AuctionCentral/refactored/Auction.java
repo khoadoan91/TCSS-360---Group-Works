@@ -29,7 +29,6 @@ package refactored;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,8 +50,8 @@ public class Auction implements Comparable<Auction> {
 	/** The list of items that are in the auction. */
 	private List<Item> myItems;
 	
-	/** The bids that have been made on items in this auction. */
-	private List<Bid> myBids;
+//	/** The bids that have been made on items in this auction. */
+//	private List<Bid> myBids;
 
 	/** The hour that represents how long for the Auction happens. */
 	private int hourDur;
@@ -82,7 +81,7 @@ public class Auction implements Comparable<Auction> {
 		getAuctionName();
 		setTimeDuration(timeDuration);
 		myItems = new LinkedList<>(theItems);
-		myBids = new ArrayList<Bid>();
+//		myBids = new ArrayList<Bid>();
 	}
 
 	public Auction(final String theAucName, final List<Item> theItems, final String startTime,
@@ -118,20 +117,20 @@ public class Auction implements Comparable<Auction> {
 //      return new Auction(sb.toString(), null, theDate,"01-01");
 //   }
    
-   public void addBid(final Bid theBid) {
-		myBids.add(theBid);
-   }
-   
-   public void removeBid(final Bid theBid) {
-		if (theBid == null) {
-			throw new NullPointerException();
-		}
-		myBids.remove(theBid);
-   }
-   
-   public List<Bid> viewBids() {
-	   return myBids;
-   }
+//   public void addBid(final Bid theBid) {
+//		myBids.add(theBid);
+//   }
+//   
+//   public void removeBid(final Bid theBid) {
+//		if (theBid == null) {
+//			throw new NullPointerException();
+//		}
+//		myBids.remove(theBid);
+//   }
+//   
+//   public List<Bid> viewBids() {
+//	   return myBids;
+//   }
    
    
 	/**
@@ -339,14 +338,14 @@ public class Auction implements Comparable<Auction> {
 //		return myOrgName + " " + myDate.getTime() + "\n";
 //	}
 	
-	public String displayItemsInAuction() {
-		String result = myOrgName + " " + myDate.getTime() + "\n";
-		char c = 'a';
-		for (int i = 0; i < myItems.size(); i++) {
-			result += c++ + ") " + myItems.get(i) + "\n";
-		}
-		return result;
-	}
+//	public String displayItemsInAuction() {
+//		String result = myOrgName + " " + myDate.getTime() + "\n";
+//		char c = 'a';
+//		for (int i = 0; i < myItems.size(); i++) {
+//			result += c++ + ") " + myItems.get(i) + "\n";
+//		}
+//		return result;
+//	}
 	
 	@Override
 	public String toString() {

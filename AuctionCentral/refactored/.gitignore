@@ -19,3 +19,8 @@
 /NPEmployeeOLD.class
 /ACEmployeeOLD.class
 /CalendarUI.class
+/DisplayCalendar$Exceed5AuctionsIn7Days.class
+/DisplayCalendar$Exceed90Days.class
+/DisplayCalendar$ExceedAuctionLimit.class
+/DisplayCalendar$ExceedAuctionLimitPerDay.class
+/DisplayCalendar$ExceedOneAuctionPerYear.class

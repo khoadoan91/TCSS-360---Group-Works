@@ -1,17 +1,16 @@
 package refactored;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 /**
  * @author KyleD
  * @author CodyM
  */
-public class DisplayCalendar {
+public class DisplayCalendar implements Serializable {
 
 	/**
 	 *
@@ -20,10 +19,7 @@ public class DisplayCalendar {
 	public static final int MAX_AUCTION = 25;
 	public static final int NINETY_DAY_FROM_NOW = 90;
 	public static final int ONE_HOUR = 60;
-//	public static final long ONE_DAY = 1000 * 60 * 60 * 24;
-//	public static final long ONE_HOUR = 1000 * 60 * 60;
-
-//	private List<Auction> myAuctions;
+	
 	private List<Auction> myPastAuctions;
 	private List<Auction> myUpcomingAuctions;
 
@@ -188,13 +184,12 @@ public class DisplayCalendar {
 		return false;
 	}
 
-	public int addAuction(final Auction theAuction) {
-		int bsrule = checkBusinessRules(theAuction);
-		if (bsrule == 0){
-			myUpcomingAuctions.add(theAuction);
-			Collections.sort(myUpcomingAuctions);
-		}
-		return bsrule;
+	public void addAuction(final Auction theAuction) throws ExceedAuctionLimit, 
+								Exceed90Days, Exceed5AuctionsIn7Days, 
+								ExceedAuctionLimitPerDay, ExceedOneAuctionPerYear{
+		checkBusinessRules(theAuction);	
+		myUpcomingAuctions.add(theAuction);
+		Collections.sort(myUpcomingAuctions);
 	}
 
 	public void removeAuction(final Auction theAuction) {
@@ -204,20 +199,54 @@ public class DisplayCalendar {
 	/**
 	 * @return 0 is good, valid
 	 */
-	public int checkBusinessRules(final Auction theAuction) {
-		if (hasExceededAuction()) return 1;
-		if (hasAuctionOver90Days(theAuction)) return 2;
-		if (hasMore5AuctionsIn7Days(theAuction)) return 3;
-		if (has2HoursBetween2Auctions(theAuction)) return 4;
-		if (!hasAuctionPerNPperYear(theAuction)) return 5;
-		if (isInPast(theAuction)) return 2;
-		return 0;
+	public void checkBusinessRules(final Auction theAuction) throws ExceedAuctionLimit, 
+										Exceed90Days, Exceed5AuctionsIn7Days, 
+										ExceedAuctionLimitPerDay, ExceedOneAuctionPerYear{
+		if (hasExceededAuction()) throw new ExceedAuctionLimit();
+		if (hasAuctionOver90Days(theAuction)) throw new Exceed90Days();
+		if (hasMore5AuctionsIn7Days(theAuction)) throw new Exceed5AuctionsIn7Days();
+		if (has2HoursBetween2Auctions(theAuction)) throw new ExceedAuctionLimitPerDay();
+		if (!hasAuctionPerNPperYear(theAuction)) throw new ExceedOneAuctionPerYear();
+		if (isInPast(theAuction)) throw new Exceed90Days();
 	}
 
 	public List<Auction> getUpcomingAuctions() {
-		return myUpcomingAuctions;
+		return new LinkedList<>(myUpcomingAuctions);
 	}
 	public List<Auction> getPastAuctions() {
-		return myPastAuctions;
+		return new LinkedList<>(myPastAuctions);
+	}
+	
+	public class ExceedAuctionLimit extends Exception {
+		public ExceedAuctionLimit() {
+			super("Exceed 25 auctions in the future.");
+		}
+	}
+	
+	public class Exceed90Days extends Exception {
+		public Exceed90Days() {
+			super("Exceed 90 days from the current date.");
+		}
+	}
+	
+	public class Exceed5AuctionsIn7Days extends Exception {
+		public Exceed5AuctionsIn7Days() {
+			super("Exceed 5 auctions in 7 days");
+		}
+	}
+	
+	public class ExceedAuctionLimitPerDay extends Exception {
+		public ExceedAuctionLimitPerDay() {
+			super("No more than 2 autions can be scheduled on the same day, "
+					+ "and the start time of the second can be no earlier "
+					+ "than 2 hours after the end time of the first");
+		}
+	}
+	
+	public class ExceedOneAuctionPerYear extends Exception {
+		public ExceedOneAuctionPerYear() {
+			super("No more than one auction per year per Non-profit organization can be"
+					+ "scheduled.");
+		}
 	}
 }

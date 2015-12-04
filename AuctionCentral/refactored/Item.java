@@ -2,6 +2,8 @@ package refactored;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author KyleD
@@ -24,6 +26,9 @@ public class Item implements Comparable<Item> {
 	/** Starting price of the item. */
 	private BigDecimal myStartingPrice;
 
+	/** The list of the bidding of the each bidder. */
+	private Map<Bidder, BigDecimal> myBidders;
+	
 	/**
 	 * Constructs an item with parameters info.
 	 * 
@@ -40,6 +45,7 @@ public class Item implements Comparable<Item> {
 		setQuantity(theQuantity);
 		setStartingPrice(thePrice);
 		setDescription(theDesc);
+		myBidders = new TreeMap<>();
 	}
 
 	/**
@@ -80,6 +86,10 @@ public class Item implements Comparable<Item> {
 	 */
 	public String getDescription() {
 		return myDesc;
+	}
+	
+	public Map<Bidder, BigDecimal> getItemBid() {
+		return new TreeMap<>(myBidders);
 	}
 
 	/**
@@ -131,6 +141,22 @@ public class Item implements Comparable<Item> {
 			throw new IllegalArgumentException();
 		}
 		myDesc = theDesc;
+	}
+	
+	/**
+	 * 
+	 * @param bidder
+	 * @param bidPrice
+	 */
+	public void addBid(final Bidder bidder, final BigDecimal bidPrice) {
+		if (bidPrice.compareTo(myStartingPrice) < 0) {
+			throw new IllegalArgumentException();
+		}
+		myBidders.put(bidder, bidPrice);
+	}
+	
+	public void removeBid(final Bidder bidder) {
+		myBidders.remove(bidder);
 	}
 	
 	@Override
