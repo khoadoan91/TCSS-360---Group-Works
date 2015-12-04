@@ -28,7 +28,7 @@ public class NPEmployee extends User {
 		if (myAuction == null) {
 			return "You do not have an auction scheduled.";
 		} else {
-			return myAuction.displayAuction();
+			return myAuction.displayItemsInAuction();
 		}
 	}
 }

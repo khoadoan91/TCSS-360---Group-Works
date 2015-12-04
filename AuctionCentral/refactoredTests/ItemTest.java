@@ -25,13 +25,55 @@ public class ItemTest {
 		myItem1 = new Item("iPad", 5, new BigDecimal("339.99"), "Used, in good condition");
 		myItem2 = new Item("Nexus 6", 1, new BigDecimal("450.00"), "Used, broken screen");
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetDescriptionWithEmptyString() {
+		myItem2.setDescription("");
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetQuantityWithZero() {
+		myItem2.setQuantity(0);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetQuantityWithNegativeNumber() {
+		myItem2.setQuantity(-1);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetTitleWithEmptyString() {
+		myItem2.setTitle("");
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetStartingPriceWithNegativeNumber() {
+		myItem2.setStartingPrice(new BigDecimal("-100.00"));
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testSetTitleWithNull() {
+		myItem2.setTitle(null);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testSetDescriptionWithNull() {
+		myItem2.setDescription(null);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testSetStartingPriceWithNull() {
+		myItem2.setStartingPrice(null);
+	}
 
 	/**
 	 * Test method for {@link refactored.Item#setTitle(java.lang.String)}.
 	 */
 	@Test
 	public void testSetTitle() {
-		fail("Not yet implemented");
+		String title = "iPad 4th Generation";
+		myItem1.setTitle(title);
+		assertEquals(myItem1.getTitle(), title);
 	}
 
 	/**
@@ -39,7 +81,9 @@ public class ItemTest {
 	 */
 	@Test
 	public void testSetQuantity() {
-		fail("Not yet implemented");
+		int quantity = 10;
+		myItem1.setQuantity(quantity);
+		assertEquals(myItem1.getQuantity(), quantity);
 	}
 
 	/**
@@ -47,7 +91,9 @@ public class ItemTest {
 	 */
 	@Test
 	public void testSetStartingPrice() {
-		fail("Not yet implemented");
+		BigDecimal price = new BigDecimal("33999.00");
+		myItem1.setStartingPrice(price);
+		assertEquals(myItem1.getStartingPrice(), price);
 	}
 
 	/**
@@ -55,7 +101,9 @@ public class ItemTest {
 	 */
 	@Test
 	public void testSetDescription() {
-		fail("Not yet implemented");
+		String desc = "Like New";
+		myItem1.setDescription(desc);
+		assertEquals(myItem1.getDescription(), desc);
 	}
 
 	/**
@@ -63,7 +111,8 @@ public class ItemTest {
 	 */
 	@Test
 	public void testToString() {
-		fail("Not yet implemented");
+		assertEquals("iPad\nQuantity: 5\nStarting Price: $339.99\nDescription: "
+				+ "Used, in good condition", myItem1.toString());
 	}
 
 	/**
@@ -71,23 +120,18 @@ public class ItemTest {
 	 */
 	@Test
 	public void testToStringTextFile() {
-		fail("Not yet implemented");
+		assertEquals("iPad, 5, 339.99, Used, in good condition", myItem1.toStringTextFile());
 	}
 
 	/**
 	 * Test method for {@link refactored.Item#compareTo(refactored.Item)}.
 	 */
 	@Test
-	public void testCompareTo() {
-		fail("Not yet implemented");
+	public void testCompareToOnSameTitle() {
+		assertTrue(myItem1.compareTo(new Item("ipad", 1, new BigDecimal("200.00"), "bla bla")) == 0);
 	}
-
-	/**
-	 * Test method for {@link refactored.Item#equals(java.lang.Object)}.
-	 */
-	@Test
-	public void testEqualsObject() {
-		fail("Not yet implemented");
+	
+	public void testCompareToOnNotSameTitle() {
+		assertFalse(myItem1.compareTo(myItem2) != 0);
 	}
-
 }

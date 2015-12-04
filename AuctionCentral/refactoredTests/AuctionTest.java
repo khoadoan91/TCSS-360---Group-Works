@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import refactored.Auction;
 import refactored.Item;
+import refactored.Bid;
 
 public class AuctionTest {
 	
@@ -20,6 +21,8 @@ public class AuctionTest {
 	private Item myItem2;
 	private Calendar myAuctionStartDate;
 	private Calendar myAuctionEndDate;
+//	private Bid myBid1;
+//	private Bid myBid2;
 
 	@Before
 	public void setUp() throws Exception {
@@ -30,27 +33,15 @@ public class AuctionTest {
 		list.add(myItem2);
 		Calendar cal = Calendar.getInstance();
 		cal.clear();
-		cal.set(2015, 11, 25, 8, 30);
+		cal.set(2015, 12, 25, 8, 30);
 		myAuction = new Auction("GoodWill", list, cal, "2:10");
 		myAuctionStartDate = myAuction.getDateAuctionStarts();
 		myAuctionEndDate = myAuction.getDateAuctionEnds();
+		
+//		myBid1 = new Bid(myItem1, 400.0, "Nina");
+//		myBid1 = new Bid(myItem2, 1100.0, "Nina");
 	}
-
-	@Test
-	public void testAuctionStringListOfItemCalendarString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAuctionStringListOfItemStringString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testMakeTestAuction() {
-		fail("Not yet implemented");
-	}
-
+	
 	/**
 	 * Test method for {@link refactored.Auction#addItem(refactored.Item)}.
 	 */
@@ -71,7 +62,7 @@ public class AuctionTest {
 
 	@Test
 	public void testGetAuctionName() {
-		assertEquals(myAuction.getAuctionName(), "GoodWill-Nov-25-2015");
+		assertEquals(myAuction.getAuctionName(), "GoodWill-Dec-25-2015");
 	}
 
 	@Test
@@ -81,7 +72,7 @@ public class AuctionTest {
 	
 	@Test
 	public void testGetDateAuctionStartsAtMonth() {
-		assertEquals(myAuctionStartDate.get(Calendar.MONTH), 10);  // November
+		assertEquals(myAuctionStartDate.get(Calendar.MONTH), 11);  // December
 	}
 	
 	@Test
@@ -91,12 +82,12 @@ public class AuctionTest {
 	
 	@Test
 	public void testGetDateAuctionStartsAtHour() {
-		assertEquals(myAuctionStartDate.get(Calendar.HOUR_OF_DAY), 10);
+		assertEquals(myAuctionStartDate.get(Calendar.HOUR_OF_DAY), 8);
 	}
 	
 	@Test
 	public void testGetDateAuctionStartsAtMinute() {
-		assertEquals(myAuctionStartDate.get(Calendar.MINUTE), 40);
+		assertEquals(myAuctionStartDate.get(Calendar.MINUTE), 30);
 	}
 
 	@Test
@@ -106,7 +97,7 @@ public class AuctionTest {
 	
 	@Test
 	public void testGetDateAuctionEndsAtMonth() {
-		assertEquals(myAuctionEndDate.get(Calendar.MONTH), 10);  // November
+		assertEquals(myAuctionEndDate.get(Calendar.MONTH), 11);  // December
 	}
 	
 	@Test
@@ -125,25 +116,72 @@ public class AuctionTest {
 	}
 	
 	@Test
-	public void testSetStartingTime() {
+	public void testSetStartingTimeAtYear() {
 		myAuction.setStartingTime("14:30");
 		Calendar startDate = myAuction.getDateAuctionStarts();
 		assertEquals(startDate.get(Calendar.YEAR), 2015);
-		assertEquals(startDate.get(Calendar.MONTH), 10);  // November
+	}
+	
+	@Test
+	public void testSetStartingTimeAtMonth() {
+		myAuction.setStartingTime("14:30");
+		Calendar startDate = myAuction.getDateAuctionStarts();
+		assertEquals(startDate.get(Calendar.MONTH), 11);  // December
+	}
+	
+	@Test
+	public void testSetStartingTimeAtDate() {
+		myAuction.setStartingTime("14:30");
+		Calendar startDate = myAuction.getDateAuctionStarts();
 		assertEquals(startDate.get(Calendar.DAY_OF_MONTH), 25);
+	}
+	
+	@Test
+	public void testSetStartingTimeAtHour() {
+		myAuction.setStartingTime("14:30");
+		Calendar startDate = myAuction.getDateAuctionStarts();
 		assertEquals(startDate.get(Calendar.HOUR_OF_DAY), 14);
+	}
+	
+	@Test
+	public void testSetStartingTimeAtMinute() {
+		myAuction.setStartingTime("14:30");
+		Calendar startDate = myAuction.getDateAuctionStarts();
 		assertEquals(startDate.get(Calendar.MINUTE), 30);
 	}
 	
 	@Test
-	public void testSetTimeDuration() {
+	public void testSetTimeDurationAtYear() {
 		myAuction.setTimeDuration("4:30");
 		Calendar endTime = myAuction.getDateAuctionEnds();
-		System.out.println(endTime.getTime());
 		assertEquals(endTime.get(Calendar.YEAR), 2015);
-		assertEquals(endTime.get(Calendar.MONTH), 10);  // November
+	}
+	
+	@Test
+	public void testSetTimeDurationAtMonth() {
+		myAuction.setTimeDuration("4:30");
+		Calendar endTime = myAuction.getDateAuctionEnds();
+		assertEquals(endTime.get(Calendar.MONTH), 11);  // December
+	}
+	
+	@Test
+	public void testSetTimeDurationAtDate() {
+		myAuction.setTimeDuration("4:30");
+		Calendar endTime = myAuction.getDateAuctionEnds();
 		assertEquals(endTime.get(Calendar.DAY_OF_MONTH), 25);
-		assertEquals(endTime.get(Calendar.HOUR_OF_DAY), 13); 
+	}
+	
+	@Test
+	public void testSetTimeDurationAtHour() {
+		myAuction.setTimeDuration("4:30");
+		Calendar endTime = myAuction.getDateAuctionEnds();
+		assertEquals(endTime.get(Calendar.HOUR_OF_DAY), 13);
+	}
+	
+	@Test
+	public void testSetTimeDurationAtMinute() {
+		myAuction.setTimeDuration("4:30");
+		Calendar endTime = myAuction.getDateAuctionEnds();
 		assertEquals(endTime.get(Calendar.MINUTE), 00);
 	}
 
@@ -158,13 +196,13 @@ public class AuctionTest {
 	}
 
 	@Test
-	public void testAddItem() {
-		fail("Not yet implemented");
+	public void testRemoveItemContainInList() {
+		assertTrue(myAuction.removeItem(myItem1));
 	}
-
+	
 	@Test
-	public void testRemoveItem() {
-		fail("Not yet implemented");
+	public void testRemoveItemNotContainInList() {
+		assertFalse(myAuction.removeItem(new Item("Google", 2, new BigDecimal(10000), "a website")));
 	}
 
 	@Test
@@ -177,47 +215,52 @@ public class AuctionTest {
 
 	@Test
 	public void testGetOrganizationName() {
-		assertEquals(myAuction.getOrganizationName(), "Goodwill");
+		assertEquals(myAuction.getOrganizationName(), "GoodWill");
 	}
 
 	@Test
-	public void testSetDate() {
-		fail("Not yet implemented");
+	public void testSetDateOfMonth() {
+		myAuction.setDateOfMonth(20);
+		assertEquals(myAuction.getDateAuctionStarts().get(Calendar.DAY_OF_MONTH), 20);
 	}
 
 	@Test
 	public void testSetMonth() {
-		fail("Not yet implemented");
+		myAuction.setMonth(10);
+		// since the calendar starts at index 0 for Jan, Auction class handle this error by subtracting one
+		assertEquals(myAuction.getMonth(), 9); // 9 is actually October
 	}
 
 	@Test
 	public void testSetYear() {
-		fail("Not yet implemented");
+		myAuction.setYear(2016);
+		assertEquals(myAuction.getYear(), 2016);
+	}
+	
+	@Test
+	public void testGetDayOfYear() {
+		assertEquals(myAuction.getDayOfYear(), myAuctionStartDate.get(Calendar.DAY_OF_YEAR));
 	}
 
 	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testDisplayAuction() {
-		fail("Not yet implemented");
+	public void testDisplayItemsInAuction() {
+		assertEquals("GoodWill Fri Dec 25 08:30:00 PST 2015\na) iPad\nQuantity: 1\n"
+				+ "Starting Price: $300.00\nDescription: 4th generation\nb) Macbook\n"
+				+ "Quantity: 1\nStarting Price: $1,000.00\nDescription: Used\n", 
+				myAuction.displayItemsInAuction());
 	}
 
 	@Test
 	public void testToStringTextFile() {
-		fail("Not yet implemented");
+		assertEquals("GoodWill-Dec-25-2015, 2, 8:30, 2:10", myAuction.toString());
 	}
 
 	@Test
 	public void testCompareTo() {
-		fail("Not yet implemented");
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(2015, 12, 25, 16, 30);
+		Auction temp = new Auction("GoodWill", new ArrayList<Item>(), cal, "2:10");
+		assertTrue(myAuction.compareTo(temp) < 0);
 	}
-
-	@Test
-	public void testEqualsObject() {
-		fail("Not yet implemented");
-	}
-
 }

@@ -27,7 +27,7 @@ public class ACEmployeeUI implements UserUI {
 		int pickAuc = scanner.nextInt();
 		if (pickAuc == 0) return;
 		for (int i = 1; i <= upcomingAuc.size(); i++) {
-			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1).displayAuction());
+			if (i == pickAuc) System.out.println(upcomingAuc.get(i - 1).displayItemsInAuction());
 		}
 	}
 
