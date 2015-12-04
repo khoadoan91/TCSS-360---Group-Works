@@ -35,8 +35,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import model.Auction;
-import model.Item;
+import refactored.Auction;
+import refactored.Item;
 
 
 /**
@@ -215,7 +215,7 @@ public class Auction implements Comparable<Auction> {
 	 *
 	 * @return
 	 */
-	public String getOrganizationNam() {
+	public String getOrganizationName() {
 		return myOrgName;
 	}
 

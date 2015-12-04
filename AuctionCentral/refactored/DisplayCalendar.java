@@ -27,10 +27,6 @@ public class DisplayCalendar {
 	private List<Auction> myPastAuctions;
 	private List<Auction> myUpcomingAuctions;
 
-	public DisplayCalendar() {
-
-	}
-
 	public DisplayCalendar(final List<Auction> theAuction) {
 		myPastAuctions = new LinkedList<>();
 		myUpcomingAuctions = new LinkedList<>(theAuction);
@@ -45,13 +41,14 @@ public class DisplayCalendar {
 		Collections.sort(myPastAuctions);
 //		myAuctions.addAll(theAuction);
 //		Collections.sort(myAuctions);
+		assert myUpcomingAuctions != null;
 	}
 
 	/**
 	 * First business rule:
 	 * No more than 25 auctions may be scheduled into the future.
 	 * False is good -> we can add more auctions.
-	 * @return
+	 * @return true iff calendar already has exceeded Auction;
 	 */
 	public boolean hasExceededAuction() {
 		return myUpcomingAuctions.size() >= MAX_AUCTION;
@@ -65,7 +62,7 @@ public class DisplayCalendar {
 	 * @param theAuc the new Auction
 	 * @return
 	 */
-	public boolean hasMoreThan90Days(final Auction theAuc) {
+	public boolean hasAuctionOver90Days(final Auction theAuc) {
 		Calendar ninetyFromNow = Calendar.getInstance();
 		ninetyFromNow.set(Calendar.DAY_OF_YEAR, 
 				ninetyFromNow.get(Calendar.DAY_OF_YEAR) + NINETY_DAY_FROM_NOW);
@@ -168,7 +165,7 @@ public class DisplayCalendar {
 	 */
 	public boolean hasAuctionPerNPperYear(final Auction theAuction) {
 		for (int i = 0; i < myPastAuctions.size(); i++) {
-			if (myPastAuctions.get(i).getOrganizationNam().equals(theAuction.getOrganizationNam())) {
+			if (myPastAuctions.get(i).getOrganizationName().equals(theAuction.getOrganizationName())) {
 				if (theAuction.getDayOfYear() - myPastAuctions.get(i).getDayOfYear() >= ONE_YEAR) {
 					return true;
 				} else {
@@ -187,23 +184,35 @@ public class DisplayCalendar {
 	 */
 	private boolean isInPast(final Auction theAuction) {
 		Calendar now = Calendar.getInstance();
+		now.set(Calendar.MONTH,now.getMaximum(Calendar.MONTH) - 1);
 		if (theAuction.getDayOfYear() <= now.get(Calendar.DAY_OF_YEAR)) return true;
 		return false;
 	}
 
-	public boolean addAuction(final Auction theAuction) {
-		if (!hasExceededAuction() && !hasMoreThan90Days(theAuction)
-				&& !hasMore5AuctionsIn7Days(theAuction) && !has2HoursBetween2Auctions(theAuction)
-				&& hasAuctionPerNPperYear(theAuction) && !isInPast(theAuction)){
+	public int addAuction(final Auction theAuction) {
+		int bsrule = checkBusinessRules(theAuction);
+		if (bsrule == 0){
 			myUpcomingAuctions.add(theAuction);
 			Collections.sort(myUpcomingAuctions);
-			return true;
 		}
-		return false;
+		return bsrule;
 	}
 
 	public void removeAuction(final Auction theAuction) {
 		myUpcomingAuctions.remove(theAuction);
+	}
+	
+	/**
+	 * @return 0 is good, valid
+	 */
+	public int checkBusinessRules(final Auction theAuction) {
+		if (hasExceededAuction()) return 1;
+		if (hasAuctionOver90Days(theAuction)) return 2;
+		if (hasMore5AuctionsIn7Days(theAuction)) return 3;
+		if (has2HoursBetween2Auctions(theAuction)) return 4;
+		if (!hasAuctionPerNPperYear(theAuction)) return 5;
+		if (isInPast(theAuction)) return 2;
+		return 0;
 	}
 
 	public List<Auction> getUpcomingAuctions() {
@@ -212,88 +221,4 @@ public class DisplayCalendar {
 	public List<Auction> getPastAuctions() {
 		return myPastAuctions;
 	}
-
-//	public List<Auction> getAllAuctions() {
-//		return myAuctions;
-//	}
-
-//	public List<Auction> getAvailableAuctions() {
-//		List<Auction> temp = new ArrayList<>();
-//		for (Auction myAuction : myAuctions) {
-//			if (myAuction.isAvailable())
-//				temp.add(myAuction);
-//		}
-//		return temp;
-//	}
-
-	/**
-	 * 
-	 *
-	 * @param theDate
-	 * @return
-	 */
-
-	@Override
-	public String toString() {
-		return displayCalendar(Calendar.getInstance());
-	}
-
-	public String displayCalendar(final Calendar time) {
-		Calendar calShow = (Calendar) time.clone();
-		// aucMonth is already sorted.
-		List<Integer> aucDates = viewAuctionsInMonth(calShow.get(Calendar.MONTH));
-		calShow.set(Calendar.DAY_OF_MONTH, 1);
-		String result = new SimpleDateFormat("MMMMMMMMM").format(calShow.getTime()).toUpperCase();
-		result += " " + calShow.get(Calendar.YEAR) + "\t\t F = Filled\n";
-		result += "  Sun   Mon   Tue   Wed   Thu   Fri   Sat  \n";
-		result += "===========================================\n";
-		int firstDay = calShow.get(Calendar.DAY_OF_WEEK);
-		int i;
-		if (firstDay != 1) {
-			i = firstDay - (firstDay - 1)*2;
-		} else {
-			i = 1;
-		}
-		while (i < calShow.getActualMaximum(Calendar.DAY_OF_MONTH)) {
-			for (int j = 0; j < 7; j++) {
-				result += "|  ";
-				if (i > 0 && calShow.getActualMaximum(Calendar.DAY_OF_MONTH) >= i) {
-					if (i < 10) {
-						result += " " + i++ + " ";
-					} else {
-						result += i++ + " ";
-					}
-				} else {
-					result += "   ";
-					i++;
-				}
-			}
-			result += "|\n";
-			// Use for loop to fill out the Auction in a calendar.
-			for (int k = 0; k < 2; k++) {
-				for (int j = i - 7; j < i; j++) {
-					result += "|   ";
-					if (aucDates.contains(j)) {
-						aucDates.remove(aucDates.indexOf(j));
-						result += "F ";
-					} else result += "= ";
-				}
-				result += "|\n";
-			}
-			result += "===========================================\n";
-
-		}
-		return result;
-	}
-
-	private List<Integer> viewAuctionsInMonth(final int month) {
-		List<Integer> result = new ArrayList<>();
-		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
-			if (myUpcomingAuctions.get(i).getMonth() == month) {
-				result.add(myUpcomingAuctions.get(i).getDateAuctionStarts().get(Calendar.DAY_OF_MONTH));
-			}
-		}
-		return result;
-	}
-
 }
