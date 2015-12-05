@@ -1,7 +1,8 @@
 package refactored;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Map;
-import java.util.Scanner;
 
 
 public class MainUI {
@@ -19,13 +20,14 @@ public class MainUI {
 	
 	/**
 	 * Prompts user to enter username for verification
+	 * @throws IOException 
 	 */
-	public void promptLogin(Scanner scanner) {
+	public void promptLogin(BufferedReader reader) throws IOException {
 		boolean isLogin = false;
 		String user;
 		do {
 			System.out.print("Enter username: ");
-			user = scanner.next();
+			user = reader.readLine();
 			if (allUsers.containsKey(user)) {
 				System.out.println("Welcome " + user + "!!!!");
 				isLogin = true;
@@ -36,19 +38,19 @@ public class MainUI {
 		currentUser = allUsers.get(user);
 	}
 
-	public void run(Scanner scanner, CalendarUI theCalendar) {
+	public void run(BufferedReader reader, CalendarUI theCalendar) throws IOException {
 		UserUI ui;
 		if (currentUser instanceof ACEmployee) {
 			ui = new ACEmployeeUI();
-			ui.promptMainMenu(scanner, theCalendar, currentUser);
+			ui.promptMainMenu(reader, theCalendar, currentUser);
 		}
 		if (currentUser instanceof NPEmployee) {
 			ui = new NPEmployeeUI();
-			ui.promptMainMenu(scanner, theCalendar, currentUser);		//Probably need to pass the user object
+			ui.promptMainMenu(reader, theCalendar, currentUser);		//Probably need to pass the user object
 		}
 		if (currentUser instanceof Bidder) {
 			ui = new BidderUI();
-			ui.promptMainMenu(scanner, theCalendar, currentUser);
+			ui.promptMainMenu(reader, theCalendar, currentUser);
 		}		
 	}
 

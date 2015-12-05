@@ -3,12 +3,13 @@
  */
 package refactored;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 /**
  * @author nabilfadili
  *
  */
 public interface UserUI {
-	public void promptMainMenu(Scanner scanner, CalendarUI theCalendar, User currentUser);
+	public void promptMainMenu(BufferedReader reader, CalendarUI theCalendar, User currentUser) throws IOException;
 }

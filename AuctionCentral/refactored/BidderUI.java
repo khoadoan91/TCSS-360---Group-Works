@@ -1,6 +1,7 @@
 package refactored;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.List;
@@ -11,7 +12,7 @@ public class BidderUI implements UserUI {
 	private Bidder myBidder;
 
 	@Override
-	public void promptMainMenu(Scanner scanner, CalendarUI theCalendar, User currentUser) {
+	public void promptMainMenu(BufferedReader reader, CalendarUI theCalendar, User currentUser) throws NumberFormatException, IOException {
 		myBidder = (Bidder) currentUser;
 		boolean isQuit = false;
 		do {
@@ -21,9 +22,9 @@ public class BidderUI implements UserUI {
 			System.out.println("2.  Create or change a bid on an item");
 			System.out.println("3.  View your current bids");
 			System.out.print("------Done!! want to exit? type any number ");
-			switch (scanner.nextInt()) {
-				case 1: viewUpcomingAuction(scanner, theCalendar); break;
-				case 2: makeOrChangeBid(scanner, theCalendar); break;
+			switch (Integer.parseInt(reader.readLine())) {
+				case 1: viewUpcomingAuction(theCalendar); break;
+				case 2: makeOrChangeBid(reader, theCalendar); break;
 				case 3: viewCurrentBids(); break;
 				default: isQuit = true; break;
 			}
@@ -43,7 +44,7 @@ public class BidderUI implements UserUI {
 		}
 	}
 	
-	private void viewUpcomingAuction(Scanner scanner, CalendarUI cal) {
+	private void viewUpcomingAuction(CalendarUI cal) {
 		System.out.println("Please pick one auction for detail. ");
 		List<Auction> upcomingAuc = cal.getDispCalendar().getUpcomingAuctions();
 		for (int i = 0; i < upcomingAuc.size(); i++) {
@@ -62,25 +63,25 @@ public class BidderUI implements UserUI {
 		return result;		
 	}
 	
-	private void makeOrChangeBid(Scanner scanner, CalendarUI cal) {
-		Auction chosenAuc = chooseAuction(scanner, cal);
+	private void makeOrChangeBid(BufferedReader reader, CalendarUI cal) throws NumberFormatException, IOException {
+		Auction chosenAuc = chooseAuction(reader, cal);
 		if (chosenAuc != null) {
-			Item chosenItem = chooseItem(scanner, chosenAuc);
+			Item chosenItem = chooseItem(reader, chosenAuc);
 			if (chosenItem != null) {
-				nextAction(scanner, chosenAuc, chosenItem);
+				nextAction(reader, chosenAuc, chosenItem);
 			} else {
-				makeOrChangeBid(scanner, cal);
+				makeOrChangeBid(reader, cal);
 			}
 		}
 	}
 	
-	private Auction chooseAuction(Scanner scanner, CalendarUI cal) {
+	private Auction chooseAuction(BufferedReader reader, CalendarUI cal) throws NumberFormatException, IOException {
 		System.out.println("Choose an auction or hit other number to go back. ".toUpperCase());
 		List<Auction> upcomingAuc = cal.getDispCalendar().getUpcomingAuctions();
 		for (int i = 0; i < upcomingAuc.size(); i++) {
 			System.out.println((i + 1) + ") " + upcomingAuc.get(i));
 		}
-		int pickAuc = scanner.nextInt() - 1;
+		int pickAuc = Integer.parseInt(reader.readLine()) - 1;
 		for (int i = 0; i < upcomingAuc.size(); i++) {
 			if (i == pickAuc) { 
 				return upcomingAuc.get(i);
@@ -89,12 +90,12 @@ public class BidderUI implements UserUI {
 		return null;
 	}
 	
-	private Item chooseItem(Scanner scanner, Auction chosenAuc) {
+	private Item chooseItem(BufferedReader reader, Auction chosenAuc) throws NumberFormatException, IOException {
 		System.out.println("Choose an item. ");
 		for (int i = 0; i < chosenAuc.getAllItems().size(); i++) {
 			System.out.println((i + 1) + ") " + chosenAuc.getAllItems().get(i));
 		}
-		int pickItem = scanner.nextInt() - 1;
+		int pickItem = Integer.parseInt(reader.readLine()) - 1;
 		for (int i = 0; i < chosenAuc.getAllItems().size(); i++) {
 			if (i == pickItem) {
 				return chosenAuc.getAllItems().get(i);
@@ -103,7 +104,7 @@ public class BidderUI implements UserUI {
 		return null;
 	}
 	
-	private void nextAction(Scanner scanner, Auction auction, Item item) {
+	private void nextAction(BufferedReader reader, Auction auction, Item item) throws IOException {
 		if (myBidder.containsBid(auction, item)) {
 			System.out.println("You have made a bid on this item.");
 			System.out.println("Your bid on this item was " 
@@ -113,7 +114,7 @@ public class BidderUI implements UserUI {
 			System.out.println("You have not made a bid on this item.");
 			System.out.println("Enter the amount you want to bid.");
 		}
-		String price = scanner.next();
+		String price = reader.readLine();
 		myBidder.addBid(auction, item, new BigDecimal(price));
 //		Bid existingBid = null;
 //		for (Bid bid : myBidder.viewBids()) {
