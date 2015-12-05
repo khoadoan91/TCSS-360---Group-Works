@@ -37,16 +37,11 @@ public class Main {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		/*KYLE's CODE
-		FileHandler fileLoader = new FileHandler();
-		DisplayCalendar calendarModel = new
-				DisplayCalendar(fileLoader.readAuctionFile(auctionFile, itemFile));
+		DisplayCalendar calendarModel = new DisplayCalendar(retrieveAuctions(myUsers));
 		myCalendar = new CalendarUI(calendarModel);
-		myUsers = fileLoader.readUserFile(userFile);
-		*/
 
-		myCalendar = new DisplayCalendar(retrieveAuctions(myUsers));
+
+		//myCalendar = new DisplayCalendar();
 		//myCalendar = new DisplayCalendar(myFileHandler.readAuctionFile(auctionFile, itemFile));
 		//myUsers = myFileHandler.readUserFile(userFile);
 
