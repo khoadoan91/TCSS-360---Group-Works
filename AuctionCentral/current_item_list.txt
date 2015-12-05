@@ -9,3 +9,4 @@ In Pursuit of the Unknown, 1, 200.00, 17 equations that changed the world by Ian
 Nexus 6P, 2, 549.99, Made by Huawei
 Coffee Cup, 10, 49.99, comes with heat insulation handle
 Microwave Oven, 1, 99.99, Limited version
+iPad, 1, 359.99, 4th generation

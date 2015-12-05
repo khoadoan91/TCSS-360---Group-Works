@@ -8,13 +8,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-
 import org.junit.Before;
 import org.junit.Test;
-
 import refactored.Auction;
 import refactored.Bid;
 import refactored.Bidder;
+import refactored.DisplayCalendar;
 import refactored.Item;
 
 import org.junit.Test;
@@ -37,7 +36,7 @@ public class BidderTest {
 	public void addBidOnNullTest() {
 		myBidder.addBid(null);
 	}
-	
+
 	@Test
 	public void addBidOnDuplicateTest() {
 		myBidder.addBid(myBid);
@@ -50,19 +49,19 @@ public class BidderTest {
 		myBidder.addBid(myBid);
 		assertTrue(myBidder.viewBids().contains(myBid));
 	}
-	
+
 	@Test(expected=NullPointerException.class)
 	public void removeBidOnNulTest() {
 		myBidder.removeBid(null);
 	}
-	
+
 	@Test
 	public void removeBideOnNotContainedTest() {
 		Bid bid = new Bid(new Item("TV", 1, new BigDecimal(20.0), "A nice TV."), 50.0, myBidder.toString());
 		myBidder.removeBid(bid);
 		assertFalse(myBidder.viewBids().contains(myBid));
 	}
-	
+
 	@Test
 	public void removeBidOnGoodBidTest() {
 		myBidder.addBid(myBid);

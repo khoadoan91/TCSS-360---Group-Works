@@ -8,7 +8,7 @@ public class BidderUI implements UserUI {
 	private Bidder myBidder;
 
 	@Override
-	public void promptMainMenu(Scanner scanner, DisplayCalendar theCalendar, User currentUser) {
+	public void promptMainMenu(Scanner scanner, CalendarUI theCalendar, User currentUser) {
 		myBidder = (Bidder) currentUser;
 		boolean isQuit = false;
 		do {
@@ -25,9 +25,9 @@ public class BidderUI implements UserUI {
 		} while (!isQuit);
 	}
 	
-	private void viewUpcomingAuction(Scanner scanner, DisplayCalendar cal) {
+	private void viewUpcomingAuction(Scanner scanner, CalendarUI cal) {
 		System.out.println("Please pick one auction for detail. ");
-		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
+		List<Auction> upcomingAuc = cal.getDispCalendar().getUpcomingAuctions();
 		for (int i = 0; i < upcomingAuc.size(); i++) {
 			System.out.println((i + 1) + ") " + upcomingAuc.get(i));
 		}
@@ -37,7 +37,7 @@ public class BidderUI implements UserUI {
 		}
 	}
 	
-	private void makeOrChangeBid(Scanner scanner, DisplayCalendar cal) {
+	private void makeOrChangeBid(Scanner scanner, CalendarUI cal) {
 		System.out.println("You are about to make or change a bid!");
 		listAuctions(cal);
 		
@@ -54,17 +54,17 @@ public class BidderUI implements UserUI {
 		}
 	}
 	
-	private void listAuctions(DisplayCalendar cal) {
+	private void listAuctions(CalendarUI cal) {
 		System.out.println("Choose an auction. ");
-		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
+		List<Auction> upcomingAuc = cal.getDispCalendar().getUpcomingAuctions();
 		for (int i = 0; i < upcomingAuc.size(); i++) {
 			System.out.println((i + 1) + ") " + upcomingAuc.get(i));
 		}
 	}
 	
-	private Auction chooseAuction(int pickAuc, DisplayCalendar cal) {
+	private Auction chooseAuction(int pickAuc, CalendarUI cal) {
 		Auction chosenAuc = null;
-		List<Auction> upcomingAuc = cal.getUpcomingAuctions();
+		List<Auction> upcomingAuc = cal.getDispCalendar().getUpcomingAuctions();
 		for (int i = 1; i <= upcomingAuc.size(); i++) {
 			if (i == pickAuc) { 
 				chosenAuc = upcomingAuc.get(i - 1);

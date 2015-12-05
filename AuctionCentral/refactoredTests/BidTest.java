@@ -12,9 +12,10 @@ import java.awt.Image;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-
 import org.junit.Before;
 import org.junit.Test;
+
+import refactored.DisplayCalendar;
 
 
 public class BidTest {
@@ -26,7 +27,7 @@ public class BidTest {
 	@Before
 	public void setup() {
 		myItem = new Item("Golf Clubs", 6, new BigDecimal("1000.00"), "Six golf clubs");
-		myBidder = new Bidder("123 Main St.", "123456789"); 
+		myBidder = new Bidder("123 Main St.", "123456789");
 		myBid = new Bid(myItem, 225.0, myBidder.toString());
 	}
 
@@ -34,7 +35,7 @@ public class BidTest {
 	public void setBidAmountOnNegativeTest() {
 		myBid.setBidAmount(-100.0);
 	}
-	
+
 	@Test(expected=IllegalArgumentException.class)
 	public void setBidAmountOnZeroTest() {
 		myBid.setBidAmount(0.0);
@@ -45,14 +46,14 @@ public class BidTest {
 		myItem.setStartingPrice(new BigDecimal(20.0));
 		myBid.setBidAmount(10.0);
 	}
-	
+
 	@Test
 	public void setBidAmountOnStartingPriceTest() {
 		myItem.setStartingPrice(new BigDecimal(20.0));
 		myBid.setBidAmount(20.0);
 		assertEquals(20.0, myBid.getBidAmount(), 0.0001);
 	}
-	
+
 	@Test
 	public void setBidAmountOnGreaterThanStartingPriceTest() {
 		myItem.setStartingPrice(new BigDecimal(20.0));
@@ -60,4 +61,3 @@ public class BidTest {
 		assertEquals(30.0, myBid.getBidAmount(), 0.0001);
 	}
 }
-

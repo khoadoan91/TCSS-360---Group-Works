@@ -10,10 +10,10 @@ import java.util.Scanner;
  *
  */
 public class MainUI {
-	
+
 	private Map<String, User> allUsers;
 	private User currentUser;
-	
+
 	/**
 	 * Takes all loaded users for login verification
 	 * @param myUsers list of all users
@@ -21,7 +21,7 @@ public class MainUI {
 	public MainUI(Map<String, User> myUsers) {
 		allUsers = myUsers;
 	}
-	
+
 	/**
 	 * Prompts user to enter username for verification
 	 */
@@ -41,7 +41,8 @@ public class MainUI {
 		currentUser = allUsers.get(user);
 	}
 
-	public Map<String, User> run(Scanner scanner, DisplayCalendar theCalendar) {
+
+	public Map<String, User> run(Scanner scanner, CalendarUI theCalendar) {
 		UserUI ui;
 		if (currentUser instanceof ACEmployee) {
 			ui = new ACEmployeeUI();
@@ -49,12 +50,12 @@ public class MainUI {
 		}
 		if (currentUser instanceof NPEmployee) {
 			ui = new NPEmployeeUI();
-			ui.promptMainMenu(scanner, theCalendar, currentUser);		
+			ui.promptMainMenu(scanner, theCalendar, currentUser);
 		}
 		if (currentUser instanceof Bidder) {
 			ui = new BidderUI();
 			ui.promptMainMenu(scanner, theCalendar, currentUser);
-		}	
+		}
 		return allUsers;
 	}
 
