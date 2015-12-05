@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class Main {
 	
-	final private static Scanner scanner = new Scanner(System.in);
 	private static Map<String, User> myUsers;
 	private static CalendarUI myCalendar; 
 	
@@ -21,10 +20,11 @@ public class Main {
 		myCalendar = new CalendarUI(calendarModel);
 		myUsers = fileLoader.readUserFile(userFile);
 		
+		Scanner scanner = new Scanner(System.in);
 		MainUI ui = new MainUI(myUsers);
 		ui.promptLogin(scanner);
 		ui.run(scanner, myCalendar);
-		
+		scanner.close();
 	}
 
 }

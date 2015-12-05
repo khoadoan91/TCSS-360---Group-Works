@@ -17,6 +17,7 @@ public class NPEmployee extends User {
 	public Auction getMyAuction() {
 		return myAuction;
 	}
+	
 	public void addAuction(Auction theAuction) {
 		myAuction = theAuction;
 	}

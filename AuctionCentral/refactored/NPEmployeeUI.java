@@ -199,6 +199,7 @@ public class NPEmployeeUI implements UserUI {
 			currentUser.addAuction(enterAuctionInfo(scanner, currentUser));
 			try {
 				theCalendar.getDispCalendar().addAuction(currentUser.getMyAuction());
+				System.out.println("You sucessfully added your auction!");
 			} catch (ExceedAuctionLimit | Exceed90Days | Exceed5AuctionsIn7Days | 
 					ExceedAuctionLimitPerDay | ExceedOneAuctionPerYear e) {
 				System.out.println(e.getMessage());
