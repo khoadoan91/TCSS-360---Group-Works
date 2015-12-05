@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Random;
 
 import java.util.Map;
@@ -50,7 +51,7 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 		setQuantity(theQuantity);
 		setStartingPrice(thePrice);
 		setDescription(theDesc);
-		myBidders = new TreeMap<>();
+		myBidders = new HashMap<>();
 	}
 	/**
 	 * Makes a random item.
@@ -112,7 +113,7 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 	}
 
 	public Map<Bidder, BigDecimal> getItemBid() {
-		return new TreeMap<>(myBidders);
+		return new HashMap<>(myBidders);
 	}
 
 	/**

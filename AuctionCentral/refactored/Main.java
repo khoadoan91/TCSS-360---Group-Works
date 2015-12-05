@@ -24,35 +24,29 @@ import java.util.Map;
  *
  */
 public class Main {
-<<<<<<< HEAD
 
 	final private static Scanner scanner = new Scanner(System.in);
 	private static Map<String, User> myUsers;
 	private static CalendarUI myCalendar;
 
-	public static void main(String[] args) {
-		//KYLE CODE
-		// File userFile = new File("user_list.txt");
-		// File auctionFile = new File("current_auction_list.txt");
-		// File itemFile = new File("current_item_list.txt");
-		//
-		// FileHandler fileLoader = new FileHandler();
-		// DisplayCalendar calendarModel = new
-		// 		DisplayCalendar(fileLoader.readAuctionFile(auctionFile, itemFile));
-		// myCalendar = new CalendarUI(calendarModel);
-		// myUsers = fileLoader.readUserFile(userFile);
-		//
-		// BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		// MainUI ui = new MainUI(myUsers);
-		// ui.promptLogin(reader);
-		// ui.run(reader, myCalendar);
-		// reader.close();
+	public static void main(String[] args) throws IOException {
+		/** Text File input**/
+//		File userFile = new File("user_list.txt");
+//		File auctionFile = new File("current_auction_list.txt");
+//		File itemFile = new File("current_item_list.txt");
+//	    FileHandler myFileHandler = new FileHandler();
+//		DisplayCalendar calendarModel = new DisplayCalendar(myFileHandler.readAuctionFile(auctionFile, itemFile));
+//		myCalendar = new CalendarUI(calendarModel);
+//		myUsers = myFileHandler.readUserFile(userFile);
+//	    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+//		MainUI ui = new MainUI(myUsers);
+//		ui.promptLogin(reader);
+//		myUsers = ui.run(reader, myCalendar);
+//		reader.close();
 
-		//File userFile = new File("user_list.txt");
-		//File auctionFile = new File("current_auction_list.txt");
-		//File itemFile = new File("current_item_list.txt");
-		FileHandler myFileHandler = new FileHandler();
-		try {
+		/**Serialized Input*/
+        FileHandler myFileHandler = new FileHandler();
+	    try {
 			FileInputStream inFile = new FileInputStream("user_list_final.ser");
 			myUsers = myFileHandler.deserializeAllUsers(inFile);
 			System.out.println(myUsers.size());
@@ -62,15 +56,14 @@ public class Main {
 		}
 		DisplayCalendar calendarModel = new DisplayCalendar(retrieveAuctions(myUsers));
 		myCalendar = new CalendarUI(calendarModel);
-
-		//myCalendar = new DisplayCalendar();
-		//myCalendar = new DisplayCalendar(myFileHandler.readAuctionFile(auctionFile, itemFile));
-		//myUsers = myFileHandler.readUserFile(userFile);
-
-		MainUI ui = new MainUI(myUsers);					//passes loaded User objects
-		ui.promptLogin(scanner);
-		myUsers = ui.run(scanner, myCalendar);				//returns whatever happened to the User objects during run()
-
+	    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		MainUI ui = new MainUI(myUsers);
+		ui.promptLogin(reader);
+		myUsers = ui.run(reader, myCalendar);
+		reader.close();
+		
+		
+		/** Always serialize*/
 		myFileHandler.serializeAllUsers(myUsers);			//saves those changes to the .ser file
 	}
 
@@ -97,14 +90,6 @@ public class Main {
 			}
 		}
 		return allAuctions;
-=======
-
-	private static Map<String, User> myUsers;
-	private static CalendarUI myCalendar;
-
-	public static void main(String[] args) throws IOException {
-
->>>>>>> Kyle1
 	}
 
 }

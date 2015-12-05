@@ -62,7 +62,7 @@ public class ACEmployeeUI implements UserUI {
 				case 1: viewCalendar(reader, theCalendar); break;
 				case 2: viewUpcomingAuction(reader, theCalendar); break;
 				case 3: isQuit = true; break;
-				default: isQuit = System.out.println("Invalid input.");
+				default: System.out.println("Invalid input.");
 			}
 		} while (!isQuit);
 	}
@@ -82,7 +82,7 @@ public class ACEmployeeUI implements UserUI {
 			System.out.println("0.  Back to main menu\n" +
 							   "1.  Previous month\n" +
 							   "2.  Next month");
-			switch (reader.read()) {
+			switch (Integer.parseInt(reader.readLine())) {
 				case 0: isQuit = true; break;
 				case 1: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) - 1); break;
 				case 2: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) + 1); break;
