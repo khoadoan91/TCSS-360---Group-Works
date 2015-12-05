@@ -186,7 +186,7 @@ public class NPEmployeeUI implements UserUI {
 				System.out.println("You sucessfully added your auction!");
 			} catch (ExceedAuctionLimit | Exceed90Days | Exceed5AuctionsIn7Days | 
 					ExceedAuctionLimitPerDay | ExceedOneAuctionPerYear e) {
-				System.out.println(e.getMessage());
+				System.err.println(e.getMessage());
 				currentUser.removeAuction();    // remove the violation BS auction.
 			}
 		}

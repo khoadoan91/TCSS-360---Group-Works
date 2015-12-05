@@ -351,7 +351,7 @@ public class Auction implements Comparable<Auction>, java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return (myAucName + ", " + getAllItems().size() + ", " + getStartHour()
+		return (getAuctionName() + ", " + getAllItems().size() + ", " + getStartHour()
 				+ ":" + getStartMin() + ", " + hourDur + ":" + minDur);
 	}
 

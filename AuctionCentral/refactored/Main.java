@@ -25,7 +25,6 @@ import java.util.Map;
  */
 public class Main {
 
-	final private static Scanner scanner = new Scanner(System.in);
 	private static Map<String, User> myUsers;
 	private static CalendarUI myCalendar;
 
@@ -49,7 +48,7 @@ public class Main {
 	    try {
 			FileInputStream inFile = new FileInputStream("user_list_final.ser");
 			myUsers = myFileHandler.deserializeAllUsers(inFile);
-			System.out.println(myUsers.size());
+//			System.out.println(myUsers.size());
 		}
 		catch (IOException e) {
 			e.printStackTrace();

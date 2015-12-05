@@ -172,7 +172,7 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 	 * @param bidder
 	 * @param bidPrice
 	 */
-	public void addBid(final Bidder bidder, final BigDecimal bidPrice) {
+	public void addBid(final Bidder bidder, final BigDecimal bidPrice) throws IllegalArgumentException{
 		if (bidPrice.compareTo(myStartingPrice) < 0) {
 			throw new IllegalArgumentException();
 		}

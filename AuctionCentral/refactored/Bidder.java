@@ -54,8 +54,12 @@ public class Bidder extends User {
 		if (!myBids.containsKey(theAuction)) {
 			myBids.put(theAuction, new HashMap<>());
 		}
-		myBids.get(theAuction).put(theItem, theBid);
-		theItem.addBid(this, theBid);
+		try {
+			theItem.addBid(this, theBid);
+			myBids.get(theAuction).put(theItem, theBid);
+		} catch (IllegalArgumentException e) {
+			System.err.println("Sorry! Your bid is lower than the starting price!");
+		}
 	}
 
 	/**
