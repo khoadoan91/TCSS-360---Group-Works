@@ -1,17 +1,16 @@
 package refactored;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
-import refactored.Bid;
-
+/**
+ * @author Nina
+ * @author KyleD
+ */
 public class Bidder extends User {
 
-	//	final private String userType = "Bidder";
-
 	/** The billing address of the bidder. */
-	//@SuppressWarnings("unused")
 	private String myAddress;
 
 	/** The credit card number of the bidder. */
@@ -19,13 +18,13 @@ public class Bidder extends User {
 	private String myCreditCard;
 
 	/** The bids this bidder has made. */
-	private List<Bid> myBids;
+	private Map<Auction, Map<Item, BigDecimal>> myBids;
 	
 	public Bidder(String theAddr, String theCredit) {
-		this(theAddr, theCredit, new ArrayList<>());
+		this(theAddr, theCredit, new HashMap<>());
 	}
 	
-	public Bidder(String theAddr, String theCredit, List<Bid> theBids) {
+	public Bidder(String theAddr, String theCredit, Map<Auction, Map<Item, BigDecimal>> theBids) {
 		myAddress = theAddr;
 		myCreditCard = theCredit;
 		myBids = theBids;
@@ -36,8 +35,8 @@ public class Bidder extends User {
 	 * 
 	 * @return the bids.
 	 */
-	public List<Bid> viewBids() {
-		return myBids;
+	public Map<Auction, Map<Item, BigDecimal>> viewBids() {
+		return new HashMap<>(myBids);
 	}
 
 	/**
@@ -45,12 +44,18 @@ public class Bidder extends User {
 	 * 
 	 * @param theBid
 	 */
-	public void addBid(final Bid theBid) {
-		if (theBid == null) {
+	public void addBid(final Auction theAuction, final Item theItem, final BigDecimal theBid) {
+		if (theBid == null || theAuction == null || theItem == null) {
 			throw new NullPointerException();
 		}
-		
-		myBids.add(theBid);
+		if (!theAuction.getAllItems().contains(theItem)) {
+			throw new IllegalArgumentException("The Auction doesn't contain the item");
+		}
+		if (!myBids.containsKey(theAuction)) {
+			myBids.put(theAuction, new HashMap<>());
+		}
+		myBids.get(theAuction).put(theItem, theBid);
+		theItem.addBid(this, theBid);
 	}
 
 	/**
@@ -58,14 +63,29 @@ public class Bidder extends User {
 	 * 
 	 * @param theBid
 	 */
-	public void removeBid(final Bid theBid) {
-		if (theBid == null) {
+	public void removeBid(final Auction theAuction, final Item theItem) {
+		if (theItem == null || theAuction == null) {
 			throw new NullPointerException();
-		} else if (!myBids.contains(theBid)) {
+		}
+		if (!myBids.containsKey(theAuction) || !myBids.get(theAuction).containsKey(theItem)) {
 			throw new IllegalArgumentException();
 		}
-
-		myBids.remove(theBid);
+		myBids.get(theAuction).remove(theItem);
+		theItem.removeBid(this);
+	}
+	
+	public boolean containsBid(final Auction theAuction, final Item theItem) {
+		return myBids.containsKey(theAuction) && myBids.get(theAuction).containsKey(theItem);
+	}
+	
+	public BigDecimal getBidFrom(final Auction theAuction, final Item theItem) {
+		if (theItem == null || theAuction == null) {
+			throw new NullPointerException();
+		}
+		if (!myBids.containsKey(theAuction) || !myBids.get(theAuction).containsKey(theItem)) {
+			throw new IllegalArgumentException();
+		}
+		return myBids.get(theAuction).get(theItem);
 	}
 
 //	@Override

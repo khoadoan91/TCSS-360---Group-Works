@@ -29,11 +29,9 @@ package refactored;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -52,14 +50,13 @@ public class Auction implements Comparable<Auction>, java.io.Serializable {
 	/** The list of items that are in the auction. */
 	private List<Item> myItems;
 
-	/** The boolean for checking if the auction is available. */
-//	private boolean isAvailable;
-	
-	/** The bids that have been made on items in this auction. */
-	private List<Bid> myBids;
+//	/** The bids that have been made on items in this auction. */
+//	private List<Bid> myBids;
 
+	/** The hour that represents how long for the Auction happens. */
 	private int hourDur;
 
+	/** The minute that represents how long for the Auction happens. */
 	private int minDur;
 
 	/**
@@ -67,15 +64,11 @@ public class Auction implements Comparable<Auction>, java.io.Serializable {
 	 *
 	 * @param theOrgName
 	 * @param theItems
-	 * @param theDate fixed a bug month starts at 0
-	 * @param timeDuration
-	 *            MUST BE in the format "HH:MM"
+	 * @param theDate is Calendar type, manages a bug that is month starts at 0
+	 * @param timeDuration MUST BE in the format "HH:MM"
 	 */
 	public Auction(final String theOrgName, final List<Item> theItems, final Calendar theDate,
 			final String timeDuration) {
-		if (theItems.size() < 1) {
-			throw new IllegalArgumentException();
-		}
 		if (theItems == null || theDate == null) {
 			throw new NullPointerException();
 		}
@@ -88,15 +81,11 @@ public class Auction implements Comparable<Auction>, java.io.Serializable {
 		getAuctionName();
 		setTimeDuration(timeDuration);
 		myItems = new LinkedList<>(theItems);
-		myBids = new ArrayList<Bid>();
-//		isAvailable = true;
+//		myBids = new ArrayList<Bid>();
 	}
 
 	public Auction(final String theAucName, final List<Item> theItems, final String startTime,
 			final String timeDur) throws ParseException {
-		if (theItems.size() < 1) {
-			throw new IllegalArgumentException();
-		}
 		myAucName = theAucName;
 		myItems = new LinkedList<>(theItems);
 		myOrgName = theAucName.substring(0, theAucName.length() - 12);
@@ -114,56 +103,51 @@ public class Auction implements Comparable<Auction>, java.io.Serializable {
    /**
     * makes a test object with random org name.
     * lasts 1 hour and 1 minute
-	* @param theDate tim the auction starts 
-	*            
+	* @param theDate tim the auction starts
+	*
     */
-	   /**
-	    * makes a test object with random org name.
-	    * lasts 1 hour and 1 minute
-		 * @param theDate tim the auction starts 
-		 *            
-	    */
-	@SuppressWarnings("unchecked")
-	public static Auction makeTestAuction(final Calendar theDate){
-		char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
-		StringBuilder sb = new StringBuilder();         //any better way to make a random string??
-		Random random = new Random();
-		for (int i = 0; i < 10; i++) {
-			char c = chars[random.nextInt(chars.length)];
-			sb.append(c);
-		}
-		List aList = new LinkedList<Item>();
-	    aList.add(Item.makeRItem());
-	    aList.add(Item.makeRItem());
-	    return new Auction(sb.toString(),aList , theDate,"01:01");
-	}
-   
-   public void addBid(final Bid theBid) {
-		myBids.add(theBid);
-	}
-   public void removeBid(final Bid theBid) {
-		if (theBid == null) {
-			throw new NullPointerException();
-		}
-		myBids.remove(theBid);
-	}
-   
-   public List<Bid> viewBids() {
-	   return myBids;
-   }
-   
-   
+
+//   public static Auction makeTestAuction(final Calendar theDate){
+//      char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
+//      StringBuilder sb = new StringBuilder();         //any better way to make a random string??
+//      Random random = new Random();
+//      for (int i = 0; i < 10; i++) {
+//         char c = chars[random.nextInt(chars.length)];
+//      sb.append(c);
+//      }
+//      return new Auction(sb.toString(), null, theDate,"01-01");
+//   }
+
+
+//   public void addBid(final Bid theBid) {
+//		myBids.add(theBid);
+//   }
+//
+//   public void removeBid(final Bid theBid) {
+//		if (theBid == null) {
+//			throw new NullPointerException();
+//		}
+//		myBids.remove(theBid);
+//   }
+//
+//   public List<Bid> viewBids() {
+//	   return myBids;
+//   }
+
+
 	/**
 	 * Adds an item to an Auction if the item is not in the Auction.
 	 *
 	 * @param theItem
 	 */
 	public boolean addItem(final Item theItem) {
+		if (theItem == null)
+			throw new NullPointerException();
 		if (!myItems.contains(theItem))
 			return myItems.add(theItem);
 		return false;
 	}
-	
+
 	public boolean removeItem(final Item theItem) {
 		if (myItems.contains(theItem)) {
 			myItems.remove(theItem);
@@ -321,12 +305,12 @@ public class Auction implements Comparable<Auction>, java.io.Serializable {
 //		myDate = (Calendar) theDate.clone();
 //	}
 
-	public void setDate(final int date) {
+	public void setDateOfMonth(final int date) {
 		myDate.set(Calendar.DAY_OF_MONTH, date);
 	}
 
 	public void setMonth(final int month) {
-		myDate.set(Calendar.MONTH, month);
+		myDate.set(Calendar.MONTH, month - 1);
 	}
 
 	public void setYear(final int year) {
@@ -351,21 +335,22 @@ public class Auction implements Comparable<Auction>, java.io.Serializable {
 //	public boolean isAvailable() {
 //		return isAvailable;
 //	}
+//	@Override
+//	public String toString() {
+//		return myOrgName + " " + myDate.getTime() + "\n";
+//	}
+
+//	public String displayItemsInAuction() {
+//		String result = myOrgName + " " + myDate.getTime() + "\n";
+//		char c = 'a';
+//		for (int i = 0; i < myItems.size(); i++) {
+//			result += c++ + ") " + myItems.get(i) + "\n";
+//		}
+//		return result;
+//	}
+
 	@Override
 	public String toString() {
-		return myOrgName + " " + myDate.getTime() + "\n";
-	}
-	
-	public String displayAuction() {
-		String result = myOrgName + " " + myDate.getTime() + "\n";
-		char c = 'a';
-		for (int i = 0; i < myItems.size(); i++) {
-			result += c++ + ") " + myItems.get(i) + "\n";
-		}
-		return result;
-	}
-
-	public String toStringTextFile() {
 		return (myAucName + ", " + getAllItems().size() + ", " + getStartHour()
 				+ ":" + getStartMin() + ", " + hourDur + ":" + minDur);
 	}
@@ -374,10 +359,4 @@ public class Auction implements Comparable<Auction>, java.io.Serializable {
 	public int compareTo(Auction theAuction) {
 		return this.myDate.compareTo(theAuction.myDate);
 	}
-
-	@Override
-	public boolean equals(Object theAuction) {
-		return ((Auction) theAuction).myDate.equals(this.myDate);
-	}
-
 }

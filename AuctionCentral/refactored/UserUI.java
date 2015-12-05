@@ -1,7 +1,8 @@
 
 package refactored;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 /**
  * Interface for sublass UIs.
@@ -9,5 +10,5 @@ import java.util.Scanner;
  *
  */
 public interface UserUI {
-	public void promptMainMenu(Scanner scanner, CalendarUI theCalendar, User currentUser);
+	public void promptMainMenu(BufferedReader reader, CalendarUI theCalendar, User currentUser) throws IOException;
 }

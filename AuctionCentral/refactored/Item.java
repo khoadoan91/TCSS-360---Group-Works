@@ -2,8 +2,12 @@ package refactored;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+
 import java.util.Calendar;
 import java.util.Random;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 
 /**
@@ -13,7 +17,7 @@ import java.util.Random;
 public class Item implements Comparable<Item>, java.io.Serializable {
 
 	/** The ID that is initialized by ItemID. */
-	private final long myID;
+//	private final long myID;
 
 	/** The title of the item. */
 	private String myTitle;
@@ -21,36 +25,32 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 	/** The quantity of the item. */
 	private int myQuantity;
 
-	// private List<Image> myImages;
-
 	/** The description of the item. */
 	private String myDesc;
-	
+
 	/** Starting price of the item. */
 	private BigDecimal myStartingPrice;
 
+	/** The list of the bidding of the each bidder. */
+	private Map<Bidder, BigDecimal> myBidders;
+
 	/**
 	 * Constructs an item with parameters info.
-	 * 
+	 *
 	 * @param theTitle
 	 * @param theQuantity
 	 * @param theDesc
 	 */
-	public Item(final String theTitle, final int theQuantity, final BigDecimal price, 
+	public Item(final String theTitle, final int theQuantity, final BigDecimal thePrice,
 			final String theDesc) {
-		if (theTitle.length() == 0 || theQuantity < 1 || theDesc.length() == 0) {
-			throw new IllegalArgumentException();
-		}
-		if (theTitle == null || theDesc == null) {
-			throw new NullPointerException();
-		}
 		// suppose that the difference in time between 2 created items is AT
 		// LEAST 1ms
-		myID = Calendar.getInstance().getTimeInMillis();
-		myTitle = theTitle;
-		myQuantity = theQuantity;
-		myStartingPrice = price;
-		myDesc = theDesc;
+//		myID = Calendar.getInstance().getTimeInMillis();
+		setTitle(theTitle);
+		setQuantity(theQuantity);
+		setStartingPrice(thePrice);
+		setDescription(theDesc);
+		myBidders = new TreeMap<>();
 	}
 	/**
 	 * Makes a random item.
@@ -73,7 +73,7 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 	}
 	/**
 	 * Returns the title.
-	 * 
+	 *
 	 * @return
 	 */
 	public String getTitle() {
@@ -82,7 +82,7 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 
 	/**
 	 * Returns the quantity.
-	 * 
+	 *
 	 * @return
 	 */
 	public int getQuantity() {
@@ -91,37 +91,40 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 
 	/**
 	 * Returns the ID of the item.
-	 * 
+	 *
 	 * @return
 	 */
-	public long getItemID() {
-		return myID;
-	}
+//	public long getItemID() {
+//		return myID;
+//	}
 
-	// public List<Image> getImages() {
-	// return myImages;
-	// }
-	
 	public BigDecimal getStartingPrice() {
 		return myStartingPrice;
 	}
 
 	/**
 	 * Returns the description.
-	 * 
+	 *
 	 * @return
 	 */
 	public String getDescription() {
 		return myDesc;
 	}
 
+	public Map<Bidder, BigDecimal> getItemBid() {
+		return new TreeMap<>(myBidders);
+	}
+
 	/**
 	 * Sets the title of the item.
-	 * 
+	 *
 	 * @param theTitle
 	 */
 	public void setTitle(final String theTitle) {
-		if (theTitle == null || theTitle.length() == 0) {
+		if (theTitle == null) {
+			throw new NullPointerException();
+		}
+		if (theTitle.length() == 0) {
 			throw new IllegalArgumentException();
 		}
 		myTitle = theTitle;
@@ -129,7 +132,7 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 
 	/**
 	 * Sets the quantity of the item.
-	 * 
+	 *
 	 * @param theQt
 	 */
 	public void setQuantity(final int theQt) {
@@ -138,45 +141,54 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 		}
 		myQuantity = theQt;
 	}
-	
+
 	public void setStartingPrice(final BigDecimal price) {
+		if (price == null) {
+			throw new NullPointerException();
+		}
+		if (price.doubleValue() <= 0) {
+			throw new IllegalArgumentException();
+		}
 		myStartingPrice = price;
 	}
 
 	/**
 	 * Sets the Description of the item.
-	 * 
+	 *
 	 * @param theDesp
 	 */
 	public void setDescription(final String theDesc) {
-		if (theDesc == null || theDesc.length() == 0) {
+		if (theDesc == null)
+			throw new NullPointerException();
+		if (theDesc.length() == 0) {
 			throw new IllegalArgumentException();
 		}
 		myDesc = theDesc;
 	}
 
-	// public void addImage(final Image theImage) {
-	// if (!myImages.contains(theImage))
-	// myImages.add(theImage);
-	// }
+	/**
+	 *
+	 * @param bidder
+	 * @param bidPrice
+	 */
+	public void addBid(final Bidder bidder, final BigDecimal bidPrice) {
+		if (bidPrice.compareTo(myStartingPrice) < 0) {
+			throw new IllegalArgumentException();
+		}
+		myBidders.put(bidder, bidPrice);
+	}
 
-	// public void addMultiImages(final Image[] theImages) {
-	// for (int i = 0; i < theImages.length; i++) {
-	// if(!myImages.contains(theImages[i]))
-	// myImages.add(theImages[i]);
-	// }
-	// }
+	public void removeBid(final Bidder bidder) {
+		myBidders.remove(bidder);
+	}
 
-	// public void removeImage(final Image theImage) {
-	// myImages.remove(theImage);
-	// }
 	@Override
 	public String toString() {
-		return myTitle + "\nQuantity: " + myQuantity + "\nStarting Price: " 
+		return myTitle + "\nQuantity: " + myQuantity + "\nStarting Price: "
 				+ NumberFormat.getCurrencyInstance().format(myStartingPrice)
 				+ "\nDescription: " + myDesc ;
 	}
-	
+
 	public String toStringTextFile() {
 		return (myTitle + ", " + myQuantity + ", " + myStartingPrice + ", " + myDesc);
 	}
@@ -184,10 +196,5 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 	@Override
 	public int compareTo(final Item theItem) {
 		return this.myTitle.compareToIgnoreCase(theItem.myTitle);
-	}
-
-	@Override
-	public boolean equals(Object theItem) {
-		return ((Item) theItem).myTitle.equalsIgnoreCase(this.myTitle);
 	}
 }

@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -169,9 +170,11 @@ public class FileHandler {
 	 * @return the auction if it matches
 	 */
 	private Auction matchAuctionAndNPE(List<Auction> auctionList, String orgName) {
+		Calendar now = Calendar.getInstance();
 		for (int i = 0; i < auctionList.size(); i++) {
-			if (auctionList.get(i).getOrganizationName().equals(orgName)) {
-				return auctionList.remove(i);
+			if (auctionList.get(i).getDateAuctionStarts().compareTo(now) >= 0 
+					&& auctionList.get(i).getOrganizationName().equals(orgName)) {
+				return auctionList.remove(i); 
 			}
 		}
 		return null;

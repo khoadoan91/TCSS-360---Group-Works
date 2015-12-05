@@ -43,15 +43,15 @@ public class CalendarUI {
 		}
 		while (i <= calShow.getActualMaximum(Calendar.DAY_OF_MONTH)) {
 			for (int j = 0; j < 7; j++) {
-				result += "|  ";
+				result += "|__";
 				if (i > 0 && calShow.getActualMaximum(Calendar.DAY_OF_MONTH) >= i) {
 					if (i < 10) {
-						result += " " + i++ + " ";
+						result += "_" + i++ + "_";
 					} else {
-						result += i++ + " ";
+						result += i++ + "_";
 					}
 				} else {
-					result += "   ";
+					result += "___";
 					i++;
 				}
 			}
