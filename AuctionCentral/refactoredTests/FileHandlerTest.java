@@ -26,8 +26,6 @@ import refactored.User;
  */
 public class FileHandlerTest {
 	private Map<String, User> testUsers;
-	private List<Auction> testAuctionList;
-	private List<Item> testItemList;
 	FileHandler fh;
 
 	/**
@@ -37,6 +35,15 @@ public class FileHandlerTest {
 	public void setUp() throws Exception {
 		fh = new FileHandler();
 	}
+	
+	@Test
+	public void testReadingSerializedUserFileWithOneUser() {
+		
+	}
 
+	@Test
+	public void testWritingSerializedFileWithOneUser() {
+		
+	}
 
 }
