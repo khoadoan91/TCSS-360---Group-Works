@@ -79,8 +79,8 @@ public class Main {
 		while (it.hasNext()) {
 			tempUser = it.next().getValue();
 			if (tempUser instanceof NPEmployee) {
-				if (((NPEmployee)tempUser).getMyAuction() != null){
-					allAuctions.add(((NPEmployee) tempUser).getMyAuction());
+				if (((NPEmployee)tempUser).getMyCurrentAuction() != null){
+					allAuctions.add(((NPEmployee) tempUser).getMyCurrentAuction());
 				}
 			}
 			if (tempUser instanceof Bidder) {

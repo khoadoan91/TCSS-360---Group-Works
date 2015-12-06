@@ -56,7 +56,7 @@ public class ACEmployeeUI implements UserUI {
 		do {
 			System.out.println("Please choose an option below or type any other number to exit.");
 			System.out.println("1.  View the calendar");
-			System.out.println("2.  View all upcoming auctions (in the next 3 months)");
+			System.out.println("2.  View the details of an upcoming auction");
 			System.out.println("3.  Exit");
 			switch (Integer.parseInt(reader.readLine())) {
 				case 1: viewCalendar(reader, theCalendar); break;

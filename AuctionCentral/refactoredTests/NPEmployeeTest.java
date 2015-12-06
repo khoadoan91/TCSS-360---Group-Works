@@ -48,12 +48,12 @@ public class NPEmployeeTest {
 	 */
 	@Test
 	public void testAddAuctionToEmployeeWithoutAuction() throws ParseException {
-		assertEquals(null, employeeWithoutAuction.getMyAuction());
+		assertEquals(null, employeeWithoutAuction.getMyCurrentAuction());
 		List<Item> testItems = new ArrayList<Item>();
 		testItems.add(new Item("tv", 1, new BigDecimal(10000), "Big tv"));
 		Auction testAuction = new Auction("DEF-JAN-25-2016", testItems, "12:00", "13:00");
 		employeeWithoutAuction.addAuction(testAuction);
-		assertEquals(testAuction, employeeWithoutAuction.getMyAuction());
+		assertEquals(testAuction, employeeWithoutAuction.getMyCurrentAuction());
 	}
 	
 	/**
@@ -61,9 +61,9 @@ public class NPEmployeeTest {
 	 */
 	@Test
 	public void testRemoveAuction() {
-		assertEquals(testAuction, employeeWithAuction.getMyAuction());
+		assertEquals(testAuction, employeeWithAuction.getMyCurrentAuction());
 		employeeWithAuction.removeAuction();
-		assertEquals(null, employeeWithAuction.getMyAuction());
+		assertEquals(null, employeeWithAuction.getMyCurrentAuction());
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public class NPEmployeeTest {
 	 */
 	@Test
 	public void testViewAuctionWithAuctionScheduled() {
-		assertEquals(employeeWithAuction.getMyAuction().toString(), employeeWithAuction.viewAuction());
+		assertEquals(employeeWithAuction.getMyCurrentAuction().toString(), employeeWithAuction.viewAuction());
 	}
 
 }

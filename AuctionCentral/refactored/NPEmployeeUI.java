@@ -13,6 +13,7 @@ import refactored.DisplayCalendar.ExceedAuctionLimit;
 import refactored.DisplayCalendar.ExceedAuctionLimitPerDay;
 import refactored.DisplayCalendar.ExceedOneAuctionPerYear;
 
+
 public class NPEmployeeUI implements UserUI {
 
 	@Override
@@ -33,7 +34,7 @@ public class NPEmployeeUI implements UserUI {
 				case 1: addAuction(reader, theCalendar, (NPEmployee)currentUser); break;
 				case 2: editAuction(reader, theCalendar, (NPEmployee)currentUser); break;
 				case 3: removeAuction(theCalendar, (NPEmployee)currentUser); break;
-				case 4: viewUserAuction(((NPEmployee)currentUser).getMyAuction()); break;
+				case 4: viewUserAuction(((NPEmployee)currentUser).getMyCurrentAuction()); break;
 				case 5: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) - 1); break;
 				case 6: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) + 1); break;
 				case 7 :isQuit = true; break;
@@ -43,7 +44,7 @@ public class NPEmployeeUI implements UserUI {
 	}
 	
 	private void removeAuction(CalendarUI theCalendar, NPEmployee currentUser) {
-		theCalendar.getDispCalendar().removeAuction(currentUser.getMyAuction());
+		theCalendar.getDispCalendar().removeAuction(currentUser.getMyCurrentAuction());
 		currentUser.removeAuction();
 	}
 	
@@ -63,7 +64,7 @@ public class NPEmployeeUI implements UserUI {
 	}
 	
 	private void editAuction(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws NumberFormatException, IOException {
-		if (currentUser.getMyAuction() != null) {
+		if (currentUser.getMyCurrentAuction() != null) {
 			System.out.println("What would you like to edit?");
 			System.out.println("0) Go Back");
 			System.out.println("1) Change the auction day");
@@ -89,7 +90,7 @@ public class NPEmployeeUI implements UserUI {
 	private void promptAddItem(BufferedReader reader, NPEmployee currentUser) throws IOException {
 		System.out.println("Enter a new item");
 		Item anotherItem = getItemFromPrompt(reader);
-		currentUser.getMyAuction().addItem(anotherItem);
+		currentUser.getMyCurrentAuction().addItem(anotherItem);
 		System.out.println("You have sucessfully add a new item to your auction!");
 	}
 	
@@ -108,13 +109,13 @@ public class NPEmployeeUI implements UserUI {
 	
 	private void editAuctionDuration(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException {
 		System.out.println("Change the time auction duration \"HH:MM\" ");
-		currentUser.getMyAuction().setTimeDuration(reader.readLine());
+		currentUser.getMyCurrentAuction().setTimeDuration(reader.readLine());
 		// FIXME check 4th business rule
 	}
 
 	private void editAuctionStartTime(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException {
 		System.out.println("Change the time auction starts \"HH:MM\" ");
-		currentUser.getMyAuction().setStartingTime(reader.readLine());
+		currentUser.getMyCurrentAuction().setStartingTime(reader.readLine());
 		// FIXME check 4th business rule.
 	}
 
@@ -122,13 +123,13 @@ public class NPEmployeeUI implements UserUI {
 		System.out.println("Change day to \"YYYY MM DD\": ");
 		String[] date = reader.readLine().split(" ");
 		// FIXME check 2nd, 3rd and 4th business rules.
-		currentUser.getMyAuction().setYear(Integer.parseInt(date[0]));
-		currentUser.getMyAuction().setMonth(Integer.parseInt(date[1]));
-		currentUser.getMyAuction().setDateOfMonth(Integer.parseInt(date[2]));
+		currentUser.getMyCurrentAuction().setYear(Integer.parseInt(date[0]));
+		currentUser.getMyCurrentAuction().setMonth(Integer.parseInt(date[1]));
+		currentUser.getMyCurrentAuction().setDateOfMonth(Integer.parseInt(date[2]));
 	}
 	
 	private void editItem(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws NumberFormatException, IOException {
-		List<Item> items = currentUser.getMyAuction().getAllItems();
+		List<Item> items = currentUser.getMyCurrentAuction().getAllItems();
 		System.out.println("Here is all items");
 		for (int i = 0; i < items.size(); i++) {
 			System.out.println((i + 1) + ") " + items.get(i));
@@ -169,7 +170,7 @@ public class NPEmployeeUI implements UserUI {
 						} break;
 					case 5:
 						System.out.println("Item was removed!");
-						currentUser.getMyAuction().removeItem(items.remove(i - 1)); break;
+						currentUser.getMyCurrentAuction().removeItem(items.remove(i - 1)); break;
 					default: break;
 				}
 			}
@@ -177,12 +178,12 @@ public class NPEmployeeUI implements UserUI {
 	}
 	
 	private void addAuction(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException {
-		if (currentUser.getMyAuction() != null) {
+		if (currentUser.getMyCurrentAuction() != null) {
 			System.out.println("You already have an auction scheduled.");
 		} else {
 			currentUser.addAuction(enterAuctionInfo(reader, currentUser));
 			try {
-				theCalendar.getDispCalendar().addAuction(currentUser.getMyAuction());
+				theCalendar.getDispCalendar().addAuction(currentUser.getMyCurrentAuction());
 				System.out.println("You sucessfully added your auction!");
 			} catch (ExceedAuctionLimit | Exceed90Days | Exceed5AuctionsIn7Days | 
 					ExceedAuctionLimitPerDay | ExceedOneAuctionPerYear e) {
