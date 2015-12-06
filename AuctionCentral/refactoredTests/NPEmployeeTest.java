@@ -69,17 +69,17 @@ public class NPEmployeeTest {
 	/**
 	 * viewAuction() should return an error message if the employee doesn't have an auction scheduled.
 	 */
-	@Test
-	public void testViewAuctionWithNoAuctionScheduled() {
-		assertEquals("You do not have an auction scheduled.", employeeWithoutAuction.viewAuction());
-	}
+//	@Test
+//	public void testViewAuctionWithNoAuctionScheduled() {
+//		assertEquals("You do not have an auction scheduled.", employeeWithoutAuction.viewAuction());
+//	}
 	
 	/**
 	 * viewAuction() should return a toString representation of the employee's auction if available.
 	 */
-	@Test
-	public void testViewAuctionWithAuctionScheduled() {
-		assertEquals(employeeWithAuction.getMyAuction().toString(), employeeWithAuction.viewAuction());
-	}
+//	@Test
+//	public void testViewAuctionWithAuctionScheduled() {
+//		assertEquals(employeeWithAuction.getMyAuction().toString(), employeeWithAuction.viewAuction());
+//	}
 
 }

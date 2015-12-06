@@ -91,7 +91,7 @@ public class FileHandler {
 					myUsers.put(userName, new ACEmployee());
 				} else {
 					String[] bidderInfo = scan.nextLine().split(", ");
-					myUsers.put(userName, new Bidder(bidderInfo[0], bidderInfo[1]));
+					myUsers.put(userName, new Bidder(userName, bidderInfo[0], bidderInfo[1]));
 				}
 			}
 			scan.close();

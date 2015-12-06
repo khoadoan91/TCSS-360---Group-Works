@@ -9,6 +9,9 @@ import java.util.Map;
  * @author KyleD
  */
 public class Bidder extends User {
+	
+	/** the user name that bidder uses for log in to the server. */
+	private String myUserName;
 
 	/** The billing address of the bidder. */
 	private String myAddress;
@@ -20,11 +23,13 @@ public class Bidder extends User {
 	/** The bids this bidder has made. */
 	private Map<Auction, Map<Item, BigDecimal>> myBids;
 	
-	public Bidder(String theAddr, String theCredit) {
-		this(theAddr, theCredit, new HashMap<>());
+	public Bidder(String userName, String theAddr, String theCredit) {
+		this(userName, theAddr, theCredit, new HashMap<>());
 	}
 	
-	public Bidder(String theAddr, String theCredit, Map<Auction, Map<Item, BigDecimal>> theBids) {
+	public Bidder(String userName, String theAddr, String theCredit, 
+						Map<Auction, Map<Item, BigDecimal>> theBids) {
+		myUserName = userName;
 		myAddress = theAddr;
 		myCreditCard = theCredit;
 		myBids = theBids;
@@ -44,7 +49,7 @@ public class Bidder extends User {
 	 * 
 	 * @param theBid
 	 */
-	public void addBid(final Auction theAuction, final Item theItem, final BigDecimal theBid) {
+	public boolean addBid(final Auction theAuction, final Item theItem, final BigDecimal theBid) {
 		if (theBid == null || theAuction == null || theItem == null) {
 			throw new NullPointerException();
 		}
@@ -54,12 +59,11 @@ public class Bidder extends User {
 		if (!myBids.containsKey(theAuction)) {
 			myBids.put(theAuction, new HashMap<>());
 		}
-		try {
-			theItem.addBid(this, theBid);
+		if (theItem.addBid(myUserName, theBid)) {
 			myBids.get(theAuction).put(theItem, theBid);
-		} catch (IllegalArgumentException e) {
-			System.err.println("Sorry! Your bid is lower than the starting price!");
-		}
+			return true;
+		} 
+		return false;
 	}
 
 	/**
@@ -75,7 +79,7 @@ public class Bidder extends User {
 			throw new IllegalArgumentException();
 		}
 		myBids.get(theAuction).remove(theItem);
-		theItem.removeBid(this);
+		theItem.removeBid(myUserName);
 	}
 	
 	public boolean containsBid(final Auction theAuction, final Item theItem) {
@@ -92,8 +96,8 @@ public class Bidder extends User {
 		return myBids.get(theAuction).get(theItem);
 	}
 
-//	@Override
-//    public String toString() {
-//    	return "Bidder: " + myAddress;
-//    }
+	@Override
+    public String toString() {
+    	return "Bidder: " + myAddress;
+    }
 }

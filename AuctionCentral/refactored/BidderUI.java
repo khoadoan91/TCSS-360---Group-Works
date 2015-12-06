@@ -21,12 +21,13 @@ public class BidderUI implements UserUI {
 			System.out.println("1.  View all available auctions");
 			System.out.println("2.  Create or change a bid on an item");
 			System.out.println("3.  View your current bids");
-			System.out.print("------Done!! want to exit? type any number ");
+			System.out.println("4.  Exit");
 			switch (Integer.parseInt(reader.readLine())) {
 				case 1: viewUpcomingAuction(theCalendar); break;
 				case 2: makeOrChangeBid(reader, theCalendar); break;
 				case 3: viewCurrentBids(); break;
-				default: isQuit = true; break;
+				case 4: isQuit = true; break;
+				default: System.out.println("Invalid choice"); break;
 			}
 		} while (!isQuit);
 	}
@@ -115,7 +116,11 @@ public class BidderUI implements UserUI {
 			System.out.println("Enter the amount you want to bid.");
 		}
 		String price = reader.readLine();
-		myBidder.addBid(auction, item, new BigDecimal(price));
+		if(myBidder.addBid(auction, item, new BigDecimal(price))) {
+			System.err.println("You sucessfully made a bid");
+		} else {
+			System.err.println("Sorry! Your bid is lower than the starting price!");
+		}
 //		Bid existingBid = null;
 //		for (Bid bid : myBidder.viewBids()) {
 //			if (bid.getItem().equals(item)) {

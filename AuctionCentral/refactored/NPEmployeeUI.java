@@ -3,8 +3,8 @@ package refactored;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 import refactored.DisplayCalendar.Exceed5AuctionsIn7Days;
@@ -37,7 +37,7 @@ public class NPEmployeeUI implements UserUI {
 				case 5: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) - 1); break;
 				case 6: timeRequested.set(Calendar.MONTH, timeRequested.get(Calendar.MONTH) + 1); break;
 				case 7 :isQuit = true; break;
-				default: System.out.println("Invalid choice"); break;
+				default: System.err.println("Invalid choice"); break;
 			}
 		} while (!isQuit);
 	}
@@ -58,7 +58,7 @@ public class NPEmployeeUI implements UserUI {
 			}
 			System.out.println(result);	
 		} else {
-			System.out.println("You do not have an auction scheduled.");
+			System.err.println("You do not have an auction scheduled.");
 		}
 	}
 	
@@ -78,11 +78,11 @@ public class NPEmployeeUI implements UserUI {
 				case 3: editAuctionDuration(reader, theCalendar, (NPEmployee)currentUser); break;
 				case 4: editItem(reader, theCalendar, (NPEmployee)currentUser); break;
 				case 5: promptAddItem(reader, (NPEmployee)currentUser); break;
-				default: System.out.println("Invalid choice"); break;
+				default: System.err.println("Invalid choice"); break;
 			}
 		}
 		else {
-			System.out.println("You do not have an auction");
+			System.err.println("You do not have an auction");
 		}
 	}
 	
@@ -90,7 +90,7 @@ public class NPEmployeeUI implements UserUI {
 		System.out.println("Enter a new item");
 		Item anotherItem = getItemFromPrompt(reader);
 		currentUser.getMyAuction().addItem(anotherItem);
-		System.out.println("You have sucessfully add a new item to your auction!");
+		System.err.println("You have sucessfully add a new item to your auction!");
 	}
 	
 	private Item getItemFromPrompt(BufferedReader reader) throws IOException {
@@ -108,23 +108,40 @@ public class NPEmployeeUI implements UserUI {
 	
 	private void editAuctionDuration(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException {
 		System.out.println("Change the time auction duration \"HH:MM\" ");
-		currentUser.getMyAuction().setTimeDuration(reader.readLine());
-		// FIXME check 4th business rule
+		String changedDur = reader.readLine();
+		Auction backupAuction = currentUser.getMyAuction().clone();
+		Auction changedAuction = currentUser.getMyAuction();
+		changedAuction.setTimeDuration(changedDur);
+		if (!theCalendar.getDispCalendar().changeAuction(backupAuction, changedAuction))
+			currentUser.addAuction(backupAuction);
+		else 
+			System.err.println("You sucessfully changed the time duration");
 	}
 
 	private void editAuctionStartTime(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException {
 		System.out.println("Change the time auction starts \"HH:MM\" ");
-		currentUser.getMyAuction().setStartingTime(reader.readLine());
-		// FIXME check 4th business rule.
+		String changedTime = reader.readLine();
+		Auction backupAuction = currentUser.getMyAuction().clone();
+		Auction changedAuction = currentUser.getMyAuction();
+		changedAuction.setStartingTime(changedTime);
+		if (!theCalendar.getDispCalendar().changeAuction(backupAuction, changedAuction))
+			currentUser.addAuction(backupAuction);
+		else 
+			System.err.println("You sucessfully changed the starting time");
 	}
 
 	private void editAuctionDay(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException {
 		System.out.println("Change day to \"YYYY MM DD\": ");
 		String[] date = reader.readLine().split(" ");
-		// FIXME check 2nd, 3rd and 4th business rules.
-		currentUser.getMyAuction().setYear(Integer.parseInt(date[0]));
-		currentUser.getMyAuction().setMonth(Integer.parseInt(date[1]));
-		currentUser.getMyAuction().setDateOfMonth(Integer.parseInt(date[2]));
+		Auction backupAuction = currentUser.getMyAuction().clone();
+		Auction changedAuction = currentUser.getMyAuction();
+		changedAuction.setYear(Integer.parseInt(date[0]));
+		changedAuction.setMonth(Integer.parseInt(date[1]));
+		changedAuction.setDateOfMonth(Integer.parseInt(date[2]));
+		if (!theCalendar.getDispCalendar().changeAuction(backupAuction, changedAuction))
+			currentUser.addAuction(backupAuction);
+		else 
+			System.err.println("You sucessfully changed the auction date");
 	}
 	
 	private void editItem(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws NumberFormatException, IOException {
@@ -168,7 +185,7 @@ public class NPEmployeeUI implements UserUI {
 							e.printStackTrace();
 						} break;
 					case 5:
-						System.out.println("Item was removed!");
+						System.err.println("Item was removed!");
 						currentUser.getMyAuction().removeItem(items.remove(i - 1)); break;
 					default: break;
 				}
@@ -183,7 +200,13 @@ public class NPEmployeeUI implements UserUI {
 			currentUser.addAuction(enterAuctionInfo(reader, currentUser));
 			try {
 				theCalendar.getDispCalendar().addAuction(currentUser.getMyAuction());
-				System.out.println("You sucessfully added your auction!");
+				
+				System.err.println("Your auction is sucessfully scheduled");
+				System.out.print("\nHow many items: ");
+				int itemCount = Integer.parseInt(reader.readLine());
+				for (int i = 0; i < itemCount; i++) {
+					currentUser.getMyAuction().addItem(getItemFromPrompt(reader));
+				}
 			} catch (ExceedAuctionLimit | Exceed90Days | Exceed5AuctionsIn7Days | 
 					ExceedAuctionLimitPerDay | ExceedOneAuctionPerYear e) {
 				System.err.println(e.getMessage());
@@ -196,9 +219,6 @@ public class NPEmployeeUI implements UserUI {
 		int year, month, date, hour, min;
 		Calendar tempCal = Calendar.getInstance();
 		tempCal.clear();
-		int itemCount;
-		List<Item> itemList = new ArrayList<>();
-
 		System.out.print("Which day? In format: \"YYYY MM DD\" ");
 		String[] aucDate = reader.readLine().split(" ");
 		year = Integer.parseInt(aucDate[0]);
@@ -211,13 +231,13 @@ public class NPEmployeeUI implements UserUI {
 		System.out.print("How long for the Auction: \"HH:MM\" ");
 		String timeDur = reader.readLine();
 		tempCal.set(year, month, date, hour, min);
-		
-		System.out.print("How many items: ");
-		itemCount = Integer.parseInt(reader.readLine());
-		for (int i = 0; i < itemCount; i++) {
-			itemList.add(getItemFromPrompt(reader));
-		}
-		return new Auction(currentUser.getMyOrgName(), itemList, tempCal, timeDur);
+		return new Auction(currentUser.getMyOrgName(), new LinkedList<>(), tempCal, timeDur);
+//		System.out.print("How many items: ");
+//		itemCount = Integer.parseInt(reader.readLine());
+//		for (int i = 0; i < itemCount; i++) {
+//			itemList.add(getItemFromPrompt(reader));
+//		}
+//		return new Auction(currentUser.getMyOrgName(), itemList, tempCal, timeDur);
 	}
 
 }
