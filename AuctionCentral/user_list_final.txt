@@ -1,0 +1,31 @@
+Nabil ACEmployee
+Cody ACEmployee
+Nina Bidder 123 Main St, 1234
+Josh Bidder 999 Center St, 5555
+Kyle NPEmployee MACYS
+Riley NPEmployee TARGET
+Zeff NPEmployee COSTCO
+Zorro NPEmployee WALMART
+Kelvin NPEmployee WINCO
+Alyssa NPEmployee FREDMEYER
+Mimi NPEmployee GOODWILL
+Jack NPEmployee PEPSI
+John NPEmployee MICROSOFT
+Jennifer NPEmployee APPLE
+Frank NPEmployee FRANZ
+Jessica NPEmployee SAFEWAY
+Amy NPEmployee ORACLE
+Alan NPEmployee SUBWAY
+Elizabeth NPEmployee SAMSUNG
+Chelsea NPEmployee SPRINT
+Amy NPEmployee JBL
+Jan NPEmployee DELL
+Marvin NPEmployee ATOM
+George NPEmployee STERLING
+Jane NPEmployee  MCDONALDS
+Matt NPEmployee NORDSTROM
+Jerrad NPEmployee SEARS
+Tom NPEmployee JCPENNY
+Ashley NPEmployee VERIZON
+Troy NPEmployee LENOVA
+Steven NPEmployee NESTLE
