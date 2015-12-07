@@ -8,4 +8,4 @@ Zeff NPEmployee COSTCO
 Zorro NPEmployee WALMART
 Kelvin NPEmployee WINCO
 Alyssa NPEmployee FRED-MEYER
-Mimi NPEmployee GOODWILL-INDUSTRIES
+Mimi NPEmployee GOODWILL
