@@ -78,6 +78,8 @@ public class ACEmployeeUI implements UserUI {
 		Calendar timeRequested = Calendar.getInstance();
 		boolean isQuit = false;
 		do {
+			System.out.println("Upcoming auctions: " + theCalendar.getDispCalendar().getUpcomingAuctions().size());
+			System.out.println("Past auctions: " + theCalendar.getDispCalendar().getPastAuctions().size());
 			System.out.println(theCalendar.displayCalendar(timeRequested));
 			System.out.println("0.  Back to main menu\n" +
 							   "1.  Previous month\n" +
