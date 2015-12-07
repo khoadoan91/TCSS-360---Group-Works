@@ -1,108 +1,175 @@
 package refactoredTests;
 
+
 import org.junit.Assert;
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import refactored.Auction;
 import refactored.DisplayCalendar;
+import refactored.DisplayCalendar.Exceed5AuctionsIn7Days;
+import refactored.DisplayCalendar.Exceed90Days;
+import refactored.DisplayCalendar.ExceedAuctionLimit;
+import refactored.DisplayCalendar.ExceedAuctionLimitPerDay;
+import refactored.DisplayCalendar.ExceedOneAuctionPerYear;
+import refactored.Auction;
 import refactored.Item;
+
+
 
 public class CalendarTester {
 
-   DisplayCalendar myDC;
-   Calendar day;
-   /** Fixture initialization (common initialization
-    *  for all tests). **/
-   @Before public void setUp() {
-//      myDC = new DisplayCalendar();
-//      day = Calendar.getInstance();
-   }
-   //test max auction
-   @Test public void testMaxAuctions() {
-//	  Assert.assertFalse(myDC.hasExceededAuction());
-//      for(int i = 0; i < 25; i++){
-//         day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 1 + (i % 2));
-//         myDC.addAuction(Auction.makeTestAuction(day));
-//      }
-//      Assert.assertTrue(myDC.hasExceededAuction());
-   }
-   
-   @Test public void is90DaysAway() {
+	DisplayCalendar overfullCalendar;
+	DisplayCalendar fullCalendar;
+	DisplayCalendar oneCalendar;
+	DisplayCalendar emptyCalendar;
+	DisplayCalendar fiveInWeekCalendar;
+	DisplayCalendar twoAuctionOneDayCalendar;
+	DisplayCalendar halfYearOldAuctionByTestOrgCalendar;
+	Calendar day;
+	Auction testAuction;
+	Auction testAuction2far;
+	Auction alreadyAuctionHere;
+	Auction newAuctionByTestOrg;
+	
+   @Before public void setUp() throws ExceedAuctionLimit, Exceed90Days, Exceed5AuctionsIn7Days, ExceedAuctionLimitPerDay, ExceedOneAuctionPerYear {
+	   
+	  //Item list used for occasionally manually initializing an auction
+      List<Item> aList = new LinkedList<Item>();
       
-//      day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 1);
-//      Assert.assertFalse(myDC.hasMoreThan90Days(Auction.makeTestAuction(day)));
-//      day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 97);
-//      Assert.assertTrue(myDC.hasMoreThan90Days(Auction.makeTestAuction(day)));
-   }
+      //Lists used when initializing Calendars 
+      List<Auction> empty = new ArrayList<Auction>();
+      List<Auction> full = new ArrayList<Auction>();
+      List<Auction> overfull = new ArrayList<Auction>();
+      List<Auction> halfYearOldAuctionByTestOrg = new ArrayList<Auction>();
    
-   // hasMore5AuctionsIn7Days(final Auction theAuc)
-   @Test public void hasMore5AuctionsIn7DaysTEST(){
-//      day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 1);
-//      Assert.assertFalse(myDC.hasExceededAuction());
-//      for(int i = 0; i < 5; i++){
-//         day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 1 + (i % 2));
-//         myDC.addAuction(Auction.makeTestAuction(day));
-//      }
-//      Assert.assertTrue(myDC.hasMore5AuctionsIn7Days(Auction.makeTestAuction(day)));
+      //make the item list not empty
+	  aList.add(Item.makeRItem());
+
+	  //initialize calendars that will be loaded automatically
+      oneCalendar = new DisplayCalendar(empty);
+      emptyCalendar = new DisplayCalendar(empty);
+      fiveInWeekCalendar = new DisplayCalendar(empty);
+      twoAuctionOneDayCalendar = new DisplayCalendar(empty);
       
+      //loading overfullcalendar with 100 auctions
+      day = Calendar.getInstance();
+      day.get(Calendar.DAY_OF_YEAR);
+      for(int i = 0; i < 100;i++){
+         day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 2);
+         overfull.add(Auction.makeTestAuction(day));
+      }
+      overfullCalendar = new DisplayCalendar(overfull);
+      
+      //loading a calendar with an old auction from a specific non profit
+      day = Calendar.getInstance();
+      day.set(Calendar.MONTH,day.get(Calendar.MONTH) - 6);
+      halfYearOldAuctionByTestOrg.add(new Auction("TestOrg",aList,day,"01:01"));
+      halfYearOldAuctionByTestOrgCalendar = new DisplayCalendar(halfYearOldAuctionByTestOrg);
+      
+      //loading a calendar with exactly 25 auctions
+      day = Calendar.getInstance();
+      day.set(Calendar.MONTH,day.get(Calendar.MONTH) + 1);
+      day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 8);
+      newAuctionByTestOrg = new Auction("TestOrg",aList,day,"01:01");
+      for(int i = 0; i < 25;i++){
+          day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 2);
+          full.add(Auction.makeTestAuction(day));
+       }
+      fullCalendar = new DisplayCalendar(full);
+      
+      //loading an auction with exactly one auction
+      day = Calendar.getInstance();
+      day.set(Calendar.MONTH,day.get(Calendar.MONTH) + 1);
+      day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 8);
+      oneCalendar.addAuction(Auction.makeTestAuction(day));
+      
+      //makes an auction at the same time as another auction
+      alreadyAuctionHere = Auction.makeTestAuction(day);
+      
+      //loads 5 auction into the same week
+      for(int i = 0; i < 5; i++){
+         day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 1);
+         fiveInWeekCalendar.addAuction(Auction.makeTestAuction(day));
+      }
+      day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 1);
+      testAuction = Auction.makeTestAuction(day);
+      
+      //loads two auction into the same day
+      day.set(Calendar.HOUR_OF_DAY,0);
+      day.set(Calendar.HOUR_OF_DAY,day.get(Calendar.HOUR_OF_DAY) + 5);
+      twoAuctionOneDayCalendar.addAuction(Auction.makeTestAuction(day));
+      day.set(Calendar.HOUR_OF_DAY,day.get(Calendar.HOUR_OF_DAY) + 5);
+      twoAuctionOneDayCalendar.addAuction(Auction.makeTestAuction(day));
+      
+      //makes an auction way into the future
+      day.set(Calendar.YEAR,day.get(Calendar.YEAR) + 1);
+      testAuction2far = Auction.makeTestAuction(day);
    }
    
-   // cant have 3 auctions in the same day
-   @Test public void only2auctionsindayTEST(){
-   //has2AuctionsInSameDay(final Auction theAuc){
-//      day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 1);
-//      day.set(Calendar.HOUR_OF_DAY,0);
-//      Assert.assertEquals(-2, myDC.has2AuctionsInSameDay(Auction.makeTestAuction(day)));
-//      myDC.addAuction(Auction.makeTestAuction(day));
-//      day.set(Calendar.HOUR_OF_DAY,day.get(Calendar.HOUR_OF_DAY) + 5);
-//      myDC.addAuction(Auction.makeTestAuction(day));
-//      day.set(Calendar.HOUR_OF_DAY,day.get(Calendar.HOUR_OF_DAY) + 5);
-//      Assert.assertEquals(-1, myDC.has2AuctionsInSameDay(Auction.makeTestAuction(day)));
+   @Test public void testMaxAuctionsForOverMaxAuctions(){
+	      Assert.assertTrue(fullCalendar.hasExceededAuction());
+	}
+   
+   @Test public void testMaxAuctionsForMaxAuctions(){
+      Assert.assertTrue(fullCalendar.hasExceededAuction());
    }
    
-   @Test public void noAuctionEvery2Hours(){
-   //has2HoursBetween2Auctions(final Auction theAuc)
-//      day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 1);
-//      day.set(Calendar.HOUR_OF_DAY,9);
-//      Assert.assertFalse(myDC.has2HoursBetween2Auctions(Auction.makeTestAuction(day)));
-//      myDC.addAuction(Auction.makeTestAuction(day));
-//      day.set(Calendar.HOUR_OF_DAY,day.get(Calendar.HOUR_OF_DAY) + 1);
-//      Assert.assertTrue(myDC.has2HoursBetween2Auctions(Auction.makeTestAuction(day)));
-//      day.set(Calendar.HOUR_OF_DAY,day.get(Calendar.HOUR_OF_DAY) - 2);
-//      Assert.assertTrue(myDC.has2HoursBetween2Auctions(Auction.makeTestAuction(day)));
-//      day.set(Calendar.HOUR_OF_DAY,day.get(Calendar.HOUR_OF_DAY) - 4);
-//      Assert.assertFalse(myDC.has2HoursBetween2Auctions(Auction.makeTestAuction(day)));
-//      day.set(Calendar.HOUR_OF_DAY,day.get(Calendar.HOUR_OF_DAY) + 14);
-//      Assert.assertFalse(myDC.has2HoursBetween2Auctions(Auction.makeTestAuction(day)));
+   @Test public void testMaxAuctionsForEmptyAuctions(){
+       Assert.assertFalse(emptyCalendar.hasExceededAuction());
    }
    
-   @Test public void noAuctionOnSameYearTEST(){
-      //public boolean hasAuctionPerNPperYear(final Auction theAuction) {
-//	  List<Item> aList= new LinkedList<Item>();
-//	  aList.add(Item.makeRItem());
-//      day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 1);
-//      Auction TESTAuction = new Auction("THEORGOFTESTING", aList, day, "03:01");
-//      Assert.assertTrue(myDC.hasAuctionPerNPperYear(TESTAuction));
-//      myDC.addAuction(TESTAuction);
-//      day.set(Calendar.DAY_OF_YEAR,day.get(Calendar.DAY_OF_YEAR) + 1);
-//      TESTAuction = new Auction("THEORGOFTESTING", aList, day, "03:01");
-//      Assert.assertFalse(myDC.hasAuctionPerNPperYear(TESTAuction));
+   @Test public void testMaxAuctionsLessThanMax(){
+      Assert.assertFalse(oneCalendar.hasExceededAuction());
+   }
+   
+   @Test public void testIs90DaysAwayForTooFarAway() {
+      Assert.assertTrue(oneCalendar.hasAuctionOver90Days(testAuction2far));
+   }
+   
+   @Test public void testIs90DaysAwayForInRange() {
+      Assert.assertFalse(oneCalendar.hasAuctionOver90Days(testAuction));
+   }
+   
+   @Test public void testHasMore5AuctionsIn7DaysTESTDoesNotHas5AuctionIn7Days(){
+      Assert.assertFalse(oneCalendar.hasMore5AuctionsIn7Days(testAuction));
+   }
+   
+   @Test public void testHasMore5AuctionsIn7DaysHas5AuctionIn7Days(){
+      Assert.assertTrue(fiveInWeekCalendar.hasMore5AuctionsIn7Days(testAuction));
+   }
+   
+   @Test public void testOnly2AuctionsInDayForNoAuction(){
+      Assert.assertEquals(-2,oneCalendar.has2AuctionsInSameDay(testAuction));
+   }
+   
+   @Test public void testOnly2AuctionsInDayFor2Auctions(){
+      Assert.assertEquals(-1,twoAuctionOneDayCalendar.has2AuctionsInSameDay(testAuction));
+   }
+   
+   @Test public void testNoAuctionEvery2HoursForNoNearbAauction(){
+      Assert.assertFalse(oneCalendar.has2HoursBetween2Auctions(testAuction));
+   }
+   
+   @Test public void testNoAuctionEvery2HoursForANearbyAuction() throws ExceedAuctionLimit, Exceed90Days, Exceed5AuctionsIn7Days, ExceedAuctionLimitPerDay, ExceedOneAuctionPerYear{
+      oneCalendar.addAuction(testAuction);
+      Assert.assertTrue(oneCalendar.has2HoursBetween2Auctions(testAuction));
+   }
+   
+   @Test public void testNoAuctionOnSameYearTESTForHasAuction(){
+	   Assert.assertFalse(halfYearOldAuctionByTestOrgCalendar.hasAuctionPerNPperYear(newAuctionByTestOrg));
+   }
+   
+   @Test public void testNoAuctionOnSameYearNoAuction(){
+      Assert.assertTrue(oneCalendar.hasAuctionPerNPperYear(newAuctionByTestOrg));
    }
 
-   /** A test that always fails. **/
-   @Test public void defaultTest() {//this was auto created
-      Assert.assertEquals("Default test added by jGRASP. Delete "
-            + "this test once you have added your own.", 0, 1);
-   }
-   
-   @Test public void alwaysTest(){
-	   assertTrue(true);
-   }
 }
+

@@ -55,7 +55,7 @@ public class DisplayCalendar implements Serializable {
 	 * False is good -> we can add more auctions.
 	 * @return true iff calendar already has exceeded Auction;
 	 */
-	boolean hasExceededAuction() {
+	public boolean hasExceededAuction() {
 		return myUpcomingAuctions.size() >= MAX_AUCTION;
 //		return checkAvailableAuctions() == MAX_AUCTION;
 	}
@@ -67,7 +67,7 @@ public class DisplayCalendar implements Serializable {
 	 * @param theAuc the auction that will be checked by the 2nd business rule.
 	 * @return true iff the auction is schedule over 90 days from current day.
 	 */
-	boolean hasAuctionOver90Days(final Auction theAuc) {
+	public boolean hasAuctionOver90Days(final Auction theAuc) {
 		Calendar ninetyFromNow = Calendar.getInstance();
 		ninetyFromNow.set(Calendar.DAY_OF_YEAR, 
 				ninetyFromNow.get(Calendar.DAY_OF_YEAR) + NINETY_DAY_FROM_NOW);
@@ -83,7 +83,7 @@ public class DisplayCalendar implements Serializable {
 	 * @param theAuc the auction that will be checked by the 3rd business rule.
 	 * @return true iff there are 5 or more auctions in any rolling 7 day period.
 	 */
-	boolean hasMore5AuctionsIn7Days(final Auction theAuc) {
+	public boolean hasMore5AuctionsIn7Days(final Auction theAuc) {
 		int expectedDay = theAuc.getDayOfYear();
 		List<Auction> neighborAuction = new LinkedList<>();
 		for (Auction auc : myUpcomingAuctions) {
@@ -117,7 +117,7 @@ public class DisplayCalendar implements Serializable {
 	 * any other Auctions day. Other positive number will be the index of a auction that 
 	 * has the same day as a checked auction.
 	 */
-	int has2AuctionsInSameDay(final Auction theAuc) {
+	public int has2AuctionsInSameDay(final Auction theAuc) {
 		int count = 0, indexAuction = -2;
 		for (int i = 0; i < myUpcomingAuctions.size(); i++) {
 			if (myUpcomingAuctions.get(i).getYear() == theAuc.getYear()
@@ -141,7 +141,7 @@ public class DisplayCalendar implements Serializable {
 	 * @return true iff there already had 2 auctions in the same day or the checked auction
 	 * violate the 2 hour rule in one day.
 	 */
-	boolean has2HoursBetween2Auctions(final Auction theAuc) {
+	public boolean has2HoursBetween2Auctions(final Auction theAuc) {
 		int indexAuc = has2AuctionsInSameDay(theAuc);
 		if (indexAuc == -1) { // there are 2 auctions at the same day.
 			return true;
@@ -171,7 +171,7 @@ public class DisplayCalendar implements Serializable {
 	 * @param theAuction the auction that will be checked by the 5th business rule.
 	 * @return true iff a NPE has only one auction per year after adding the checked auction.
 	 */
-	boolean hasAuctionPerNPperYear(final Auction theAuction) {
+	public boolean hasAuctionPerNPperYear(final Auction theAuction) {
 		for (int i = 0; i < myPastAuctions.size(); i++) {
 			if (myPastAuctions.get(i).getOrganizationName().equals(theAuction.getOrganizationName())) {
 				if (theAuction.getDayOfYear() - myPastAuctions.get(i).getDayOfYear() >= ONE_YEAR) {
@@ -190,7 +190,7 @@ public class DisplayCalendar implements Serializable {
 	 * @param theAuction the auction that will be checked if it is in the past from the current day.
 	 * @return true iff the check auction is in the past.
 	 */
-	boolean isInPast(final Auction theAuction) {
+	public boolean isInPast(final Auction theAuction) {
 		Calendar now = Calendar.getInstance();
 		if (theAuction.getDayOfYear() <= now.get(Calendar.DAY_OF_YEAR)) return true;
 		return false;

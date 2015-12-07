@@ -32,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -108,22 +109,26 @@ public class Auction implements Comparable<Auction>, java.io.Serializable, Clone
 		setTimeDuration(timeDur);
 	}
 	
-//   /**
-//    * makes a test object with random org name.
-//    * lasts 1 hour and 1 minute
-//	  * @param theDate tim the auction starts
-//	  *
-//    */
-//   public static Auction makeTestAuction(final Calendar theDate){
-//      char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
-//      StringBuilder sb = new StringBuilder();         //any better way to make a random string??
-//      Random random = new Random();
-//      for (int i = 0; i < 10; i++) {
-//         char c = chars[random.nextInt(chars.length)];
-//      sb.append(c);
-//      }
-//      return new Auction(sb.toString(), null, theDate,"01-01");
-//   }
+	 /**
+	  * makes a test object with random org name.
+	  * lasts 1 hour and 1 minute is only used for testing
+	  * @param theDate time the auction starts 
+	  * @returns the Auction that was created
+	  */
+	@SuppressWarnings("unchecked")
+	public static Auction makeTestAuction(final Calendar theDate){
+		char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
+		StringBuilder sb = new StringBuilder();         //any better way to make a random string??
+		Random random = new Random();
+		for (int i = 0; i < 10; i++) {
+			char c = chars[random.nextInt(chars.length)];
+			sb.append(c);
+		}
+		List<Item> aList = new LinkedList<Item>();
+	    aList.add(Item.makeRItem());
+	    aList.add(Item.makeRItem());
+	    return new Auction(sb.toString(),aList , theDate,"01:01");
+	}
 
 	/**
 	 * Add an item into the auction.

@@ -47,7 +47,8 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 	
 	/**
 	 * Makes a random item.
-	 * used for testing
+	 * used for testing all values are dummy values
+	 * @returns the item
 	 */
 	static public Item makeRItem(){
 		char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
