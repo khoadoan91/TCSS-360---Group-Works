@@ -21,6 +21,7 @@ public class NPEmployeeUI implements UserUI {
 		Calendar timeRequested = Calendar.getInstance();
 		boolean isQuit = false;
 		do {
+			System.out.println("Upcoming auctions: " + theCalendar.getDispCalendar().getUpcomingAuctions().size());
 			System.out.println(theCalendar.displayCalendar(timeRequested));
 			System.out.println("Please choose an option below.");
 			System.out.println("1.  Add a new auction");
