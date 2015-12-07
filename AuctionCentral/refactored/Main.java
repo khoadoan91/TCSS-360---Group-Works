@@ -48,7 +48,6 @@ public class Main {
 	    try {
 			FileInputStream inFile = new FileInputStream("user_list_final.ser");
 			myUsers = myFileHandler.deserializeAllUsers(inFile);
-//			System.out.println(myUsers.size());
 		}
 		catch (IOException e) {
 			e.printStackTrace();
