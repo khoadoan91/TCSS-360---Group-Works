@@ -63,7 +63,9 @@ public class BidderTest {
 	
 	@Test
 	public void testAddBidOnBidderDoesNotContainAuction() {
-		Auction auction = new Auction("Another NPO", new ArrayList<Item>(), Calendar.getInstance(), "05:00");
+		List<Item> list = new ArrayList<Item>();
+		list.add(myItem);
+		Auction auction = new Auction("Another NPO", list, Calendar.getInstance(), "05:00");
 		assertTrue(myBidder.addBid(auction, myItem, myBid));
 	}
 	
@@ -79,7 +81,7 @@ public class BidderTest {
 	
 	@Test
 	public void testAddBidMinPriceBid() {
-		assertFalse(myBidder.addBid(myAuction, myItem, new BigDecimal(1000.0)));
+		assertTrue(myBidder.addBid(myAuction, myItem, new BigDecimal(1000.0)));
 	}
 	
 	@Test
@@ -111,6 +113,7 @@ public class BidderTest {
 
 	@Test
 	public void testRemoveBidOnGoodBid() {
+		myBidder.addBid(myAuction, myItem, myBid);
 		myBidder.removeBid(myAuction, myItem);
 		assertFalse(myBidder.containsBid(myAuction, myItem));
 	}
