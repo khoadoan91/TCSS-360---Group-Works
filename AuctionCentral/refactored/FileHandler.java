@@ -37,7 +37,7 @@ public class FileHandler {
 	 * @return Map<String, User>
 	 */
 	@SuppressWarnings("unchecked")
-	public Map<String, User> deserializeAllUsers(FileInputStream inFile) {
+	public HashMap<String, User> deserializeAllUsers(FileInputStream inFile) {
 		HashMap<String, User> theUsers = null;
 		try {
 			ObjectInputStream inputStream = new ObjectInputStream(inFile);
@@ -56,11 +56,11 @@ public class FileHandler {
 	 * Auctions, which hold Items, which hold Bids.
 	 * @param myUpdatedUsers all User's and their associated objects
 	 */
-	public void serializeAllUsers(Map<String, User> myUpdatedUsers) {
+	public void serializeAllUsers(HashMap<String, User> myUpdatedUsers) {
 		FileOutputStream fileOut;
 		ObjectOutputStream outputStream;
 		try {
-			fileOut = new FileOutputStream("user_list_final.ser");
+			fileOut = new FileOutputStream("business_rule_4_user_list_final.ser");
 			outputStream = new ObjectOutputStream(fileOut);
 			outputStream.writeObject(myUpdatedUsers);
 			outputStream.close();
@@ -75,8 +75,8 @@ public class FileHandler {
 	 * @param userFile text file representing user objects 
 	 * @return Map<userName, userType>
 	 */
-	public Map<String, User> readUserFile(File userFile) {
-		Map<String, User> myUsers = new HashMap<>();
+	public HashMap<String, User> readUserFile(File userFile) {
+		HashMap<String, User> myUsers = new HashMap<>();
 		try {
 			myUsers = new HashMap<>();
 			Scanner scan = new Scanner(userFile);

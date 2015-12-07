@@ -1,6 +1,7 @@
 package refactored;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,14 +15,14 @@ import java.util.Map;
  */
 public class MainUI {
 
-	private Map<String, User> allUsers;
+	private HashMap<String, User> allUsers;
 	private User currentUser;
 
 	/**
 	 * Takes all loaded users for login verification
 	 * @param myUsers list of all users
 	 */
-	public MainUI(Map<String, User> myUsers) {
+	public MainUI(HashMap<String, User> myUsers) {
 		allUsers = myUsers;
 	}
 
@@ -46,7 +47,7 @@ public class MainUI {
 	}
 
 
-	public Map<String, User> run(BufferedReader reader, CalendarUI theCalendar) throws IOException {
+	public HashMap<String, User> run(BufferedReader reader, CalendarUI theCalendar) throws IOException {
 		UserUI ui;
 		if (currentUser instanceof ACEmployee) {
 			ui = new ACEmployeeUI();

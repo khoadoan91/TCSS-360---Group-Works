@@ -29,3 +29,4 @@ Test Item, 1, 1000.00, An item for testing business rule one
 Test Item, 1, 1000.00, An item for testing business rule one
 Test Item, 1, 1000.00, An item for testing business rule one
 Test Item, 1, 1000.00, An item for testing business rule one
+Test Item, 1, 1000.00, An item for testing business rule one
