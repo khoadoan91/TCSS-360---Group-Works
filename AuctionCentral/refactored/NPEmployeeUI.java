@@ -13,7 +13,12 @@ import refactored.DisplayCalendar.ExceedAuctionLimit;
 import refactored.DisplayCalendar.ExceedAuctionLimitPerDay;
 import refactored.DisplayCalendar.ExceedOneAuctionPerYear;
 
-
+/**
+ * Handles I/O for NPEmployees
+ * @author Kyle Doan
+ * @author nabilfadili
+ *
+ */
 public class NPEmployeeUI implements UserUI {
 
 	@Override
@@ -49,7 +54,7 @@ public class NPEmployeeUI implements UserUI {
 		currentUser.removeAuction();
 	}
 
-	void viewUserAuction(final Auction theAuction) {
+	void viewUserAuction(final Auction theAuction) throws InterruptedException {
 		if (theAuction != null) {
 			String result = theAuction.getOrganizationName() + " "
 						+ theAuction.getDateAuctionStarts().getTime() + "\n";
@@ -61,6 +66,7 @@ public class NPEmployeeUI implements UserUI {
 			System.out.println(result);
 		} else {
 			System.err.println("You do not have an auction scheduled.");
+			Thread.sleep(10);
 		}
 	}
 
@@ -108,33 +114,39 @@ public class NPEmployeeUI implements UserUI {
 		return new Item(itemTitle, itemQt, startPrice, itemDesc);
 	}
 
-	private void editAuctionDuration(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException {
+	private void editAuctionDuration(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException, InterruptedException {
 		System.out.println("Change the time auction duration \"HH:MM\" ");
 
 		String changedDur = reader.readLine();
 		Auction backupAuction = currentUser.getMyCurrentAuction().clone();
 		Auction changedAuction = currentUser.getMyCurrentAuction();
 		changedAuction.setTimeDuration(changedDur);
-		if (!theCalendar.getDispCalendar().changeAuction(backupAuction, changedAuction))
+		if (!theCalendar.getDispCalendar().changeAuction(backupAuction, changedAuction)) {
 			currentUser.addAuction(backupAuction);
-		else
+		}
+		else {
 			System.err.println("You sucessfully changed the time duration");
+		}
+		Thread.sleep(10);				//To prevent the two output streams from overlapping
 	}
 
-	private void editAuctionStartTime(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException {
+	private void editAuctionStartTime(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException, InterruptedException {
 		System.out.println("Change the time auction starts \"HH:MM\" ");
 
 		String changedTime = reader.readLine();
 		Auction backupAuction = currentUser.getMyCurrentAuction().clone();
 		Auction changedAuction = currentUser.getMyCurrentAuction();
 		changedAuction.setStartingTime(changedTime);
-		if (!theCalendar.getDispCalendar().changeAuction(backupAuction, changedAuction))
+		if (!theCalendar.getDispCalendar().changeAuction(backupAuction, changedAuction)) {
 			currentUser.addAuction(backupAuction);
-		else
-			System.err.println("You sucessfully changed the starting time");
+		}
+		else {
+			System.err.println("You sucessfully changed the starting time");			
+		}
+		Thread.sleep(10);			//To prevent the two output streams from overlapping
 	}
 
-	private void editAuctionDay(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException {
+	private void editAuctionDay(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws IOException, InterruptedException {
 		System.out.println("Change day to \"YYYY MM DD\": ");
 		String[] date = reader.readLine().split(" ");
 
@@ -143,10 +155,13 @@ public class NPEmployeeUI implements UserUI {
 		changedAuction.setYear(Integer.parseInt(date[0]));
 		changedAuction.setMonth(Integer.parseInt(date[1]));
 		changedAuction.setDateOfMonth(Integer.parseInt(date[2]));
-		if (!theCalendar.getDispCalendar().changeAuction(backupAuction, changedAuction))
+		if (!theCalendar.getDispCalendar().changeAuction(backupAuction, changedAuction)) {
 			currentUser.addAuction(backupAuction);
-		else
-			System.err.println("You sucessfully changed the auction date");
+		}
+		else {
+			System.err.println("You sucessfully changed the auction date");		
+		}
+		Thread.sleep(10);			//To prevent the two output streams from overlapping
 	}
 
 	private void editItem(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws NumberFormatException, IOException, InterruptedException {

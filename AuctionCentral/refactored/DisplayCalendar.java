@@ -285,7 +285,7 @@ public class DisplayCalendar implements Serializable {
 	 */
 	public class ExceedAuctionLimit extends Exception {
 		public ExceedAuctionLimit() {
-			super("Exceeds 25 auctions into the future.");
+			super("Exceeds 25 upcoming auctions.");
 		}
 	}
 	
