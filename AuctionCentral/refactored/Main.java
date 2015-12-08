@@ -29,11 +29,11 @@ public class Main {
 	private static HashMap<String, User> myUsers;
 	private static CalendarUI myCalendar;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		/** Text File input**/
 //		File userFile = new File("user_list_final.txt");
-//		File auctionFile = new File("business_rule_4_auction_list.txt");
-//		File itemFile = new File("business_rule_4_item_list.txt");
+//		File auctionFile = new File("business_rule_5_auction_list.txt");
+//		File itemFile = new File("business_rule_5_item_list.txt");
 //	    FileHandler myFileHandler = new FileHandler();
 //		DisplayCalendar calendarModel = new DisplayCalendar(myFileHandler.readAuctionFile(auctionFile, itemFile));
 //		myCalendar = new CalendarUI(calendarModel);
@@ -51,11 +51,12 @@ public class Main {
 		 * business_rule_3_user_list_final.ser
 		 * business_rule_4_user_list_final.ser
 		 * business_rule_5_user_list_final.ser
+		 * current_user_list_final.ser
 		 * 
 		 * */
         FileHandler myFileHandler = new FileHandler();
 	    try {
-			FileInputStream inFile = new FileInputStream("business_rule_4_user_list_final.ser");
+			FileInputStream inFile = new FileInputStream("current_user_list_final.ser");
 			myUsers = myFileHandler.deserializeAllUsers(inFile);
 		}
 		catch (IOException e) {
@@ -69,14 +70,6 @@ public class Main {
 		myUsers = ui.run(reader, myCalendar);
 		reader.close();
 		
-//		User tempUser; 
-//		Iterator<Entry<String, User>> it = myUsers.entrySet().iterator();myUsers.entrySet().iterator();
-//		while (it.hasNext()) {
-//			tempUser = it.next().getValue();
-//			if (tempUser instanceof NPEmployee) {
-//				System.out.println(((NPEmployee) tempUser).getMyCurrentAuction());
-//			}
-//		}
 		/** Always serialize*/
 		myFileHandler.serializeAllUsers(myUsers);			
 	}

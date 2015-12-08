@@ -47,7 +47,7 @@ public class MainUI {
 	}
 
 
-	public HashMap<String, User> run(BufferedReader reader, CalendarUI theCalendar) throws IOException {
+	public HashMap<String, User> run(BufferedReader reader, CalendarUI theCalendar) throws IOException, InterruptedException {
 		UserUI ui;
 		if (currentUser instanceof ACEmployee) {
 			ui = new ACEmployeeUI();

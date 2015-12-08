@@ -87,8 +87,8 @@ public class DisplayCalendar implements Serializable {
 		int expectedDay = theAuc.getDayOfYear();
 		List<Auction> neighborAuction = new LinkedList<>();
 		for (Auction auc : myUpcomingAuctions) {
-			if (auc.getDayOfYear() - expectedDay < 7
-					|| expectedDay - auc.getDayOfYear() < 7) {
+			if ((auc.getDayOfYear() - expectedDay < 7 && auc.getDayOfYear() - expectedDay >= 0)
+					|| (expectedDay - auc.getDayOfYear() <  7 && expectedDay - auc.getDayOfYear()  >= 0)) {
 				neighborAuction.add(auc);
 			}
 		}
@@ -192,7 +192,7 @@ public class DisplayCalendar implements Serializable {
 	 */
 	public boolean isInPast(final Auction theAuction) {
 		Calendar now = Calendar.getInstance();
-		if (theAuction.getDayOfYear() <= now.get(Calendar.DAY_OF_YEAR)) return true;
+		if (theAuction.getDateAuctionStarts().getTimeInMillis() <= now.getTimeInMillis()) return true;
 		return false;
 	}
 
@@ -298,7 +298,7 @@ public class DisplayCalendar implements Serializable {
 		 * Construct an exception with some message.
 		 */
 		public Exceed90Days() {
-			super("Exceed 90 days from the current date.");
+			super("Auction must be within 90 days.");
 		}
 	}
 	

@@ -138,7 +138,7 @@ public class CalendarTester {
       Assert.assertFalse(oneCalendar.hasAuctionOver90Days(testAuction));
    }
    
-   @Test public void testHasMore5AuctionsIn7DaysTESTDoesNotHas5AuctionIn7Days(){
+   @Test public void testHasMore5AuctionsIn7DaysDoesNotHave5AuctionIn7Days(){
       Assert.assertFalse(oneCalendar.hasMore5AuctionsIn7Days(testAuction));
    }
    
@@ -154,7 +154,7 @@ public class CalendarTester {
       Assert.assertEquals(-1,twoAuctionOneDayCalendar.has2AuctionsInSameDay(testAuction));
    }
    
-   @Test public void testNoAuctionEvery2HoursForNoNearbAauction(){
+   @Test public void testNoAuctionEvery2HoursForNoNearbyAuction(){
       Assert.assertFalse(oneCalendar.has2HoursBetween2Auctions(testAuction));
    }
    
@@ -163,7 +163,7 @@ public class CalendarTester {
       Assert.assertTrue(oneCalendar.has2HoursBetween2Auctions(testAuction));
    }
    
-   @Test public void testNoAuctionOnSameYearTESTForHasAuction(){
+   @Test public void testNoAuctionOnSameYearForHasAuction(){
 	   Assert.assertFalse(halfYearOldAuctionByTestOrgCalendar.hasAuctionPerNPperYear(newAuctionByTestOrg));
    }
    

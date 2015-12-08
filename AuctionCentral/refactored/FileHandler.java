@@ -60,7 +60,7 @@ public class FileHandler {
 		FileOutputStream fileOut;
 		ObjectOutputStream outputStream;
 		try {
-			fileOut = new FileOutputStream("business_rule_4_user_list_final.ser");
+			fileOut = new FileOutputStream("current_user_list_final.ser");
 			outputStream = new ObjectOutputStream(fileOut);
 			outputStream.writeObject(myUpdatedUsers);
 			outputStream.close();

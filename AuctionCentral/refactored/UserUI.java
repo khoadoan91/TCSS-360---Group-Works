@@ -10,5 +10,5 @@ import java.io.IOException;
  *
  */
 public interface UserUI {
-	public void promptMainMenu(BufferedReader reader, CalendarUI theCalendar, User currentUser) throws IOException;
+	public void promptMainMenu(BufferedReader reader, CalendarUI theCalendar, User currentUser) throws IOException, InterruptedException;
 }
