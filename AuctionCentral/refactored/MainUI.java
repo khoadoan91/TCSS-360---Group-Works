@@ -37,7 +37,10 @@ public class MainUI {
 			System.out.print("Enter username: ");
 			user = reader.readLine();
 			if (allUsers.containsKey(user)) {
-				System.out.println("Welcome " + user + "!!!!");
+				System.out.println("Welcome " + user + "!");
+				if (allUsers.get(user) instanceof NPEmployee) {
+					System.out.println("Organization: " + ((NPEmployee)allUsers.get(user)).getMyOrgName());
+				}
 				isLogin = true;
 			} else {
 				System.out.println("Oops, please try again");

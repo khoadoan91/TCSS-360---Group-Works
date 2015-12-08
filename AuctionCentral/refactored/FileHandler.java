@@ -54,6 +54,12 @@ public class FileHandler {
 	/**
 	 * Saves all User objects in a .ser file for the next program start. User objects hold
 	 * Auctions, which hold Items, which hold Bids.
+	 * * SerialFiles/business_rule_1_user_list_final.ser
+	 * SerialFiles/business_rule_2_user_list_final.ser
+	 * SerialFiles/business_rule_3_user_list_final.ser
+	 * SerialFiles/business_rule_4_user_list_final.ser
+	 * SerialFiles/business_rule_5_user_list_final.ser
+	 * SerialFiles/current_user_list_final.ser
 	 * @param myUpdatedUsers all User's and their associated objects
 	 */
 	public void serializeAllUsers(HashMap<String, User> myUpdatedUsers) {

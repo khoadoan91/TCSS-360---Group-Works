@@ -31,7 +31,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		/** Text File input**/
-//		File userFile = new File("user_list_final.txt");
+//		File userFile = new File("TextFiles/user_list_final.txt");
 //		File auctionFile = new File("TextFiles/business_rule_5_auction_list.txt");
 //		File itemFile = new File("TextFiles/business_rule_5_item_list.txt");
 //	    FileHandler myFileHandler = new FileHandler();
@@ -52,7 +52,7 @@ public class Main {
 		 * SerialFiles/business_rule_3_user_list_final.ser
 		 * SerialFiles/business_rule_4_user_list_final.ser
 		 * SerialFiles/business_rule_5_user_list_final.ser
-		 * SerialFiles/current_user_list_final.ser
+		 * SerialFiles/current_user_list_final.ser				~Default file~
 		 * */
         FileHandler myFileHandler = new FileHandler();
 	    try {
