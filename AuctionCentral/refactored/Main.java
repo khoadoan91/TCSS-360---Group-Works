@@ -32,8 +32,8 @@ public class Main {
 	public static void main(String[] args) throws IOException, InterruptedException {
 		/** Text File input**/
 //		File userFile = new File("user_list_final.txt");
-//		File auctionFile = new File("business_rule_5_auction_list.txt");
-//		File itemFile = new File("business_rule_5_item_list.txt");
+//		File auctionFile = new File("TextFiles/business_rule_5_auction_list.txt");
+//		File itemFile = new File("TextFiles/business_rule_5_item_list.txt");
 //	    FileHandler myFileHandler = new FileHandler();
 //		DisplayCalendar calendarModel = new DisplayCalendar(myFileHandler.readAuctionFile(auctionFile, itemFile));
 //		myCalendar = new CalendarUI(calendarModel);
@@ -47,16 +47,16 @@ public class Main {
 		
 		/**
 		 * Serialized Input. Select from:
-		 * business_rule_1_user_list_final.ser
-		 * business_rule_2_user_list_final.ser
-		 * business_rule_3_user_list_final.ser
-		 * business_rule_4_user_list_final.ser
-		 * business_rule_5_user_list_final.ser
-		 * current_user_list_final.ser
+		 * SerialFiles/business_rule_1_user_list_final.ser
+		 * SerialFiles/business_rule_2_user_list_final.ser
+		 * SerialFiles/business_rule_3_user_list_final.ser
+		 * SerialFiles/business_rule_4_user_list_final.ser
+		 * SerialFiles/business_rule_5_user_list_final.ser
+		 * SerialFiles/current_user_list_final.ser
 		 * */
         FileHandler myFileHandler = new FileHandler();
 	    try {
-			FileInputStream inFile = new FileInputStream("current_user_list_final.ser");
+			FileInputStream inFile = new FileInputStream("SerialFiles/current_user_list_final.ser");
 			myUsers = myFileHandler.deserializeAllUsers(inFile);
 		}
 		catch (IOException e) {
