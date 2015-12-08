@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Scanner;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +17,7 @@ import java.util.Map;
 
 
 /**
- * Main program start. Scanner singleton is initialized and passed around the program's
+ * Main program start.
  * UI classes as it is needed.
  * Files are read and passed here.
  * @author nabilfadili
