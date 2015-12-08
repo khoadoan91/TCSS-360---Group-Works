@@ -20,7 +20,7 @@ import refactored.NPEmployee;
  *
  */
 public class NPEmployeeTest {
-	
+
 	public NPEmployee employeeWithAuction;
 	public NPEmployee employeeWithoutAuction;
 	public Auction testAuction;
@@ -41,7 +41,7 @@ public class NPEmployeeTest {
 	public void testNPEmployee() {
 		assertTrue(employeeWithAuction instanceof NPEmployee);
 	}
-	
+
 	/**
 	 * An NPEmployee should have at most one auction at a time and null otherwise.
 	 * @throws ParseException
@@ -55,7 +55,7 @@ public class NPEmployeeTest {
 		employeeWithoutAuction.addAuction(testAuction);
 		assertEquals(testAuction, employeeWithoutAuction.getMyCurrentAuction());
 	}
-	
+
 	/**
 	 * An NPEmployee should have at most one auction at a time and null otherwise.
 	 */
@@ -65,18 +65,19 @@ public class NPEmployeeTest {
 		employeeWithAuction.removeAuction();
 		assertEquals(null, employeeWithAuction.getMyCurrentAuction());
 	}
-	
+
 	/**
 	 * viewAuction() should return an error message if the employee doesn't have an auction scheduled.
 	 */
-	@Test
-	public void testViewAuctionWithNoAuctionScheduled() {
-		assertEquals("You do not have an auction scheduled.", employeeWithoutAuction.viewAuction());
-	}
-	
+//	@Test
+//	public void testViewAuctionWithNoAuctionScheduled() {
+//		assertEquals("You do not have an auction scheduled.", employeeWithoutAuction.viewAuction());
+//	}
+
 	/**
 	 * viewAuction() should return a toString representation of the employee's auction if available.
 	 */
+
 	@Test
 	public void testViewAuctionWithAuctionScheduled() {
 		assertEquals(employeeWithAuction.getMyCurrentAuction().toString(), employeeWithAuction.viewAuction());

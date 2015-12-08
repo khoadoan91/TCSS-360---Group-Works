@@ -65,6 +65,26 @@ public class ItemTest {
 	public void testSetStartingPriceWithNull() {
 		myItem2.setStartingPrice(null);
 	}
+	
+	@Test(expected = NullPointerException.class) 
+	public void testAddBidWithEmptyString() {
+		myItem2.addBid("", new BigDecimal("10"));
+	}
+	
+	@Test(expected = NullPointerException.class) 
+	public void testAddBidWithNullString() {
+		myItem2.addBid(null, new BigDecimal("10"));
+	}
+	
+	@Test(expected = NullPointerException.class) 
+	public void testAddBidWithNullBigDecimal() {
+		myItem2.addBid("Nina", null);
+	}
+	
+	@Test(expected = NullPointerException.class) 
+	public void testRemoveBidWithNull() {
+		myItem2.removeBid(null);
+	}
 
 	/**
 	 * Test method for {@link refactored.Item#setTitle(java.lang.String)}.

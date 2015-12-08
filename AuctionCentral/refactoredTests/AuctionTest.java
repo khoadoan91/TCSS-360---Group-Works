@@ -185,16 +185,6 @@ public class AuctionTest {
 	}
 
 	@Test
-	public void testRemoveBid() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testViewBids() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testRemoveItemContainInList() {
 		assertTrue(myAuction.removeItem(myItem1));
 	}
@@ -217,6 +207,21 @@ public class AuctionTest {
 		assertEquals(myAuction.getOrganizationName(), "GoodWill");
 	}
 
+	@Test (expected = IllegalArgumentException.class)
+	public void testSetDateOfMonthOnNegativeNumber() {
+		myAuction.setDateOfMonth(-1);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testSetDateOfMonthOnZero() {
+		myAuction.setDateOfMonth(0);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testSetDateOfMonthOnBigNumber() {
+		myAuction.setDateOfMonth(35);
+	}
+	
 	@Test
 	public void testSetDateOfMonth() {
 		myAuction.setDateOfMonth(20);
