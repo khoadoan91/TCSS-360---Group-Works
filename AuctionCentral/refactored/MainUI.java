@@ -47,6 +47,14 @@ public class MainUI {
 	}
 
 
+	/**
+	 * Runs the main menus for the currently logged in user.
+	 * @param reader for input
+	 * @param theCalendar
+	 * @return the modified users to be serialized.
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public HashMap<String, User> run(BufferedReader reader, CalendarUI theCalendar) throws IOException, InterruptedException {
 		UserUI ui;
 		if (currentUser instanceof ACEmployee) {

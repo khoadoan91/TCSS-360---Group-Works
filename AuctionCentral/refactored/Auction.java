@@ -80,7 +80,6 @@ public class Auction implements Comparable<Auction>, java.io.Serializable, Clone
 		getAuctionName();
 		setTimeDuration(timeDuration);
 		myItems = new LinkedList<>(theItems);
-//		myBids = new ArrayList<Bid>();
 	}
 
 	/**
@@ -117,8 +116,8 @@ public class Auction implements Comparable<Auction>, java.io.Serializable, Clone
 	  */
 	@SuppressWarnings("unchecked")
 	public static Auction makeTestAuction(final Calendar theDate){
-		char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
-		StringBuilder sb = new StringBuilder();         //any better way to make a random string??
+		char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();
+		StringBuilder sb = new StringBuilder();         
 		Random random = new Random();
 		for (int i = 0; i < 10; i++) {
 			char c = chars[random.nextInt(chars.length)];
@@ -161,37 +160,6 @@ public class Auction implements Comparable<Auction>, java.io.Serializable, Clone
 			return false;
 		}
 	}
-
-//	/**
-//	 * Removes an item from an Auction.
-//	 *
-//	 * @param theItemTitle
-//	 */
-//	public boolean removeItem(final String theItemTitle) {
-//		if (theItemTitle == null) {
-//			throw new NullPointerException();
-//		}
-//		if (theItemTitle.length() == 0) {
-//			throw new IllegalArgumentException();
-//		}
-//		for (int i = 0; i < myItems.size(); i++) {
-//			if (myItems.get(i).getTitle().equals(theItemTitle)) {
-//				myItems.remove(i);
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-
-//	/**
-//	 * Returns a date and hour.
-//	 *
-//	 * @return a string about the date and hour
-//	 */
-//	public String printAuctionDay() {
-//		return "on " + myDate.get(Calendar.MONDAY) + ", " + myDate.get(Calendar.DAY_OF_MONTH) + " "
-//				+ myDate.get(Calendar.YEAR) + " at " + myDate.get(Calendar.HOUR_OF_DAY);
-//	}
 
 	/**
 	 * Returns a copy of a list of all items in a auction.
@@ -401,27 +369,6 @@ public class Auction implements Comparable<Auction>, java.io.Serializable, Clone
 		if (year < 1970) throw new IllegalArgumentException(); 
 		myDate.set(Calendar.YEAR, year);
 	}
-	
-//	public void setAvailable(final boolean theAvailable) {
-//		isAvailable = theAvailable;
-//	}
-
-//	public boolean isAvailable() {
-//		return isAvailable;
-//	}
-//	@Override
-//	public String toString() {
-//		return myOrgName + " " + myDate.getTime() + "\n";
-//	}
-
-//	public String displayItemsInAuction() {
-//		String result = myOrgName + " " + myDate.getTime() + "\n";
-//		char c = 'a';
-//		for (int i = 0; i < myItems.size(); i++) {
-//			result += c++ + ") " + myItems.get(i) + "\n";
-//		}
-//		return result;
-//	}
 
 	/**
 	 * {@inheritDoc}

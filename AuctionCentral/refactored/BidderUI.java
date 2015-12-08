@@ -12,7 +12,7 @@ public class BidderUI implements UserUI {
 	private Bidder myBidder;
 
 	@Override
-	public void promptMainMenu(BufferedReader reader, CalendarUI theCalendar, User currentUser) throws NumberFormatException, IOException {
+	public void promptMainMenu(BufferedReader reader, CalendarUI theCalendar, User currentUser) throws NumberFormatException, IOException, InterruptedException {
 		myBidder = (Bidder) currentUser;
 		boolean isQuit = false;
 		do {
@@ -64,7 +64,7 @@ public class BidderUI implements UserUI {
 		return result;		
 	}
 	
-	private void makeOrChangeBid(BufferedReader reader, CalendarUI cal) throws NumberFormatException, IOException {
+	private void makeOrChangeBid(BufferedReader reader, CalendarUI cal) throws NumberFormatException, IOException, InterruptedException {
 		Auction chosenAuc = chooseAuction(reader, cal);
 		if (chosenAuc != null) {
 			Item chosenItem = chooseItem(reader, chosenAuc);
@@ -105,7 +105,7 @@ public class BidderUI implements UserUI {
 		return null;
 	}
 	
-	private void nextAction(BufferedReader reader, Auction auction, Item item) throws IOException {
+	private void nextAction(BufferedReader reader, Auction auction, Item item) throws IOException, InterruptedException {
 		if (myBidder.containsBid(auction, item)) {
 			System.out.println("You have made a bid on this item.");
 			System.out.println("Your bid on this item was " 
@@ -121,32 +121,6 @@ public class BidderUI implements UserUI {
 		} else {
 			System.err.println("Sorry! Your bid is lower than the starting price!");
 		}
-//		Bid existingBid = null;
-//		for (Bid bid : myBidder.viewBids()) {
-//			if (bid.getItem().equals(item)) {
-//				hasBid = true;
-//				existingBid = bid;
-//				break;
-//			}
-//		}
-//		
-//		if (hasBid) {
-//			if (existingBid != null) {
-//				System.out.println("You have made a bid on this item.");
-//				System.out.println("You bid $" + existingBid.getBidAmount() + " on the item.");
-//				System.out.println("Enter the $ amount you want to change the bid to.");
-//				double newAmount = scanner.nextDouble();
-//				existingBid.setBidAmount(newAmount);
-//				int i = auction.viewBids().indexOf(existingBid);
-//				auction.viewBids().get(i).setBidAmount(newAmount);
-//			}
-//		} else {
-//			System.out.println("You have not made a bid on this item.");
-//			System.out.println("Enter the $ amount you want to bid.");
-//			double bidAmount = scanner.nextDouble();
-//			Bid newBid = new Bid(item, bidAmount, myBidder.toString());
-//			myBidder.addBid(newBid);
-//			auction.addBid(newBid);
-//		}
+		Thread.sleep(10);				//To prevent the two output streams from overlapping
 	}
 }

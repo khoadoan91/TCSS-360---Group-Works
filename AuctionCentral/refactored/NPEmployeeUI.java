@@ -92,7 +92,7 @@ public class NPEmployeeUI implements UserUI {
 		System.out.println("Enter a new item");
 		Item anotherItem = getItemFromPrompt(reader);
 		currentUser.getMyCurrentAuction().addItem(anotherItem);
-		System.out.println("You have sucessfully add a new item to your auction!");
+		System.out.println("You have sucessfully added a new item to your auction!");
 	}
 
 	private Item getItemFromPrompt(BufferedReader reader) throws IOException {
@@ -151,7 +151,7 @@ public class NPEmployeeUI implements UserUI {
 
 	private void editItem(BufferedReader reader, CalendarUI theCalendar, NPEmployee currentUser) throws NumberFormatException, IOException, InterruptedException {
 		List<Item> items = currentUser.getMyCurrentAuction().getAllItems();
-		System.out.println("Here is all items");
+		System.out.println("Here are all items:");
 		for (int i = 0; i < items.size(); i++) {
 			System.out.println((i + 1) + ") " + items.get(i));
 		}
@@ -191,7 +191,7 @@ public class NPEmployeeUI implements UserUI {
 						} break;
 					case 5:
 						System.err.println("Item was removed!");
-						Thread.sleep(10);
+						Thread.sleep(10);					//To prevent the two output streams from overlapping
 						currentUser.getMyCurrentAuction().removeItem(items.remove(i - 1)); break;
 					default: break;
 				}
@@ -207,8 +207,8 @@ public class NPEmployeeUI implements UserUI {
 			try {
 				theCalendar.getDispCalendar().addAuction(currentUser.getMyCurrentAuction());
 
-				System.err.println("Your auction is sucessfully scheduled");
-				Thread.sleep(10);
+				System.err.println("Your auction has been sucessfully scheduled");
+				Thread.sleep(10);				//To prevent the two output streams from overlapping
 				System.out.print("\nHow many items: ");
 				int itemCount = Integer.parseInt(reader.readLine());
 				for (int i = 0; i < itemCount; i++) {
@@ -217,7 +217,7 @@ public class NPEmployeeUI implements UserUI {
 			} catch (ExceedAuctionLimit | Exceed90Days | Exceed5AuctionsIn7Days |
 					ExceedAuctionLimitPerDay | ExceedOneAuctionPerYear e) {
 				System.err.println(e.getMessage());
-				Thread.sleep(10);
+				Thread.sleep(10);				//To prevent the two output streams from overlapping
 				currentUser.removeAuction();    // remove the violation BS auction.
 			}
 		}
@@ -240,12 +240,6 @@ public class NPEmployeeUI implements UserUI {
 		String timeDur = reader.readLine();
 		tempCal.set(year, month, date, hour, min);
 		return new Auction(currentUser.getMyOrgName(), new LinkedList<>(), tempCal, timeDur);
-//		System.out.print("How many items: ");
-//		itemCount = Integer.parseInt(reader.readLine());
-//		for (int i = 0; i < itemCount; i++) {
-//			itemList.add(getItemFromPrompt(reader));
-//		}
-//		return new Auction(currentUser.getMyOrgName(), itemList, tempCal, timeDur);
 	}
 
 }

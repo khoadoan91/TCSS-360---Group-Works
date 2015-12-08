@@ -45,14 +45,14 @@ public class Main {
 //		reader.close();
 		
 		
-		/**Serialized Input. Select from:
+		/**
+		 * Serialized Input. Select from:
 		 * business_rule_1_user_list_final.ser
 		 * business_rule_2_user_list_final.ser
 		 * business_rule_3_user_list_final.ser
 		 * business_rule_4_user_list_final.ser
 		 * business_rule_5_user_list_final.ser
 		 * current_user_list_final.ser
-		 * 
 		 * */
         FileHandler myFileHandler = new FileHandler();
 	    try {

@@ -51,14 +51,14 @@ public class Item implements Comparable<Item>, java.io.Serializable {
 	 * @returns the item
 	 */
 	static public Item makeRItem(){
-		char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();//found this on stack overflow
-	      StringBuilder sb = new StringBuilder();         //any better way to make a random string??
+		char[] chars = "bbuilbulaqqweqwergfnnfvae".toCharArray();
+	      StringBuilder sb = new StringBuilder();         
 	      Random random = new Random();
 	      for (int i = 0; i < 10; i++) {
 	         char c = chars[random.nextInt(chars.length)];
 	      sb.append(c);
 	      }
-	      StringBuilder sb2 = new StringBuilder();         //any better way to make a random string??
+	      StringBuilder sb2 = new StringBuilder();         
 	      for (int i = 0; i < 10; i++) {
 	         char c = chars[random.nextInt(chars.length)];
 	      sb2.append(c);

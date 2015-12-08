@@ -285,7 +285,7 @@ public class DisplayCalendar implements Serializable {
 	 */
 	public class ExceedAuctionLimit extends Exception {
 		public ExceedAuctionLimit() {
-			super("Exceed 25 auctions in the future.");
+			super("Exceeds 25 auctions into the future.");
 		}
 	}
 	
@@ -311,7 +311,7 @@ public class DisplayCalendar implements Serializable {
 		 * Construct an exception with some message.
 		 */
 		public Exceed5AuctionsIn7Days() {
-			super("Exceed 5 auctions in 7 days");
+			super("Exceeds 5 auctions in 7 days");
 		}
 	}
 	
@@ -324,7 +324,7 @@ public class DisplayCalendar implements Serializable {
 		 * Construct an exception with some message.
 		 */
 		public ExceedAuctionLimitPerDay() {
-			super("No more than 2 autions can be scheduled on the same day, "
+			super("No more than 2 auctions can be scheduled on the same day, "
 					+ "and the start time of the second can be no earlier "
 					+ "than 2 hours after the end time of the first");
 		}
@@ -340,7 +340,7 @@ public class DisplayCalendar implements Serializable {
 		 */
 		public ExceedOneAuctionPerYear() {
 			super("No more than one auction per year per Non-profit organization can be"
-					+ "scheduled.");
+					+ " scheduled.");
 		}
 	}
 	

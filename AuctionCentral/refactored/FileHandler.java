@@ -60,7 +60,7 @@ public class FileHandler {
 		FileOutputStream fileOut;
 		ObjectOutputStream outputStream;
 		try {
-			fileOut = new FileOutputStream("current_user_list_final.ser");
+			fileOut = new FileOutputStream("current_user_list_final.ser");					//Change this to change where it is saved
 			outputStream = new ObjectOutputStream(fileOut);
 			outputStream.writeObject(myUpdatedUsers);
 			outputStream.close();
